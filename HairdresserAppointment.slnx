@@ -1,3 +1,4 @@
 <Solution>
   <Project Path="HairdresserAppointment.API/HairdresserAppointment.API.csproj" />
+  <Project Path="HairdresserAppointmentClient/HairdresserAppointmentClient.csproj" />
 </Solution>
