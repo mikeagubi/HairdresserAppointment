@@ -14,7 +14,18 @@ namespace HairdresserAppointment.API.Data
         public DbSet<Treatment> Treatments { get; set; }
         public DbSet<WorkingHour> WorkingHours { get; set; }
 
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
 
+            modelBuilder.Entity<Treatment>()
+                .Property(t => t.Price)
+                .HasPrecision(5, 2);
+
+            modelBuilder.Entity<Promotion>()
+                .Property(p => p.DiscountPercent)
+                .HasPrecision(5, 2);
+        }
 
 
     }

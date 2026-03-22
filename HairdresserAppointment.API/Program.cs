@@ -12,7 +12,7 @@ builder.Services.AddControllers();
 
 // DbContext
 builder.Services.AddDbContext<MyDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+    options.UseSqlServer(builder.Configuration.GetConnectionString("MyConnection")));
 
 
 
