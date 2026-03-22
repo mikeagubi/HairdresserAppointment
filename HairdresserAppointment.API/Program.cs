@@ -1,4 +1,5 @@
 using HairdresserAppointment.API.Data;
+using HairdresserAppointment.API.Services;
 using Microsoft.EntityFrameworkCore;
 
 
@@ -15,6 +16,13 @@ builder.Services.AddDbContext<MyDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("MyConnection")));
 
 
+
+builder.Services.AddScoped<BookingService>();
+builder.Services.AddScoped<DayOffService>();
+builder.Services.AddScoped<HairdresserService>();
+builder.Services.AddScoped<PromotionService>();
+builder.Services.AddScoped<TreatmentService>();
+builder.Services.AddScoped<WorkingHourService>();
 
 // Swagger
 builder.Services.AddEndpointsApiExplorer();
