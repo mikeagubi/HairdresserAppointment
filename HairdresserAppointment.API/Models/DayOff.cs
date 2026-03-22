@@ -1,4 +1,6 @@
-﻿namespace HairdresserAppointment.API.Models
+﻿using HairdresserAppointment.API.Enums;
+
+namespace HairdresserAppointment.API.Models
 {
     public class DayOff
     {
