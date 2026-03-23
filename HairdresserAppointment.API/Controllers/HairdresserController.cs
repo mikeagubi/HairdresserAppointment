@@ -5,11 +5,8 @@ namespace HairdresserAppointment.API.Controllers
 
     [ApiController]
     [Route("api/[Controller]")]
-    public class HairdresserController : Controller
+    public class HairdresserController : ControllerBase
     {
-        public IActionResult Index()
-        {
-            return View();
-        }
+        
     }
 }

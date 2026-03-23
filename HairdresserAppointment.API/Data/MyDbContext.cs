@@ -1,9 +1,10 @@
 ﻿using HairdresserAppointment.API.Models;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace HairdresserAppointment.API.Data
 {
-    public class MyDbContext : DbContext
+    public class MyDbContext : IdentityDbContext<CustomUser>
     {
         public MyDbContext(DbContextOptions<MyDbContext>options) : base(options) { }
 
