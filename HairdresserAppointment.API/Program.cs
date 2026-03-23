@@ -1,6 +1,8 @@
 using HairdresserAppointment.API.Data;
 using HairdresserAppointment.API.Services;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
+using HairdresserAppointment.API.Models;
 
 
 
@@ -15,6 +17,10 @@ builder.Services.AddControllers();
 builder.Services.AddDbContext<MyDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("MyConnection")));
 
+builder.Services.AddIdentity<CustomUser, IdentityRole>()
+    .AddEntityFrameworkStores<MyDbContext>();
+
+builder.Services.AddAuthorization();
 
 
 builder.Services.AddScoped<BookingService>();
@@ -40,7 +46,10 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+app.UseAuthentication();
 app.UseAuthorization();
+
+
 
 app.MapControllers();
 
