@@ -1,0 +1,39 @@
+﻿@page
+@model HairdresserAppointmentClient.Pages.HairdresserModel
+@{
+}
+
+
+<h2>Skapa frisör med arbetstid</h2>
+
+<form method="post">
+	<div>
+		<input asp-for="Hairdresser.Name" />
+		<label asp-for="Hairdresser.Name">Namn</label>
+	</div>
+	<div>
+		<input type="checkbox" asp-for="Hairdresser.IsActive" />
+		<label asp-for="Hairdresser.IsActive">Ange Aktivitet</label>
+	</div>
+	<button type="submit">Spara</button>
+
+
+
+<hr />
+<h3>Arbetstiderna</h3>
+	@for(int i = 0; i < Model.Hairdresser.WorkingHours.Count; i++)
+	{
+		<div>
+			<label>
+				<input type="checkbox" asp-for="Hairdresser.WorkingHours[i].Selected" />
+				@Model.Hairdresser.WorkingHours[i].DayOfWeek
+			</label>
+
+			<input type="time" asp-for="Hairdresser.WorkingHours[i].StartTime" />
+			<input type="time" asp-for="Hairdresser.WorkingHours[i].EndTime" />
+			<input type="hidden" asp-for="Hairdresser.WorkingHours[i].DayOfWeek" />
+		</div>
+	}
+
+
+</form>
