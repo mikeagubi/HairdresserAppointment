@@ -21,9 +21,8 @@ namespace HairdresserAppointmentClient.Pages
 
 
         public void OnGet()
+        
         {
-            Hairdresser = new CreateHairdresserDto();
-
             Hairdresser.WorkingHours = Enum.GetValues<DayOfWeek>()
                 .Select(d => new WorkingHourDto
                 {

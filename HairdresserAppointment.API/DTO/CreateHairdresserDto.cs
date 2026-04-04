@@ -6,4 +6,6 @@
         public bool IsActive { get; set; }
         public List<WorkingHourDto> WorkingHours { get; set; } = new();
     }
+
+   
 }
