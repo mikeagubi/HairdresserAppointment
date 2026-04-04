@@ -1,4 +1,5 @@
 ﻿using HairdresserAppointment.API.Data;
+using HairdresserAppointment.API.DTO;
 using HairdresserAppointment.API.Models;
 using Microsoft.EntityFrameworkCore;
 
@@ -25,9 +26,9 @@ namespace HairdresserAppointment.API.Services
 
         public async Task<Hairdresser> CreateHairdresserAsync(Hairdresser hairdresser)
         {
+            
             _context.Hairdressers.Add(hairdresser);
-            _context.SaveChanges();
-
+            await _context.SaveChangesAsync();
             return hairdresser;
         }
 
@@ -59,7 +60,25 @@ namespace HairdresserAppointment.API.Services
             return true;
         }
 
+        public async Task<Hairdresser> CreateStackAsync(CreateHairdresserDto dto)
+        {
+            var hairdresser = new Hairdresser
+            {
+                Name = dto.Name,
+                IsActive = dto.IsActive,
+                WorkingHours = dto.WorkingHours.Select(w => new WorkingHour
+                {
+                    DayOfWeek = w.DayOfWeek,
+                    StartTime = w.StartTime,
+                    EndTime = w.EndTime
+                }).ToList()
+            };
+            
+            _context.Hairdressers.Add(hairdresser);
+            await _context.SaveChangesAsync();
 
+            return hairdresser;
+        }
 
 
 

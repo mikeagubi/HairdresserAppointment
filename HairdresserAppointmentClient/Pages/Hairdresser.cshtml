@@ -1,0 +1,36 @@
+﻿@page
+@model HairdresserAppointmentClient.Pages.HairdresserModel
+@{
+}
+
+
+<h3>
+	Hairdresser Registration & Schedule</h3>
+
+<form method="post">
+	<div>
+		<label asp-for="Hairdresser.Name" class="fw-bold mt-5">Hairdresser</label><br />
+		<input asp-for="Hairdresser.Name" placeholder="Enter firstname" />
+	</div>
+	
+<h3 class="mt-5">Schedule</h3>
+	@for(int i = 0; i < Model.Hairdresser.WorkingHours.Count; i++)
+	{
+		<div>
+			<label>
+				<input type="checkbox" asp-for="Hairdresser.WorkingHours[i].Selected" />
+				@Model.Hairdresser.WorkingHours[i].DayOfWeek
+			</label>
+
+			<input type="time" asp-for="Hairdresser.WorkingHours[i].StartTime" />
+			<input type="time" asp-for="Hairdresser.WorkingHours[i].EndTime" />
+			<input type="hidden" asp-for="Hairdresser.WorkingHours[i].DayOfWeek" />
+		</div>
+	}
+	<div>
+		<input type="checkbox" asp-for="Hairdresser.IsActive" />
+		<label asp-for="Hairdresser.IsActive">Active Hairdresser</label>
+	</div>
+	<button type="submit">Add Shedule</button>
+
+</form>
