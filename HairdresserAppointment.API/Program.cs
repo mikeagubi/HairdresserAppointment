@@ -22,13 +22,14 @@ builder.Services.AddIdentity<CustomUser, IdentityRole>()
 
 builder.Services.AddAuthorization();
 
-
+builder.Services.AddScoped<AuthService>();
 builder.Services.AddScoped<BookingService>();
 builder.Services.AddScoped<DayOffService>();
 builder.Services.AddScoped<HairdresserService>();
 builder.Services.AddScoped<PromotionService>();
 builder.Services.AddScoped<TreatmentService>();
 builder.Services.AddScoped<WorkingHourService>();
+
 
 // Swagger
 builder.Services.AddEndpointsApiExplorer();
