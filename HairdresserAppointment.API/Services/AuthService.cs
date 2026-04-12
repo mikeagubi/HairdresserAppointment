@@ -2,9 +2,21 @@
 
 namespace HairdresserAppointment.API.Services
 {
-    private readonly MyDbContext _context;
     public class AuthService
     {
-        
+        private readonly MyDbContext _context;
+        public AuthService(MyDbContext context)
+        {
+            _context = context;
+        }
+
+
+
+
+
+
+
+
+
     }
 }
