@@ -22,11 +22,11 @@ namespace HairdresserAppointment.API.Controllers
             await _hairdresserService.CreateStackAsync(dto);
         }
 
-        [HttpPost]
-        public async Task CreateHairdresser(Hairdresser hairdresser)
-        {
-            await _hairdresserService.CreateHairdresserAsync(hairdresser);
-        }
+
+        //skapa hämtning av hairdressers
+        //skapa PUT men inte en hel PUT utan kanske bara från active till false ? 
+
+        
 
 
 

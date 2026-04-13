@@ -18,7 +18,10 @@ builder.Services.AddHttpClient("HairdresserAppointmentApi", client =>
 {
     client.BaseAddress = new Uri(apiUrl);
 });
+
+
 builder.Services.AddScoped<HairdresserApiService>();
+builder.Services.AddScoped<AuthApiService>();
 
 
 

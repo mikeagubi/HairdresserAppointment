@@ -7,5 +7,12 @@
         {
             _httpClient = factory.CreateClient("HairdresserAppointmentApi");
         }
+
+
+
+
+
+
+
     }
 }
