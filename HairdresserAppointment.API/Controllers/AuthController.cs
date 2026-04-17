@@ -37,10 +37,6 @@ namespace HairdresserAppointment.API.Controllers
         }
 
 
-        [HttpGet()]
-
-        //VIKTIGAST ADMIN? fundera på hur ska jag create en admin första gången? 
-
         //PUT ENDAST på changeID för Hairdresser
 
         //Bygga Create users,

@@ -3,6 +3,7 @@ using HairdresserAppointment.API.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 using HairdresserAppointment.API.Models;
+using HairdresserAppointment.API.Seed;
 
 
 
@@ -54,4 +55,11 @@ app.UseAuthorization();
 
 app.MapControllers();
 
-app.Run();
+
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+    await AdminSeeder.AdminSeedAsync(services);
+}
+
+    app.Run();

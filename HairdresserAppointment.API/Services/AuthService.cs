@@ -10,9 +10,11 @@ namespace HairdresserAppointment.API.Services
         private readonly MyDbContext _context;
         private readonly UserManager<CustomUser> _userManager;
         private readonly SignInManager<CustomUser> _signInManager;
-        public AuthService(MyDbContext context)
+        public AuthService(MyDbContext context, UserManager<CustomUser> userManager, SignInManager<CustomUser> signInManager)
         {
             _context = context;
+            _signInManager = signInManager;
+            _userManager = userManager;
         }
 
 
