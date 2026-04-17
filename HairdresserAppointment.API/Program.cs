@@ -3,6 +3,7 @@ using HairdresserAppointment.API.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 using HairdresserAppointment.API.Models;
+using HairdresserAppointment.API.Seed;
 
 
 
@@ -22,13 +23,14 @@ builder.Services.AddIdentity<CustomUser, IdentityRole>()
 
 builder.Services.AddAuthorization();
 
-
+builder.Services.AddScoped<AuthService>();
 builder.Services.AddScoped<BookingService>();
 builder.Services.AddScoped<DayOffService>();
 builder.Services.AddScoped<HairdresserService>();
 builder.Services.AddScoped<PromotionService>();
 builder.Services.AddScoped<TreatmentService>();
 builder.Services.AddScoped<WorkingHourService>();
+
 
 // Swagger
 builder.Services.AddEndpointsApiExplorer();
@@ -53,4 +55,11 @@ app.UseAuthorization();
 
 app.MapControllers();
 
-app.Run();
+
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+    await AdminSeeder.AdminSeedAsync(services);
+}
+
+    app.Run();
