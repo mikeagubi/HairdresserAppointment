@@ -1,3 +1,6 @@
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 using HairdresserAppointment.API.Data;
 using HairdresserAppointment.API.Services;
 using Microsoft.EntityFrameworkCore;
@@ -21,6 +24,26 @@ builder.Services.AddDbContext<MyDbContext>(options =>
 builder.Services.AddIdentity<CustomUser, IdentityRole>()
     .AddEntityFrameworkStores<MyDbContext>();
 
+builder.Services.AddAuthentication("Bearer").AddJwtBearer("Bearer", options =>
+    {
+        var key = builder.Configuration["JwtSettings:Key"];
+
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuer = true,
+            ValidateAudience = true,
+            ValidateLifetime = true,
+            ValidateIssuerSigningKey = true,
+
+            ValidIssuer = builder.Configuration["JwtSettings:Issuer"],
+            ValidAudience = builder.Configuration["JwtSettings:Audience"],
+
+            IssuerSigningKey = new SymmetricSecurityKey(
+                Encoding.UTF8.GetBytes(key)
+            )
+        };
+    });
+
 builder.Services.AddAuthorization();
 
 builder.Services.AddScoped<AuthService>();
@@ -29,6 +52,7 @@ builder.Services.AddScoped<DayOffService>();
 builder.Services.AddScoped<HairdresserService>();
 builder.Services.AddScoped<PromotionService>();
 builder.Services.AddScoped<TreatmentService>();
+builder.Services.AddScoped<TokenService>();
 builder.Services.AddScoped<WorkingHourService>();
 
 
@@ -47,12 +71,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
 app.UseAuthentication();
 app.UseAuthorization();
-
-
-
 app.MapControllers();
 
 
