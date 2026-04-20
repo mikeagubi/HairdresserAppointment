@@ -33,16 +33,17 @@
 				<label class="form-label">Password</label>
 				<input asp-for="@Model.loginDto.Password" type="password" class="form-control" />
 			</div>
+			<div class="mt-2">
+				@if (Model.ErrorMessage != null)
+				{
+					<div class="alert alert-danger py-1 px-2 small">
+						@Model.ErrorMessage
+					</div>
+				}
+			</div>
 			<button type="submit" class="btn btn-outline-light w-50 fw-bold">Login</button>
 		</form>
-		<div class="mt-2">
-			@if (Model.ErrorMessage != null)
-			{
-				<div class="alert alert-danger py-1 px-2 small">
-					@Model.ErrorMessage
-				</div>
-			}
-		</div>
+		
 	</div>
 
 	
