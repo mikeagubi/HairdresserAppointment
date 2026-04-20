@@ -8,14 +8,18 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/HairdresserAppointmentClient.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
 </head>
 <body>
+    @{
+        var role = Context.Session.GetString("role");
+    }
     <header>
-        <nav class="navbar navbar-expand-lg m-0 p-0 navbar-dark bg-black position-relative">
+        <nav class="navbar navbar-expand-lg m-0 p-0 navbar-dark bg-black fixed-top">
             <div class="container-fluid">
 
                 <a class="me-0 m-0 p-0" href="/index">
-                    <img src="~/images/dagenslyxsvart.png" width="250">
+                    <img src="~/images/dagenslyxsvart.png" width="150" height="120px">
                     </a>
 
                     <div class="position-absolute top-50 start-50 translate-middle">
@@ -36,7 +40,33 @@
                             <li class="nav-item">
                                 <a class="nav-link" asp-page="/Hairdresser">GömSen</a>
                             </li>
-                            
+                            @if(role == "Admin")
+                            {
+                                <li class="nav-item dropdown ">
+                                <a class="nav-link dropdown-toggle text-danger fw-bold" href="#" data-bs-toggle="dropdown">Admin-Menu</a>
+                                <ul class="dropdown-menu dropdown-menu-end bg-dark">
+                                    <li><a class="dropdown-item text-white" asp-page="/Hairdresser">Skapa Frisör</a></li>
+                                    <li><a class="dropdown-item text-white" asp-page="/Hairdresser">Skapa frisör</a></li>
+                                    <li><a class="dropdown-item text-white" asp-page="/Hairdresser">Göra nåt 2</a></li>
+                                    <li><a class="dropdown-item text-white" asp-page="/Hairdresser">Ändra nåt 3</a></li>
+                                        <a class="dropdown-item text-white" asp-page="/Logout">
+                                            <i class="bi bi-box-arrow-right"></i> Logga ut
+                                        </a>
+                                    </ul>
+                                </li>
+                            }
+                            else if(role  == "Hairdresser")
+                            {
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle text-warning fw-bold" href="#" data-bs-toggle="dropdown">Frisör-Menu</a>
+                                    <ul class="dropdown-menu dropdown-menu-end">
+                                        <li><a class="dropdown-item" asp-page="/Hairdresser">Kolla Arbetstid</a></li>
+                                        <li><a class="dropdown-item" asp-page="/Hairdresser">Söka ledighet</a></li>
+                                    
+                                    </ul>
+                                </li>
+                            }
+
                         </ul>
                     </div>
 
@@ -49,9 +79,22 @@
         </main>
     </div>
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2026 - HairdresserAppointmentClient - <a asp-area="" asp-page="/Privacy">Privacy</a>
+    <footer class="footer bg-black text-white py-2 position-fixed">
+        <div class="container-fluid d-flex align-items-center small">
+            <div>&copy; 2026 DagensLyx</div>
+            <div class="ms-4">
+                <a asp-page="/Contact" class="text-white text-decoration-none me-3 fw-bolder">Kontakt</a>
+                <a asp-page="/Privacy" class="text-white text-decoration-none me-3 fw-bolder">Om Oss</a>
+            </div>
+                @if (string.IsNullOrEmpty(role))
+                {
+				    <a asp-page="/login" class="text-white text-decoration-none ms-auto fs-5">
+                    <i class="bi bi-box-arrow-in-right"></i>
+				    </a>
+                }
+                
+                
+
         </div>
     </footer>
 
