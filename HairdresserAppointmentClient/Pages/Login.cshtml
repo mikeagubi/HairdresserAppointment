@@ -4,32 +4,48 @@
 }
 
 
-<h2>Login</h2>
-@if(Model.Role == "Admin")
-{
-	<div class="alert alert-success">
-		<h2>inloggad som: @Model.Role</h2>
-	</div>
-}
+<div class="position-relative vh-100">
 
-<form method="post">
-	<div>
-		<label>Hotmail</label>
-		<input asp-for="@Model.loginDto.Email" />
-	</div>
-	<div>
-		<label>Password</label>
-		<input asp-for="@Model.loginDto.Password" type="password" />
-	</div>
-	<button type="submit">Login</button>
-</form>
-<div>
-	@if(Model.ErrorMessage != null)
-	{
-		<div class="alert alert-danger">
-			@Model.ErrorMessage 
+	<img src="~/images/loginbild2.png" class="position-absolute top-0 start-0 w-100 h-100 object-fit-cover d-block opacity-75"/> 
+
+	<div class="position-absolute top-50 start-50 translate-middle p-4 rounded text-center text-white"
+		 style="
+		backdrop-filter: blur(20px);
+		background: rgba(0,0,0,0.4);
+		border-radius: 25px;
+		padding: 40px;
+		width: 380px;
+		">
+		<h5>Internal Login</h5>
+		@if (Model.Role == "Admin")
+		{
+			<div class="alert alert-success">
+				<h2>inloggad som: @Model.Role</h2>
+			</div>
+		}
+
+		<form method="post">
+			<div class="mb-3 text-start">
+				<label class="form-label">Username</label>
+				<input asp-for="@Model.loginDto.Email" class="form-control" />
+			</div>
+			<div class="mb-3 text-start">
+				<label class="form-label">Password</label>
+				<input asp-for="@Model.loginDto.Password" type="password" class="form-control" />
+			</div>
+			<button type="submit" class="btn btn-outline-light w-50 fw-bold">Login</button>
+		</form>
+		<div class="mt-2">
+			@if (Model.ErrorMessage != null)
+			{
+				<div class="alert alert-danger py-1 px-2 small">
+					@Model.ErrorMessage
+				</div>
+			}
 		</div>
-	}
+	</div>
+
+	
+
+
 </div>
-
-
