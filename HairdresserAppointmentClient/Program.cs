@@ -23,9 +23,7 @@ builder.Services.AddHttpClient("HairdresserAppointmentApi", client =>
 builder.Services.AddScoped<HairdresserApiService>();
 builder.Services.AddScoped<AuthApiService>();
 
-
-
-
+builder.Services.AddSession();
 
 
 
@@ -47,6 +45,7 @@ app.UseHttpsRedirection();
 
 app.UseRouting();
 
+app.UseSession();
 
 app.MapStaticAssets();
 app.MapRazorPages()

@@ -12,28 +12,22 @@ namespace HairdresserAppointment.API.Controllers
     public class AuthController : ControllerBase
     {
         private readonly AuthService _authService;
-        private readonly UserManager<CustomUser> _userManager;
-        private readonly SignInManager<CustomUser> _signInManager;
 
 
-        public AuthController(AuthService authService, 
-            UserManager<CustomUser> userManager, 
-            SignInManager<CustomUser> signInManager)
+        public AuthController(AuthService authService)
         {
             _authService = authService;
-            _userManager = userManager;
-            _signInManager = signInManager;
         }
 
 
         [HttpPost("login")]
         public async Task<ActionResult> LoginUser(LoginDto dto)
         {
-            var success = await _authService.LoginUserAsync(dto);
-            if (!success)
+            var token = await _authService.LoginUserAsync(dto);
+            if(token == null)
                 return Unauthorized("Wrong Email or Password");
 
-            return Ok("Login Succeed");
+            return Ok(new {token});
         }
 
 
