@@ -30,7 +30,17 @@ body {
   text-align: start;
 }
 
+
+/*stil och färg*/
+
 .dropdown-menu .dropdown-item:hover {
     background-color: #222 !important;
     color: #ff4d4d !important;
+}
+
+.text-gold {
+    color: goldenrod !important;
+
+    font-family: Calibri;
+    
 }
