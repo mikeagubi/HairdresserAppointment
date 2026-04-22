@@ -4,7 +4,57 @@
     ViewData["Title"] = "Home page";
 }
 
+<link rel="stylesheet" href="~/css/homepage.css" />
+
+
 <body class="bg-body-tertiary">
-  
+
+    <h3 class="pt-5 mt-5 text-center fw-bolder"style="letter-spacing: 5px">DAGENS LYX</h3>
+
+    <section id="home" class="fix-top container ">
+        <div id="carouselExample" class="carousel slide" data-bs-ride="carousel">
+
+            <div class="carousel-inner">
+
+                <div class="carousel-item active">
+                    <img src="/images/klippning.jpg" class="d-block w-100 hero-img">
+
+                    <div class="carousel-caption">
+                        <h2 class="text-gold">Klippning</h2>
+                        <p>Högkvalitativ klippning för alla stilar.Vi skapar en frisyr som passar dig – både till vardag och fest.</p>
+                    </div>
+                </div>
+
+                <div class="carousel-item">
+                    <img src="~/images/coloring.jpg" class="d-block w-100 hero-img">
+
+                    <div class="carousel-caption">
+                        <h2 class="text-gold">Färg & Slingor</h2>
+                        <p>Ge ditt hår nytt liv med färg och slingor.Vi skapar djup, glans och en look som lyfter din stil.</p>
+                    </div>
+                </div>
+
+                <div class="carousel-item">
+                    <img src="/images/brown.jpg" class="d-block w-100 hero-img">
+
+                    <div class="carousel-caption">
+                        <h2 class="text-gold">Bryn & Trådning</h2>
+                        <p>Forma och framhäv dina drag.Vi skapar en ren, naturlig och definierad look.</p>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- knapparna -->
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon"></span>
+            </button>
+
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+                <span class="carousel-control-next-icon"></span>
+            </button>
+
+        </div>
+    </section>
    
 </body>
