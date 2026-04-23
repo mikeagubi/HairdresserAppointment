@@ -33,6 +33,7 @@
 
 .text-gold {
     color: #d4af37 !important;
+}
 
 .navbar {
     padding-top: 10px;
@@ -44,8 +45,12 @@
     text-transform: uppercase;
     transition: 0.3s;
 }
+
 .fix-top{
     padding-top: 100px;
 }
 
+h1 {
+    font-family: 'Poppins', sans-serif;
+}
 
