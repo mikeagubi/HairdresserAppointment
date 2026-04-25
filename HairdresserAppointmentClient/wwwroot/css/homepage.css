@@ -1,0 +1,65 @@
+﻿.carousel {
+    max-height: 500px;
+    overflow: hidden;
+}
+
+.hero-img {
+    height: 500px;
+    object-fit: cover;
+}
+
+.carousel-caption {
+    bottom: 5%;
+    background: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(5px);
+    padding: 20px;
+    border-radius: 10px;
+}
+
+
+
+.carousel-caption h2 {
+    font-size: 40px;
+    font-weight: bold;
+    font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+
+.carousel-caption p {
+    font-size: 15px;
+    max-width: 600px;
+    margin: auto;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+
+.text-gold {
+    color: #d4af37 !important;
+}
+
+.navbar {
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.nav-link {
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    transition: 0.3s;
+}
+
+.fix-top{
+    padding-top: 100px;
+}
+
+
+h1 {
+    font-family: 'Poppins', sans-serif;
+    font-size: clamp(1.8rem, 3.5vw, 4rem);
+}
+h2 {
+    font-size: clamp(1.3rem, 2vw, 2.5rem);
+    font-family: 'Poppins', sans-serif;
+}
+p {
+    font-size: clamp(0.95rem, 1vw, 1.15rem);
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif
+}

@@ -19,6 +19,7 @@ html {
 
 body {
   margin-bottom: 60px;
+  padding-top: 80px;
 }
 
 .form-floating > .form-control-plaintext::placeholder, .form-floating > .form-control::placeholder {
@@ -39,8 +40,17 @@ body {
 }
 
 .text-gold {
-    color: goldenrod !important;
-
-    font-family: Calibri;
-    
+    color: #d4af37 !important;
 }
+.navbar {
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.nav-link {
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    transition: 0.3s;
+}
+
+    

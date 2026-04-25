@@ -10,63 +10,76 @@
     <link rel="stylesheet" href="~/HairdresserAppointmentClient.styles.css" asp-append-version="true" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display&family=Poppins&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
     @{
         var role = Context.Session.GetString("role");
     }
     <header>
-        <nav class="navbar navbar-expand-lg m-0 p-0 navbar-dark bg-black fixed-top">
-            <div class="container-fluid">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-black fixed-top">
+            <div class="container-fluid d-flex ">
 
-                <a class="me-0 m-0 p-0" href="/index">
-                    <img src="~/images/dagenslyxsvart.png" width="150" height="120px">
-                    </a>
+                <a class="navbar-brand ms-5" href="#home">
+                    <img src="~/images/dagenslyxlogga.png" height="60">
+                </a>
 
-                    <div class="position-absolute top-50 start-50 translate-middle">
-                        <span class="text-white  display-1 text-body" style="letter-spacing: 2px;">Dagens Lyx</span>
-                    </div>
+                <button class="navbar-toggler " type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
 
-                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
-                    <div class="collapse navbar-collapse">
-                        <ul class="navbar-nav ms-auto">
-                                <li class="nav-item"><a class="nav-link fw-bold text-gold" asp-page="/Index">Hem</a></li>
-							    <li class="nav-item"><a class="nav-link text-gold" asp-page="/Booking">Bokningar</a></li>
-                                <li class="nav-item"><a class="nav-link text-gold" asp-page="/Hairdresser">GömSen</a></li>
-                                @if(role == "Admin")
-                                {
-                                    <li class="nav-item dropdown ">
-                                    <a class="nav-link dropdown-toggle text-gold fw-bold" href="#" data-bs-toggle="dropdown">Admin-Menu</a>
-                                    <ul class="dropdown-menu dropdown-menu-end bg-dark">
-                                        <li><a class="dropdown-item text-gold" asp-page="/Hairdresser">Skapa Frisör</a></li>
-                                        <li><a class="dropdown-item text-gold" asp-page="/Hairdresser">Skapa frisör</a></li>
-                                        <li><a class="dropdown-item text-gold" asp-page="/Hairdresser">Göra nåt 2</a></li>
-                                        <li><a class="dropdown-item text-gold" asp-page="/Hairdresser">Ändra nåt 3</a></li>
+                <div class="collapse navbar-collapse justify-content-end me-5" id="navbarNav">
+                    <ul class="navbar-nav">
+
+                        <li class="nav-item">
+                            <a class="nav-link text-gold fw-bold" href="#home">HEM</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-gold" href="#about">OM OSS</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-gold" href="#contact">HITTA HIT</a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link text-gold" asp-page="/Booking">Bokningar</a>
+                        </li>
+
+                        @if (role == "Admin")
+                        {
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle text-gold fw-bold" href="#" data-bs-toggle="dropdown">
+                                    Admin
+                                </a>
+                                <ul class="dropdown-menu dropdown-menu-end bg-dark">
+                                    <li><a class="dropdown-item text-gold" asp-page="/Hairdresser">Skapa Frisör</a></li>
+                                    <li><a class="dropdown-item text-gold" asp-page="/Hairdresser">Göra nåt</a></li>
+                                    <li>
                                         <a class="dropdown-item text-gold" asp-page="/Logout">
-                                                <i class="bi bi-box-arrow-right"></i> Logga ut
-                                            </a>
-                                        </ul>
+                                            <i class="bi bi-box-arrow-right"></i> Logga ut
+                                        </a>
                                     </li>
-                                }
-                                else if(role  == "Hairdresser")
-                                {
-                                    <li class="nav-item dropdown">
-                                        <a class="nav-link dropdown-toggle text-warning fw-bold" href="#" data-bs-toggle="dropdown">Frisör-Menu</a>
-                                        <ul class="dropdown-menu dropdown-menu-end">
-                                            <li><a class="dropdown-item" asp-page="/Hairdresser">Kolla Arbetstid</a></li>
-                                            <li><a class="dropdown-item" asp-page="/Hairdresser">Söka ledighet</a></li>
-                                    
-                                        </ul>
-                                    </li>
-                                }
+                                </ul>
+                            </li>
+                        }
+                        else if (role == "Hairdresser")
+                        {
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle text-gold fw-bold" href="#" data-bs-toggle="dropdown">
+                                    Frisör
+                                </a>
+                                <ul class="dropdown-menu dropdown-menu-end bg-dark">
+                                    <li><a class="dropdown-item text-gold" asp-page="/Hairdresser">Arbetstid</a></li>
+                                    <li><a class="dropdown-item text-gold" asp-page="/Hairdresser">Ledighet</a></li>
+                                </ul>
+                            </li>
+                        }
 
-                            </ul>
-                    </div>
-
+                    </ul>
                 </div>
-            </nav>
+
+            </div>
+        </nav>
     </header>
     <div class="container-fluid p-0">
         <main role="main" class="pb-3">
@@ -77,9 +90,9 @@
     <footer class="footer bg-black text-white py-2 position-fixed">
         <div class="container-fluid d-flex align-items-center small">
             <div>&copy; 2026 DagensLyx</div>
-            <div class="ms-4">
-                <a asp-page="/Contact" class="text-white text-decoration-none me-3 fw-bolder">Kontakt</a>
-                <a asp-page="/Privacy" class="text-white text-decoration-none me-3 fw-bolder">Om Oss</a>
+            <div class="ms-4 text-start">
+                <a class="text-gold text-decoration-none me-3 fw-bolder">Kontakt</a>
+                <a class="text-gold text-decoration-none me-3 fw-bold" href="#about">OM OSS</a>
             </div>
                 @if (string.IsNullOrEmpty(role))
                 {
