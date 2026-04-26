@@ -16,11 +16,14 @@
     @{
         var role = Context.Session.GetString("role");
     }
+
+    <a href="#" id="scrollBtn" class="bi bi-caret-up-fill btn position-fixed text-bg-black d-none"></a>
+
     <header>
         <nav class="navbar navbar-expand-lg navbar-dark bg-black fixed-top">
             <div class="container-fluid d-flex ">
 
-                <a class="navbar-brand ms-5" href="#home">
+                <a class="navbar-brand ms-5" href="#">
                     <img src="~/images/dagenslyxlogga.png" height="60">
                 </a>
 
@@ -32,7 +35,7 @@
                     <ul class="navbar-nav">
 
                         <li class="nav-item">
-                            <a class="nav-link text-gold fw-bold" href="#home">HEM</a>
+                            <a class="nav-link text-gold fw-bold" href="#">HEM</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-gold" href="#about">OM OSS</a>
@@ -91,7 +94,7 @@
         <div class="container-fluid d-flex align-items-center small">
             <div>&copy; 2026 DagensLyx</div>
             <div class="ms-4 text-start">
-                <a class="text-gold text-decoration-none me-3 fw-bolder">Kontakt</a>
+                <a class="text-gold text-decoration-none me-3 fw-bolder" href="#contact">Kontakt</a>
                 <a class="text-gold text-decoration-none me-3 fw-bold" href="#about">OM OSS</a>
             </div>
                 @if (string.IsNullOrEmpty(role))
@@ -113,3 +116,4 @@
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
+

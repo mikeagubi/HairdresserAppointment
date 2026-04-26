@@ -53,4 +53,12 @@ body {
     transition: 0.3s;
 }
 
+#scrollBtn{
+    z-index: 9990;
+    right: 20px;
+    bottom: 80px;
+    background-color: black;
+    color: white;
+}
+
     
