@@ -11,6 +11,8 @@
 
     <h1 id="home" class="pt-1 mt-3 text-center fw-bolder " style="letter-spacing: 5px">DAGENS LYX</h1>
 
+
+    <!-- Karusellen -->
     <section  class="fix-top container-fluid p-5">
         <div id="carouselExample" class="carousel slide rounded" data-bs-ride="carousel">
 
@@ -57,6 +59,7 @@
         </div>
     </section>
 
+    <!-- Om Oss -->
     <section id="about" class="container-fluid p-5">
         <div class="mx-auto" style="max-width: 2000px;">
 
@@ -82,6 +85,7 @@
         </div>
     </section>
 
+    <!-- Produkter -->
     <section class="container-fluid p-4 mt-5">
         <div class="mx-auto" style="max-width: 2000px;">
 
@@ -104,6 +108,54 @@
         </div>
     </section>
 
+    <!-- Galleri -->
+
+    <h2 class=" pt-5 text-center fw-bold mb-3">Bild Galleri</h2>
+    <section id="gallery" class="container p-0">
+        <div id="galleryCarousel" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-inner">
+
+                @for (int i = 0; i < Model.GalleryImages.Count; i++)
+                {
+                    <div class="carousel-item @(i == 0 ? "active" : "")">
+                        <div class="d-flex flex-column h-100 border border-2">
+                                <div class="d-flex text-center text-bg-black fw-bold py-2">
+                                <h4 class="w-100 fw-bolder">Före</h4>
+                                <h4 class="w-100 fw-bolder">Efter</h4>
+                            </div>
+
+                            <div class="d-flex h-100 gap-1 px-2">
+                                <div class="w-50 d-flex align-items-center justify-content-center bg-black">
+                                    <img src="~/images/@Model.GalleryImages[i].Before" class="gallery-img" />
+                                </div>
+
+                                <div class="w-50 d-flex align-items-center justify-content-center bg-black">
+                                    <img src="~/images/@Model.GalleryImages[i].After" class="gallery-img" />
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+                }
+
+            </div>
+
+            <button class="carousel-control-prev" type="button" data-bs-target="#galleryCarousel" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon bg-dark rounded-circle p-3"></span>
+            </button>
+
+            <button class="carousel-control-next" type="button" data-bs-target="#galleryCarousel" data-bs-slide="next">
+                <span class="carousel-control-next-icon bg-dark rounded-circle p-3"></span>
+            </button>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- Hitta hit -->
     <section id="contact" class="pt-5 text-center">
         <h2 class="pt-5 fw-bold">Hitta till oss</h2>
         <p class="fw-bold">Du hittar oss på Stationsvägen 16 i Tystberga. Lätt att nå och alltid redo att ta emot dig. </p>

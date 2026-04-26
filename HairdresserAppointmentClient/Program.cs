@@ -1,4 +1,6 @@
 using HairdresserAppointmentClient.ApiServices;
+using HairdresserAppointmentClient.Helpers;
+using HairdresserAppointmentClient.Models;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -22,6 +24,7 @@ builder.Services.AddHttpClient("HairdresserAppointmentApi", client =>
 
 builder.Services.AddScoped<HairdresserApiService>();
 builder.Services.AddScoped<AuthApiService>();
+builder.Services.AddScoped<GalleryHelper>();
 
 builder.Services.AddSession();
 
