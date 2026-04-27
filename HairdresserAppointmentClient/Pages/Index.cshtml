@@ -7,9 +7,9 @@
 <link rel="stylesheet" href="~/css/homepage.css" />
 
 
-<body class="bg-body-tertiary">
+<body id="home" class="bg-body-tertiary">
 
-    <h1 id="home" class="pt-1 mt-3 text-center fw-bolder " style="letter-spacing: 5px">DAGENS LYX</h1>
+    <h1  class="pt-1 mt-3 text-center fw-bolder " style="letter-spacing: 5px">DAGENS LYX</h1>
 
 
     <!-- Karusellen -->
@@ -110,7 +110,7 @@
 
     <!-- Galleri -->
 
-    <h2 class=" pt-5 text-center fw-bold mb-3">Bild Galleri</h2>
+    <h2 id="gallery" class=" pt-5 text-center fw-bold mb-3">Bild Galleri</h2>
     <section id="gallery" class="container p-0">
         <div id="galleryCarousel" class="carousel slide" data-bs-ride="carousel">
             <div class="carousel-inner">
@@ -118,8 +118,8 @@
                 @for (int i = 0; i < Model.GalleryImages.Count; i++)
                 {
                     <div class="carousel-item @(i == 0 ? "active" : "")">
-                        <div class="d-flex flex-column h-100 border border-2">
-                                <div class="d-flex text-center text-bg-black fw-bold py-2">
+                        <div class="d-flex flex-column h-100">
+                                <div class="d-flex text-center bg-body-tertiary fw-bold py-2">
                                 <h4 class="w-100 fw-bolder">Före</h4>
                                 <h4 class="w-100 fw-bolder">Efter</h4>
                             </div>
@@ -141,14 +141,17 @@
 
             </div>
 
-            <button class="carousel-control-prev" type="button" data-bs-target="#galleryCarousel" data-bs-slide="prev">
-                <span class="carousel-control-prev-icon bg-dark rounded-circle p-3"></span>
+            <button class="carousel-control-prev" id="prevArrow" type="button" data-bs-target="#galleryCarousel" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon custom-arrow"></span>
             </button>
 
-            <button class="carousel-control-next" type="button" data-bs-target="#galleryCarousel" data-bs-slide="next">
-                <span class="carousel-control-next-icon bg-dark rounded-circle p-3"></span>
+            <button class="carousel-control-next" id="nextArrow" type="button" data-bs-target="#galleryCarousel" data-bs-slide="next">
+                <span class="carousel-control-next-icon custom-arrow"></span>
             </button>
 
+        </div>
+        <div class="text-center pt-2">
+            <a href="/gallery" class="btn fw-semibold" id="goldenBtn">Se våra resultat</a>
         </div>
 
     </section>

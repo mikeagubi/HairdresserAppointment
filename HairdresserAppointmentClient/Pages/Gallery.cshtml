@@ -1,0 +1,49 @@
+﻿@page
+@model HairdresserAppointmentClient.Pages.GalleryModel
+@{
+}
+<link rel="stylesheet" href="~/css/gallery.css" />
+
+
+
+
+
+<div class="text-center">
+	<h2>Galleri</h2>
+	<div class="container">
+		<div class="row g-4">
+			@for(int i = 0; i < Model.GalleryImages.Count; i++)
+			{
+				<div class="col-12 col-md-4 col-lg-3">
+					<div class="gallery-card" data-bs-toggle="modal" data-bs-target="#modal-@i">
+						<div class="d-flex">
+							<img src="~/images/@Model.GalleryImages[i].Before" class="w-50" />
+							<img src="~/images/@Model.GalleryImages[i].After" class="w-50" />
+						</div>
+
+					</div>
+
+				</div>
+			}
+
+		</div>
+	</div>
+</div>
+
+@for(int i = 0; i < Model.GalleryImages.Count; i++)
+{
+	<div class="modal fade" id="modal-@i">
+		<div class="modal-dialog modal-dialog-centered modal-lg">
+			<div class="modal-content bg-dark">
+				<div class="modal-body">
+					<div class="d-flex">
+						<img src="~/images/@Model.GalleryImages[i].Before" class="w-50" data-bs-dismiss="modal" />
+						<img src="~/images/@Model.GalleryImages[i].After" class="w-50" data-bs-dismiss="modal" />
+					</div>
+				</div>
+			</div>
+
+		</div>
+	</div>
+}
+
