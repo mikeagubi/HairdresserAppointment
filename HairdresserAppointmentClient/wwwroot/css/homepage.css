@@ -1,6 +1,5 @@
 ﻿.carousel {
     max-height: 500px;
-    overflow: hidden;
 }
 
 .hero-img {
@@ -80,4 +79,21 @@ p {
     max-width: 100%;
     max-height: 100%;
     object-fit: cover;
+}
+
+.custom-arrow {
+    background-color: #d4af37;
+    padding: 20px;
+    height: 447.5px;
+}
+
+#prevArrow {
+    position: absolute;
+    left: -96px;
+    align-items: flex-end;
+}
+#nextArrow {
+    position: absolute;
+    right: -98px;
+    align-items: flex-end;
 }
