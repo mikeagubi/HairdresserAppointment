@@ -71,9 +71,9 @@ p {
     background-color:aliceblue
 }
 
-    #galleryCarousel .carousel-item {
-        height: 500px;
-    }
+#galleryCarousel .carousel-item {
+    height: 500px;
+}
 
 .gallery-img {
     max-width: 100%;
