@@ -20,6 +20,11 @@ namespace HairdresserAppointment.API.Seed
                 await roleManager.CreateAsync(new IdentityRole(adminRole));
             }
 
+            if (!await roleManager.RoleExistsAsync("Hairdresser"))
+            {
+                await roleManager.CreateAsync(new IdentityRole("Hairdresser"));
+            }
+
             var admin = await userManager.FindByEmailAsync(adminEmail);
 
             if(admin == null)
