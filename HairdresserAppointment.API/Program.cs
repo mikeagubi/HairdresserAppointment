@@ -19,7 +19,12 @@ builder.Services.AddControllers();
 
 // DbContext
 builder.Services.AddDbContext<MyDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("MyConnection")));
+    options.UseSqlServer(
+        builder.Configuration.GetConnectionString("MyConnection"),
+        sqlOptions =>
+        {
+            sqlOptions.EnableRetryOnFailure();
+        }));
 
 builder.Services.AddIdentity<CustomUser, IdentityRole>()
     .AddEntityFrameworkStores<MyDbContext>();
