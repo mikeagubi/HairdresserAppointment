@@ -14,13 +14,15 @@ namespace HairdresserAppointmentClient.Pages
             _hairdresserApiServices = hairdresserApiService;
         }
 
+        public List<HairdresserDto> Hairdressers { get; set; }
+
         [BindProperty]
         public CreateHairdresserDto Hairdresser { get; set; } = new();
 
 
 
 
-        public void OnGet()
+        public async Task OnGet()
         
         {
             Hairdresser.WorkingHours = Enum.GetValues<DayOfWeek>()
@@ -28,6 +30,8 @@ namespace HairdresserAppointmentClient.Pages
                 {
                     DayOfWeek = d
                 }).ToList();
+
+            Hairdressers = await _hairdresserApiServices.GetHairdressersAsync();
         }
 
         public async Task<IActionResult> OnPostAsync()

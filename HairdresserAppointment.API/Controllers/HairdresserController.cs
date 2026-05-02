@@ -16,12 +16,23 @@ namespace HairdresserAppointment.API.Controllers
             _hairdresserService = hairdresserService;
         }
 
+
+
+
         [HttpPost("create-with-time")]
         public async Task CreateWithTime(CreateHairdresserDto dto)
         {
             await _hairdresserService.CreateStackAsync(dto);
         }
 
+
+        [HttpGet]
+        public async Task<List<HairdresserDto>> GetHairdressers()
+        {
+            var hairdressers = await _hairdresserService.GetAllHairdressersAsync();
+
+            return  hairdressers;
+        }
 
         //skapa hämtning av hairdressers
         //skapa PUT men inte en hel PUT utan kanske bara från active till false ? 
