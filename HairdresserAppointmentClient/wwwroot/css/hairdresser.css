@@ -1,0 +1,14 @@
+﻿
+#hairdresser-list {
+    max-height: 570px;
+    overflow-y: auto;
+}
+
+#statusCheckBox{
+
+    border:solid 1px black;
+}
+
+#statusCheckBox:checked {
+    background-color: limegreen;
+}
