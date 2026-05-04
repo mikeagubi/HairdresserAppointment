@@ -1,4 +1,4 @@
-﻿namespace HairdresserAppointment.API.DTO
+﻿namespace HairdresserAppointmentClient.Dto
 {
     public class CreateUserDto
     {

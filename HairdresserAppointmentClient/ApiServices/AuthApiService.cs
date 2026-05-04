@@ -22,6 +22,13 @@ namespace HairdresserAppointmentClient.ApiServices
             return result.Token;
         }
 
+        public async Task<bool> CreateUserAsync(CreateUserDto dto)
+        {
+            var response = await _httpClient.PostAsJsonAsync("api/Auth/create-user", dto);
+
+            return response.IsSuccessStatusCode;
+        }
+
 
 
 
