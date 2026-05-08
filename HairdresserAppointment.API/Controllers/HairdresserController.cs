@@ -19,14 +19,15 @@ namespace HairdresserAppointment.API.Controllers
 
 
 
-
+        [Authorize(Roles = "Admin")]
         [HttpPost("create-with-time")]
         public async Task CreateWithTime(CreateHairdresserDto dto)
         {
             await _hairdresserService.CreateStackAsync(dto);
         }
 
-        [Authorize(Roles = "Admin")]
+
+
         [HttpGet]
         public async Task<List<HairdresserDto>> GetHairdressers()
         {

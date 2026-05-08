@@ -29,20 +29,26 @@ namespace HairdresserAppointmentClient.Pages
 
 
 
-        public async Task OnGet()
+        public async Task<IActionResult> OnGet()
         
         {
 
             await LoadPageAsync();
-            
+
+            return Page();
         }
 
+
+        //skapa med tid
         public async Task<IActionResult> OnPostAsync()
         {
+            var role = HttpContext.Session.GetString("role");
+            var token = HttpContext.Session.GetString("token");
+
             Hairdresser.WorkingHours = Hairdresser.WorkingHours
                 .Where(w => w.Selected).ToList();
 
-            var success = await _hairdresserApiServices.CreateWithTimeAsync(Hairdresser);
+            var success = await _hairdresserApiServices.CreateWithTimeAsync(Hairdresser, token);
 
             if (success)
             {
@@ -58,9 +64,14 @@ namespace HairdresserAppointmentClient.Pages
             return RedirectToPage("/hairdresser");
         }
 
+
+        //skapa account för Hairdressern
         public async Task<IActionResult> OnPostCreateUserAsync()
         {
-            var success = await _authApiService.CreateUserAsync(User);
+            var role = HttpContext.Session.GetString("role");
+            var token = HttpContext.Session.GetString("token");
+
+            var success = await _authApiService.CreateUserAsync(User, token);
             if (success)
             {
                 TempData["AccountMessage"] = $"{User.Email} is now created";
@@ -75,9 +86,13 @@ namespace HairdresserAppointmentClient.Pages
 
         }
 
+
         private async Task LoadPageAsync()
         {
-            Hairdressers = await _hairdresserApiServices.GetHairdressersAsync();
+            var role = HttpContext.Session.GetString("role");
+            var token = HttpContext.Session.GetString("token");
+
+            Hairdressers = await _hairdresserApiServices.GetHairdressersAsync(token);
 
             Hairdresser.WorkingHours = Enum.GetValues<DayOfWeek>()
                 .Select(d => new WorkingHourDto
@@ -86,10 +101,7 @@ namespace HairdresserAppointmentClient.Pages
                 }).ToList();
         }
 
-        //Kontrollera att namn syns, tänk på namnet i DB om jag ska ha kvar eller ta bort i user!
-        //Tänk på Redirect om de verkligen ska se ut så, 
-        //tänk på meddelanden inte skapade än!
-        //Fixa till layouten lite
+
         //Glöm inte valideringar!
 
 

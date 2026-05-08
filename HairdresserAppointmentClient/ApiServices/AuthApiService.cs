@@ -4,12 +4,12 @@
 
 namespace HairdresserAppointmentClient.ApiServices
 {
-    public class AuthApiService
+    public class AuthApiService : BaseApiService
     {
-        private readonly HttpClient _httpClient;
+
         public AuthApiService(IHttpClientFactory factory)
+            : base(factory.CreateClient("HairdresserAppointmentApi"))
         {
-            _httpClient = factory.CreateClient("HairdresserAppointmentApi");
         }
 
         public async Task<string?> LoginAsync(LoginDto dto)
@@ -22,8 +22,10 @@ namespace HairdresserAppointmentClient.ApiServices
             return result.Token;
         }
 
-        public async Task<bool> CreateUserAsync(CreateUserDto dto)
+        public async Task<bool> CreateUserAsync(CreateUserDto dto, string token)
         {
+            AddJwtToken(token);
+
             var response = await _httpClient.PostAsJsonAsync("api/Auth/create-user", dto);
 
             return response.IsSuccessStatusCode;
