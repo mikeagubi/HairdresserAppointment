@@ -19,5 +19,19 @@ namespace HairdresserAppointmentClient.ApiServices
             return response.IsSuccessStatusCode;
         }
 
+
+        public async Task<List<HairdresserDto>> GetHairdressersAsync()
+        {
+            var response = await _httpClient.GetFromJsonAsync<List<HairdresserDto>>("api/hairdresser");
+
+            if (response == null)
+                return new List<HairdresserDto>();
+
+            return response;
+        }
+
+
+
+
     }
 }

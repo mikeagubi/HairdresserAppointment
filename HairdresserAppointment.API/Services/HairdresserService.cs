@@ -14,9 +14,15 @@ namespace HairdresserAppointment.API.Services
             _context = context;
         }
 
-        public async Task<List<Hairdresser>> GetAllHairdressersAsync()
+        public async Task<List<HairdresserDto>> GetAllHairdressersAsync()
         {
-            return await _context.Hairdressers.ToListAsync();
+            return await _context.Hairdressers
+                .Select(h => new HairdresserDto
+                {
+                    Id = h.Id,
+                    Name = h.Name,
+                    IsActive = h.IsActive
+                }).ToListAsync();
         }
 
         public async Task<Hairdresser> GetHairdresserByIdAsync(int id)

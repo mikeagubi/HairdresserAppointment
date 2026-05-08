@@ -31,9 +31,21 @@ namespace HairdresserAppointment.API.Controllers
         }
 
 
+        [HttpPost("create-user")]
+        public async Task<IActionResult> CreateUser(CreateUserDto dto)
+        {
+            var reult = await _authService.CreateUserAsync(dto);
+            if (!reult)
+                return BadRequest("Cant create user");
+
+            return Ok("user created");
+        }
+
+
+
+
         //PUT ENDAST på changeID för Hairdresser
 
-        //Bygga Create users,
 
         //Bygga delete Users
 

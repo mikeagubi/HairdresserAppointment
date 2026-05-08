@@ -2,63 +2,157 @@
 @model HairdresserAppointmentClient.Pages.HairdresserModel
 @{
 }
+<link href="~/css/hairdresser.css" rel="stylesheet" />
 <body class="bg-warning-subtle">
 
-    <div class="card mt-5">
+    <div class="container">
 
-        <div class="card shadow-sm bg-body-tertiary">
-            <div class="card-body">
+        <div class="row">
+            @* 6kolumner, fundera på design sen!!!! *@
+            <div class="col-md-6">
+                <div class="card shadow-lg w-100 h-100">
+                    <div class="card-body">
 
-                <h3 class="mb-5 ">Hairdresser Registration & Schedule</h3>
+                        <h5 class="mb-3 fw-bold">Hairdresser registration</h5>
 
-                <form method="post">
+                        <form method="post">
 
-                    <div class="mb-4 col-md-5">
-                        <label asp-for="Hairdresser.Name" class="form-label ms-2 fw-bold"></label>
-                        <input asp-for="Hairdresser.Name" class="form-control" placeholder="Enter firstname" />
-                    </div>
+                            <div class="mb-3">
+                                <label asp-for="Hairdresser.Name"  class="form-label fw-bold"></label>
+                                <input asp-for="Hairdresser.Name" placeholder="Enter name..." class="form-control" />
+                            </div>
 
-                    <h5 class="mb-3 ms-3">Schedule</h5>
-                    
-                    @for (int i = 0; i < Model.Hairdresser.WorkingHours.Count; i++)
-                    {
-                        <div class="row align-items-center mb-3">
+                            <h5 class="mt-4 mb-4 fw-bold">Schedule</h5>
 
-                            <div class="col-md-1 ms-4 form-check">
-                                <input type="checkbox" asp-for="Hairdresser.WorkingHours[i].Selected" class="form-check-input border-dark" />
-                                <label class="form-check-label">
-                                    @Model.Hairdresser.WorkingHours[i].DayOfWeek
+                            @for (int i = 0; i < Model.Hairdresser.WorkingHours.Count; i++)
+                            {
+                                <div class="row mb-2">
+
+                                    <div class="col-4 form-check">
+                                        <input type="checkbox" asp-for="Hairdresser.WorkingHours[i].Selected" class="form-check-input border border-dark ms-1" />
+                                        <label class="form-check-label ms-2">
+                                            @Model.Hairdresser.WorkingHours[i].DayOfWeek
+                                        </label>
+                                    </div>
+
+                                    <div class="col-4">
+                                        <input type="time" class="form-control" value="09:00" asp-for="Hairdresser.WorkingHours[i].StartTime" />
+                                    </div>
+
+                                    <div class="col-4">
+                                        <input type="time" class="form-control" value="19:00" asp-for="Hairdresser.WorkingHours[i].EndTime" />
+                                    </div>
+
+                                    <input type="hidden" asp-for="Hairdresser.WorkingHours[i].DayOfWeek" />
+                                </div>
+                            }
+
+                            <div class="form-check form-switch mb-3 ms-3 ">
+                                <input type="checkbox" asp-for="Hairdresser.IsActive" class="form-check-input" id="statusCheckBox" onclick="updateStatus()" />
+                                <label id="statusText" class="fw-bold">
+                                    Inactive
                                 </label>
                             </div>
+                            @if (TempData["HairdresserMessage"] != null)
+                            {
+                                var type = TempData["HairdresserMessageType"]?.ToString();
 
-                            <div class="col-md-5">
-                                <input type="time" class="form-control" value="09:00" asp-for="Hairdresser.WorkingHours[i].StartTime" class="form-control" />
-                            </div>
+                                <div class="alert small py-1 text-center @(type == "success" ? "alert-success" : "alert-danger")">
+                                    @TempData["HairdresserMessage"]
+                                </div>
+                            }
+                            <button type="submit" class="btn btn-dark w-100">
+                                Save
+                            </button>
+                            
 
-                            <div class="col-md-5">
-                                <input type="time" class="form-control" value="19:00" asp-for="Hairdresser.WorkingHours[i].EndTime" />
-                            </div>
+                        </form>
 
-                            <input type="hidden" asp-for="Hairdresser.WorkingHours[i].DayOfWeek" />
-                        </div>
-                    }
-
-                    <div class="form-check form-switch mb-5">
-                        <input type="checkbox" asp-for="Hairdresser.IsActive" class="form-check-input" />
-                        <label asp-for="Hairdresser.IsActive" class="form-check-label fw-semibold">
-                            Available for bookings
-                        </label>
                     </div>
-
-                    <button type="submit" class="btn btn-dark w-100">
-                        Add Schedule
-                    </button>
-
-                </form>
+                </div>
 
             </div>
-        </div>
 
+            @* 6kolumner *@
+			<div class="col-md-6">
+				<div class="card shadow-lg w-100 h-100">
+					<div class="card-body">
+						<h5 class="mb-3  fw-bold">Account registration</h5>
+						<form method="post" asp-page-handler="CreateUser">
+                            <div class="mb-3">
+                                <label asp-for="User.Email" class="form-label fw-bold"></label>
+                                <input asp-for="User.Email" type="email" class="form-control" placeholder="Enter email..." />
+                            </div>
+                            <div class="mb-3">
+                                <label asp-for="User.Password" class="form-label fw-bold"></label>
+                                <input asp-for="User.Password" type="password" class="form-control" placeholder="Enter password..." />
+                            </div>
+                            <div class=" mb-3 mt-3">
+                                <label asp-for="User.HairdresserId" class="form-label fw-bold">Assign a hairdresser to this account</label>
+                                <select asp-for="User.HairdresserId" class="form-select">
+                                    @foreach(var dresser in Model.Hairdressers)
+                                    {
+                                        <option value="@dresser.Id">
+                                            @dresser.Name
+                                        </option>                 
+                                    }
+								</select>
+							</div>
+                            @if (TempData["AccountMessage"] != null)
+                            {
+                                var type = TempData["AccountMessageType"]?.ToString();
+
+                                <div class="alert small py-1 text-center @(type == "success" ? "alert-success" : "alert-danger")">
+                                    @TempData["AccountMessage"]
+                                </div>
+                            }
+                            <div>
+                                <button type="submit" class="btn btn-outline-dark w-100">Create</button>
+                            </div>
+						</form>
+                       
+
+					</div>
+				</div>
+
+
+			</div>
+        </div>
     </div>
+    
 
 </body>
+
+<div class="container mt-5">
+    <div class="card shadow-lg w-100 h-100">
+        <div class="card-body">
+
+            <h5 class="mb-3 fw-bold text-center">List of Hairdressers</h5>
+
+            <div id="hairdresser-list">
+                <table class="table table-hover table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Id</th>
+                            <th>Name</th>
+                            <th>Active</th>
+                            <th>Mail</th>
+                            <th>Password</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var h in Model.Hairdressers)
+                        {
+                            <tr>
+                                <td>@h.Id</td>
+                                <td>@h.Name</td>
+                                <td>@(h.IsActive ? "Yes" : "No")</td>
+                            </tr>
+                        }
+                       
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

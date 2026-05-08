@@ -42,7 +42,7 @@ namespace HairdresserAppointmentClient.Pages
 
             HttpContext.Session.SetString("jwt", token);
             HttpContext.Session.SetString("role", role);
-            return RedirectToPage("/login");
+            return RedirectToPage("/hairdresser");
         }
 
 
