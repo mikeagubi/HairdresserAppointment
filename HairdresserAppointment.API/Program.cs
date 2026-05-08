@@ -53,7 +53,6 @@ builder.Services.AddAuthorization();
 
 builder.Services.AddScoped<AuthService>();
 builder.Services.AddScoped<BookingService>();
-builder.Services.AddScoped<DayOffService>();
 builder.Services.AddScoped<HairdresserService>();
 builder.Services.AddScoped<PromotionService>();
 builder.Services.AddScoped<TreatmentService>();

@@ -9,7 +9,6 @@ namespace HairdresserAppointment.API.Data
         public MyDbContext(DbContextOptions<MyDbContext>options) : base(options) { }
 
         public DbSet<Booking> Bookings { get; set; }
-        public DbSet<DayOff> DayOffs { get; set; }
         public DbSet<Hairdresser> Hairdressers { get; set; }
         public DbSet<Promotion> Promotions { get; set; }
         public DbSet<Treatment> Treatments { get; set; }

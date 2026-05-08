@@ -47,12 +47,6 @@
                                 </div>
                             }
 
-                            <div class="form-check form-switch mb-3 ms-3 ">
-                                <input type="checkbox" asp-for="Hairdresser.IsActive" class="form-check-input" id="statusCheckBox" onclick="updateStatus()" />
-                                <label id="statusText" class="fw-bold">
-                                    Inactive
-                                </label>
-                            </div>
                             @if (TempData["HairdresserMessage"] != null)
                             {
                                 var type = TempData["HairdresserMessageType"]?.ToString();
