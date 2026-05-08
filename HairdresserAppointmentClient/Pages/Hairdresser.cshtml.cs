@@ -31,14 +31,8 @@ namespace HairdresserAppointmentClient.Pages
         public async Task OnGet()
         
         {
-            Hairdressers = await _hairdresserApiServices.GetHairdressersAsync();
 
-            Hairdresser.WorkingHours = Enum.GetValues<DayOfWeek>()
-                .Select(d => new WorkingHourDto
-                {
-                    DayOfWeek = d
-                }).ToList();
-
+            await LoadPageAsync();
             
         }
 
@@ -48,25 +42,47 @@ namespace HairdresserAppointmentClient.Pages
                 .Where(w => w.Selected).ToList();
 
             var success = await _hairdresserApiServices.CreateWithTimeAsync(Hairdresser);
-            if (!success)
-                return Page();
 
+            if (success)
+            {
+                TempData["HairdresserMessage"] = $"{Hairdresser.Name} is now registered";
+                TempData["HairdresserMessageType"] = "success";
+            }
+            else
+            {
+                TempData["HairdresserMessage"] = $"Failed to register hairdresser";
+                TempData["HairdresserMessageType"] = "fail";
+            }
+              
             return RedirectToPage("/hairdresser");
         }
 
         public async Task<IActionResult> OnPostCreateUserAsync()
         {
             var success = await _authApiService.CreateUserAsync(User);
-            if (!success)
+            if (success)
             {
-                ErrorMessage = "Failed To Create Account";
+                TempData["AccountMessage"] = $"{User.Email} is now created";
+                TempData["AccountMessageType"] = "success";
             }
             else
             {
-                ErrorMessage = "Account Created";
+                TempData["AccountMessage"] = $"Failed to create account";
+                TempData["AccountMessageType"] = "fail";
             }
-            return RedirectToPage("/hairdresser");
+            return RedirectToPage("/Hairdresser");
 
+        }
+
+        private async Task LoadPageAsync()
+        {
+            Hairdressers = await _hairdresserApiServices.GetHairdressersAsync();
+
+            Hairdresser.WorkingHours = Enum.GetValues<DayOfWeek>()
+                .Select(d => new WorkingHourDto
+                {
+                    DayOfWeek = d
+                }).ToList();
         }
 
         //Kontrollera att namn syns, tänk på namnet i DB om jag ska ha kvar eller ta bort i user!
