@@ -17,11 +17,16 @@ namespace HairdresserAppointment.API.Services
         public async Task<List<HairdresserDto>> GetAllHairdressersAsync()
         {
             return await _context.Hairdressers
+                .Where(h => h.IsActive)
                 .Select(h => new HairdresserDto
                 {
                     Id = h.Id,
                     Name = h.Name,
-                    IsActive = h.IsActive
+
+                    UserEmail = _context.Users
+                    .Where(u => u.HairdresserId == h.Id)
+                    .Select(u => u.Email)
+                    .FirstOrDefault()
                 }).ToListAsync();
         }
 

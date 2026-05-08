@@ -29,20 +29,20 @@ namespace HairdresserAppointmentClient.Pages
 
         public async Task<IActionResult> OnPostAsync()
         {
-            var token = await _authApiService.LoginAsync(loginDto);
-            if(token == null)
+            var jwtToken = await _authApiService.LoginAsync(loginDto);
+            if(jwtToken == null)
             {
                 ErrorMessage = "Wrong Email Or Password";
                 return Page();
             }
 
             var handler = new JwtSecurityTokenHandler();
-            var jwt = handler.ReadJwtToken(token);
-            var role = jwt.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role).Value;
+            var jwt = handler.ReadJwtToken(jwtToken);
+            var role = jwt.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role)?.Value;
 
-            HttpContext.Session.SetString("jwt", token);
+            HttpContext.Session.SetString("token", jwtToken);
             HttpContext.Session.SetString("role", role);
-            return RedirectToPage("/hairdresser");
+            return RedirectToPage("/index");
         }
 
 

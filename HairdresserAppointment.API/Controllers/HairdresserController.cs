@@ -1,6 +1,7 @@
 ﻿using HairdresserAppointment.API.DTO;
 using HairdresserAppointment.API.Models;
 using HairdresserAppointment.API.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HairdresserAppointment.API.Controllers
@@ -25,7 +26,7 @@ namespace HairdresserAppointment.API.Controllers
             await _hairdresserService.CreateStackAsync(dto);
         }
 
-
+        [Authorize(Roles = "Admin")]
         [HttpGet]
         public async Task<List<HairdresserDto>> GetHairdressers()
         {
