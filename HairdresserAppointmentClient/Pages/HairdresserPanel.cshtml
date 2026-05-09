@@ -1,0 +1,15 @@
+﻿@page
+@model HairdresserAppointmentClient.Pages.HairdresserPanelModel
+@{
+}
+
+<div>
+	<h1>hejhejhejhej</h1>
+</div>
+@foreach (var work in Model.Workinghours)
+{
+    <div>
+        <p>@work.DayOfWeek</p>
+        <p>@work.StartTime - @work.EndTime</p>
+    </div>
+}

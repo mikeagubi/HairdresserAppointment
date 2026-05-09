@@ -32,17 +32,17 @@ namespace HairdresserAppointmentClient.Pages
         public async Task<IActionResult> OnGet()
         
         {
-
+            var token = HttpContext.Session.GetString("token");
+            Hairdressers = await _hairdresserApiServices.GetHairdressersAsync(token);
             await LoadPageAsync();
 
             return Page();
         }
 
 
-        //skapa med tid
+        //skapa frisör med tid
         public async Task<IActionResult> OnPostAsync()
         {
-            var role = HttpContext.Session.GetString("role");
             var token = HttpContext.Session.GetString("token");
 
             Hairdresser.WorkingHours = Hairdresser.WorkingHours
@@ -65,10 +65,9 @@ namespace HairdresserAppointmentClient.Pages
         }
 
 
-        //skapa account för Hairdressern
+        //skapa account för frisören
         public async Task<IActionResult> OnPostCreateUserAsync()
         {
-            var role = HttpContext.Session.GetString("role");
             var token = HttpContext.Session.GetString("token");
 
             var success = await _authApiService.CreateUserAsync(User, token);
@@ -89,24 +88,12 @@ namespace HairdresserAppointmentClient.Pages
 
         private async Task LoadPageAsync()
         {
-            var role = HttpContext.Session.GetString("role");
-            var token = HttpContext.Session.GetString("token");
-
-            Hairdressers = await _hairdresserApiServices.GetHairdressersAsync(token);
-
             Hairdresser.WorkingHours = Enum.GetValues<DayOfWeek>()
                 .Select(d => new WorkingHourDto
                 {
                     DayOfWeek = d
                 }).ToList();
         }
-
-
-        //Glöm inte valideringar!
-
-
-
-
 
 
 
