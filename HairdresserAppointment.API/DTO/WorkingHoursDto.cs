@@ -1,6 +1,6 @@
 ﻿namespace HairdresserAppointment.API.DTO
 {
-    public class WorkingHourDto
+    public class WorkingHoursDto
     {
         public DayOfWeek DayOfWeek { get; set; }
         public TimeSpan StartTime { get; set; }

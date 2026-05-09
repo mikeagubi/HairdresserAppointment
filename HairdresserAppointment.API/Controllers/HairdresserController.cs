@@ -1,6 +1,7 @@
 ﻿using HairdresserAppointment.API.DTO;
 using HairdresserAppointment.API.Models;
 using HairdresserAppointment.API.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HairdresserAppointment.API.Controllers
@@ -18,12 +19,13 @@ namespace HairdresserAppointment.API.Controllers
 
 
 
-
+        [Authorize(Roles = "Admin")]
         [HttpPost("create-with-time")]
         public async Task CreateWithTime(CreateHairdresserDto dto)
         {
             await _hairdresserService.CreateStackAsync(dto);
         }
+
 
 
         [HttpGet]

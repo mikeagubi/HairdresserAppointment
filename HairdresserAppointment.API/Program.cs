@@ -29,11 +29,22 @@ builder.Services.AddDbContext<MyDbContext>(options =>
 builder.Services.AddIdentity<CustomUser, IdentityRole>()
     .AddEntityFrameworkStores<MyDbContext>();
 
-builder.Services.AddAuthentication("Bearer").AddJwtBearer("Bearer", options =>
-    {
-        var key = builder.Configuration["JwtSettings:Key"];
 
-        options.TokenValidationParameters = new TokenValidationParameters
+
+builder.Services.AddAuthentication(options =>
+{
+    options.DefaultAuthenticateScheme =
+        JwtBearerDefaults.AuthenticationScheme;
+
+    options.DefaultChallengeScheme =
+        JwtBearerDefaults.AuthenticationScheme;
+})
+.AddJwtBearer(options =>
+{
+    var key = builder.Configuration["JwtSettings:Key"];
+
+    options.TokenValidationParameters =
+        new TokenValidationParameters
         {
             ValidateIssuer = true,
             ValidateAudience = true,
@@ -42,18 +53,14 @@ builder.Services.AddAuthentication("Bearer").AddJwtBearer("Bearer", options =>
 
             ValidIssuer = builder.Configuration["JwtSettings:Issuer"],
             ValidAudience = builder.Configuration["JwtSettings:Audience"],
-
-            IssuerSigningKey = new SymmetricSecurityKey(
-                Encoding.UTF8.GetBytes(key)
-            )
+            IssuerSigningKey = new SymmetricSecurityKey( Encoding.UTF8.GetBytes(key))
         };
-    });
+});
 
 builder.Services.AddAuthorization();
 
 builder.Services.AddScoped<AuthService>();
 builder.Services.AddScoped<BookingService>();
-builder.Services.AddScoped<DayOffService>();
 builder.Services.AddScoped<HairdresserService>();
 builder.Services.AddScoped<PromotionService>();
 builder.Services.AddScoped<TreatmentService>();

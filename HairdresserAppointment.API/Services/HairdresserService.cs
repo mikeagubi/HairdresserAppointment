@@ -17,11 +17,16 @@ namespace HairdresserAppointment.API.Services
         public async Task<List<HairdresserDto>> GetAllHairdressersAsync()
         {
             return await _context.Hairdressers
+                .Where(h => h.IsActive)
                 .Select(h => new HairdresserDto
                 {
                     Id = h.Id,
                     Name = h.Name,
-                    IsActive = h.IsActive
+
+                    UserEmail = _context.Users
+                    .Where(u => u.HairdresserId == h.Id)
+                    .Select(u => u.Email)
+                    .FirstOrDefault()
                 }).ToListAsync();
         }
 
@@ -30,13 +35,6 @@ namespace HairdresserAppointment.API.Services
             return await _context.Hairdressers.FindAsync(id);
         }
 
-        public async Task<Hairdresser> CreateHairdresserAsync(Hairdresser hairdresser)
-        {
-            
-            _context.Hairdressers.Add(hairdresser);
-            await _context.SaveChangesAsync();
-            return hairdresser;
-        }
 
         public async Task<bool> UpdateHairdresserAsync(int id, Hairdresser hairdresser)
         {
@@ -45,7 +43,6 @@ namespace HairdresserAppointment.API.Services
                 return false;
 
             updateHairdresser.Name = hairdresser.Name;
-            updateHairdresser.DayOff = hairdresser.DayOff;
             updateHairdresser.IsActive = hairdresser.IsActive;
             updateHairdresser.WorkingHours = hairdresser.WorkingHours;
 
@@ -71,7 +68,7 @@ namespace HairdresserAppointment.API.Services
             var hairdresser = new Hairdresser
             {
                 Name = dto.Name,
-                IsActive = dto.IsActive,
+                IsActive = true,
                 WorkingHours = dto.WorkingHours.Select(w => new WorkingHour
                 {
                     DayOfWeek = w.DayOfWeek,
