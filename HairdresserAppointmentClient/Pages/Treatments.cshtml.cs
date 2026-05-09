@@ -12,17 +12,35 @@ namespace HairdresserAppointmentClient.Pages
         {
             _treatmentsApiService = treatmentsApiService;
         }
-        public List<TreatmentDto> Treatments { get; set; }
+
+        public List<TreatmentDto> Treatments { get; set; } = new();
+
+        [BindProperty]
+        public TreatmentDto Treatment { get; set; }
+
+        [BindProperty]
+        public string Message { get; set; }
 
 
 
 
 
-        public async Task OnGet()
+        public async Task OnGetAsync()
         {
             Treatments = await _treatmentsApiService.GetAllTreatments();
+
+            
         }
 
+
+        public async Task<IActionResult> OnPostCreateTreatmentAsync()
+        {
+            //var token = HttpContext.Session.GetString("token");
+            await _treatmentsApiService.CreateTreatmentAsync(Treatment);
+
+            return RedirectToPage("/Treatments");
+
+        }
 
 
 

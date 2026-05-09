@@ -1,4 +1,5 @@
 ﻿using HairdresserAppointmentClient.Dto;
+using System.Reflection.Metadata.Ecma335;
 
 namespace HairdresserAppointmentClient.ApiServices
 {
@@ -18,6 +19,15 @@ namespace HairdresserAppointmentClient.ApiServices
                 return new List<TreatmentDto>();
 
             return response;
+        }
+
+        public async Task<bool> CreateTreatmentAsync(TreatmentDto dto)
+        {
+            
+
+            var response = await _httpClient.PostAsJsonAsync("api/treatment", dto);
+
+            return response.IsSuccessStatusCode;
         }
 
        

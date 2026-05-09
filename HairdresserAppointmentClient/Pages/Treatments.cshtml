@@ -2,41 +2,75 @@
 @model HairdresserAppointmentClient.Pages.TreatmentsModel
 @{
 }
-<div class="container">
-	<div class="col-md-4">
-		<div class="card shadow-lg border-0 rounded-4">
-			<div class="card-header bg-dark text-white rounded-top-4">
-				<h4 class="mb-0 fw-bold">Hairdresser registration</h4>
-			</div>
-            <div class="card-body">
 
-            
 
-                <div id="hairdresser-list">
-                    <table class="table table-hover table-bordered">
-                        <thead>
-                            <tr>
-                                <th>Id</th>
-                                <th>Treatment</th>
-                                <th>Duration</th>
-                                <th>Price</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach (var t in Model.Treatments)
-                            {
-                                <tr>
-                                    <td>@t.Id</td>
-                                    <td>@t.Name</td>
-                                    <td>@t.DurationMinutes</td>
-                                    <td>@t.Price</td>
-                                </tr>
-                            }
-                       
-                        </tbody>
-                    </table>
-                </div>
+<div class="container mt-1">
+        <div class="card shadow border-0 rounded-4 mb-4">
+
+            <div class="card-header bg-dark text-white">
+                <h5 class="mb-0">Add Treatment</h5>
             </div>
-		</div>
-	</div>
+            <div class="card-body">
+            <form method="post" asp-page-handler="CreateTreatment">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <label asp-for="Treatment.Name"class="form-label fw-bold"></label>
+                            <input asp-for="Treatment.Name"class="form-control"placeholder="Enter name..."required />
+                        </div>
+
+                        <div class="col-md-4">
+                            <label asp-for="Treatment.DurationInMinutes" class="form-label fw-bold"></label>
+                            <input asp-for="Treatment.DurationInMinutes" class="form-control"required />
+                        </div>
+                        <div class="col-md-4">
+                            <label asp-for="Treatment.Price" class="form-label fw-bold"> </label>
+                            <input asp-for="Treatment.Price" type="number" class="form-control" required />
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn btn-dark mt-4 small">
+                        Add Treatment
+                    </button>
+
+                </form>
+
+            </div>
+
+        </div>
+
+
+
+
+
+    <div class="card shadow border-0 rounded-4">
+
+        <div class="card-header bg-dark text-white">
+            <h3 class="mb-0">Treatments</h3>
+        </div>
+
+        <div class="card-body p-0">
+            <table class="table table-hover align-middle mb-0">
+                <thead class="table-light">
+                    <tr>
+                        <th>Name</th>
+                        <th>Duration</th>
+                        <th>Price</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    @foreach (var treatment in Model.Treatments)
+                    {
+                        <tr>
+                            <td class="fw-semibold">@treatment.Name</td>
+                            <td>@treatment.DurationInMinutes</td>
+                            <td>@treatment.Price kr</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+
 </div>
