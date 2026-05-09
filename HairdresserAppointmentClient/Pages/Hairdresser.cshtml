@@ -4,18 +4,18 @@
 }
 
 <link href="~/css/hairdresser.css" rel="stylesheet" />
-<body class="bg-warning-subtle">
+<body class="bg-transparent">
 
     <div class="container">
 
         <div class="row">
 
             <div class="col-md-6">
-                <div class="card shadow-lg w-100 h-100">
+                <div class="card shadow-lg border-0 rounded-4">
+                    <div class="card-header bg-dark text-white rounded-top-4">
+                        <h4 class="mb-0 fw-bold">Hairdresser registration</h4>
+                    </div>
                     <div class="card-body">
-
-                        <h5 class="mb-3 fw-bold">Hairdresser registration</h5>
-
                         <form method="post">
 
                             <div class="mb-3">
@@ -72,13 +72,16 @@
 
 
 			<div class="col-md-6">
-				<div class="card shadow-lg w-100 h-100">
+                <div class="card shadow-lg border-0 rounded-4 h-100">
+                    <div class="card-header bg-dark text-white rounded-top-4">
+                        <h4 class="mb-0 fw-bold">Account registration</h4>
+                    </div>
 					<div class="card-body">
-						<h5 class="mb-3  fw-bold">Account registration</h5>
+
 						<form method="post" asp-page-handler="CreateUser">
                             <div class="mb-3">
                                 <label asp-for="User.Email" class="form-label fw-bold"></label>
-                                <input asp-for="User.Email" type="email" class="form-control" placeholder="Enter email..." />
+                                <input asp-for="User.Email" type="email" class="form-control" required placeholder="Enter email..." />
                             </div>
                             <div class="mb-3">
                                 <label asp-for="User.Password" class="form-label fw-bold"></label>
@@ -122,10 +125,13 @@
 </body>
 
 <div class="container mt-5">
-    <div class="card shadow-lg w-100 h-100">
+    <div class="card shadow-lg border-0 rounded-4">
+        <div class="card-header bg-dark text-white rounded-top-4">
+            <h3 class="mb-0 fw-bold">Hairdressers</h3>
+        </div>
         <div class="card-body">
 
-            <h5 class="mb-3 fw-bold text-center">Hairdressers</h5>
+            
 
             <div id="hairdresser-list">
                 <table class="table table-hover table-bordered">
