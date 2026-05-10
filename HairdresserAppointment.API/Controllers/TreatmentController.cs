@@ -34,13 +34,10 @@ namespace HairdresserAppointment.API.Controllers
         }
 
 
-        [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateTreatment(int id, Treatment treatment)
+        [HttpPut]
+        public async Task<IActionResult> UpdateTreatment(Treatment dto)
         {
-            if (id != treatment.Id)
-                return BadRequest("Id mismatch");
-
-            var treatmentToUpdate = await _treatmentService.UpdateTreatmentAsync(id, treatment);
+            var treatmentToUpdate = await _treatmentService.UpdateTreatmentAsync(dto);
             if (!treatmentToUpdate)
                 return NotFound();
 

@@ -42,6 +42,14 @@ namespace HairdresserAppointmentClient.Pages
 
         }
 
+        public async Task<IActionResult> OnPostUpdateTreatmentAsync()
+        {
+            await _treatmentsApiService.UpdateTreatmentAsync(Treatment);
+
+            return RedirectToPage("/Treatments");
+
+        }
+
 
 
 

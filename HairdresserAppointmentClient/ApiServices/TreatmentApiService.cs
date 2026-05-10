@@ -24,13 +24,20 @@ namespace HairdresserAppointmentClient.ApiServices
         public async Task<bool> CreateTreatmentAsync(TreatmentDto dto)
         {
             
-
             var response = await _httpClient.PostAsJsonAsync("api/treatment", dto);
 
             return response.IsSuccessStatusCode;
         }
 
-       
+        public async Task<bool> UpdateTreatmentAsync(TreatmentDto dto)
+        {
+            var response = await _httpClient.PutAsJsonAsync($"api/treatment", dto);
+
+            return response.IsSuccessStatusCode;
+        }
+
+
+
 
 
 

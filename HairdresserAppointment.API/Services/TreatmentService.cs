@@ -29,15 +29,15 @@ namespace HairdresserAppointment.API.Services
             return treatment;
         }
 
-        public async Task<bool> UpdateTreatmentAsync(int id, Treatment treatment)
+        public async Task<bool> UpdateTreatmentAsync(Treatment dto)
         {
-            var updateTreatment = await _context.Treatments.FindAsync(treatment.Id);
+            var updateTreatment = await _context.Treatments.FindAsync(dto.Id);
             if (updateTreatment == null)
                 return false;
 
-            updateTreatment.Name = treatment.Name;
-            updateTreatment.Price = treatment.Price;
-            updateTreatment.DurationInMinutes = treatment.DurationInMinutes;
+            updateTreatment.Name = dto.Name;
+            updateTreatment.Price = dto.Price;
+            updateTreatment.DurationInMinutes = dto.DurationInMinutes;
 
             await _context.SaveChangesAsync();
             return true;

@@ -31,6 +31,7 @@ namespace HairdresserAppointment.API.Controllers
             return Ok(new {token});
         }
 
+
         [Authorize(Roles = "Admin")]
         [HttpPost("create-user")]
         public async Task<IActionResult> CreateUser(CreateUserDto dto)

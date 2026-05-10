@@ -29,7 +29,7 @@
                     </div>
 
                     <button type="submit" class="btn btn-dark mt-4 small">
-                        Add Treatment
+                        Save
                     </button>
 
                 </form>
@@ -61,10 +61,44 @@
                 <tbody>
                     @foreach (var treatment in Model.Treatments)
                     {
-                        <tr>
+                        <tr data-bs-toggle="collapse" data-bs-target="#treatment-@treatment.Id" aria-expanded="false">
                             <td class="fw-semibold">@treatment.Name</td>
                             <td>@treatment.DurationInMinutes</td>
                             <td>@treatment.Price kr</td>
+                        </tr>
+                        <tr>
+                            <td colspan="3" class="p-0">
+                                <div id="treatment-@treatment.Id" class="collapse" aria-expanded="false">
+                                    <div class="bg-dark p-4 text-white border-top border-3 border-warning">
+                                        <h5 class="mb-4">Edit Treatment</h5>
+
+                                        <form method="post" asp-page-handler="UpdateTreatment">
+
+                                            <input type="hidden" name="Treatment.Id" value="@treatment.Id" />
+                                            <div class="row">
+                                                <div class="col-md-4">
+													<label class="form-label">Name</label>
+                                                    <input class="form-control text-muted" name="Treatment.Name" value="@treatment.Name" placeholder="@treatment.Name" />
+                                                </div>
+                                                <div class="col-md-2">
+                                                    <label class="form-label">Duration</label>
+                                                    <input class="form-control text-muted" name="Treatment.DurationInMinutes" value="@treatment.DurationInMinutes" placeholder="@treatment.DurationInMinutes" />
+                                                </div>
+                                                <div class="col-md-2">
+                                                    <label class="form-label">Price</label>
+                                                    <input class="form-control text-muted" name="Treatment.price" value="@treatment.Price" placeholder="@treatment.Price" />
+                                                </div>
+                                                
+                                            </div>
+                                            <div class="mt-4 d-flex gap-2">
+                                                <button class="btn btn-outline-warning btn-sm fw-bold" type="submit">Update</button>
+                                            </div>
+                                         </form>
+                                        
+                                    </div>
+                                </div>
+
+                            </td>
                         </tr>
                     }
                 </tbody>
