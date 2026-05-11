@@ -21,24 +21,26 @@ namespace HairdresserAppointmentClient.ApiServices
             return response;
         }
 
-        public async Task<bool> CreateTreatmentAsync(TreatmentDto dto)
+        public async Task<bool> CreateTreatmentAsync(TreatmentDto dto, string token)
         {
-            
+            AddJwtToken(token);
             var response = await _httpClient.PostAsJsonAsync("api/treatment", dto);
 
             return response.IsSuccessStatusCode;
         }
 
-        public async Task<bool> UpdateTreatmentAsync(TreatmentDto dto)
+        public async Task<bool> UpdateTreatmentAsync(TreatmentDto dto, string token)
         {
+            AddJwtToken(token);
             var response = await _httpClient.PutAsJsonAsync("api/treatment", dto);
 
             return response.IsSuccessStatusCode;
         }
 
 
-        public async Task<bool> DeleteTreatmentAsync(int id)
+        public async Task<bool> DeleteTreatmentAsync(int id, string token)
         {
+            AddJwtToken(token);
             var response = await _httpClient.DeleteAsync($"api/treatment/{id}" );
 
             return response.IsSuccessStatusCode;

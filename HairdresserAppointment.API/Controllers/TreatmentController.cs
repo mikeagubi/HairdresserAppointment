@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using HairdresserAppointment.API.Services;
 using HairdresserAppointment.API.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace HairdresserAppointment.API.Controllers
 {
@@ -27,6 +28,7 @@ namespace HairdresserAppointment.API.Controllers
         }
 
 
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public async Task CreateTreatment(Treatment treatment)
         {
@@ -34,6 +36,7 @@ namespace HairdresserAppointment.API.Controllers
         }
 
 
+        [Authorize(Roles = "Admin")]
         [HttpPut]
         public async Task<IActionResult> UpdateTreatment(Treatment dto)
         {
@@ -45,6 +48,7 @@ namespace HairdresserAppointment.API.Controllers
         }
 
 
+        [Authorize(Roles = "Admin")]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteTreatment(int id)
         {
