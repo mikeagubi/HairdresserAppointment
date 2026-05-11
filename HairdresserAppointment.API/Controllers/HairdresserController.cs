@@ -27,7 +27,7 @@ namespace HairdresserAppointment.API.Controllers
         }
 
 
-
+        [Authorize(Roles = "Admin")]
         [HttpGet]
         public async Task<List<HairdresserDto>> GetHairdressers()
         {
@@ -36,7 +36,11 @@ namespace HairdresserAppointment.API.Controllers
             return  hairdressers;
         }
 
-        //skapa hämtning av hairdressers
+ 
+
+
+
+
         //skapa PUT men inte en hel PUT utan kanske bara från active till false ? 
 
         

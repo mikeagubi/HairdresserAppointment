@@ -22,13 +22,17 @@ namespace HairdresserAppointmentClient.ApiServices
 
         public async Task<List<HairdresserDto>> GetHairdressersAsync(string token)
         {
-            AddJwtToken(token);
-            var response = await _httpClient.GetFromJsonAsync<List<HairdresserDto>>("api/hairdresser");
+            try
+            {
+                AddJwtToken(token);
+                var response = await _httpClient.GetFromJsonAsync<List<HairdresserDto>>("api/hairdresser");
 
-            if (response == null)
+                return response ?? new List<HairdresserDto>();
+            }
+            catch
+            {
                 return new List<HairdresserDto>();
-
-            return response;
+            }
         }
 
 

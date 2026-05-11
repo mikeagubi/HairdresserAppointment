@@ -32,7 +32,14 @@ namespace HairdresserAppointmentClient.Pages
         public async Task<IActionResult> OnGet()
         
         {
+            var role = HttpContext.Session.GetString("role");
+            if(role != "Admin")
+            {
+                return RedirectToPage("/login");
+            }
+
             var token = HttpContext.Session.GetString("token");
+
             Hairdressers = await _hairdresserApiServices.GetHairdressersAsync(token);
             await LoadPageAsync();
 

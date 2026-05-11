@@ -20,11 +20,11 @@ namespace HairdresserAppointment.API.Data
 
             modelBuilder.Entity<Treatment>()
                 .Property(t => t.Price)
-                .HasPrecision(5, 2);
+                .HasPrecision(7, 2);
 
             modelBuilder.Entity<Promotion>()
                 .Property(p => p.DiscountPercent)
-                .HasPrecision(5, 2);
+                .HasPrecision(7, 2);
         }
 
 

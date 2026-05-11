@@ -1,0 +1,149 @@
+﻿@page
+@model HairdresserAppointmentClient.Pages.TreatmentsModel
+@{
+}
+
+
+<div class="container mt-1">
+    <div class="card shadow border-0 rounded-4 mb-4">
+
+        <div class="card-header bg-dark text-white">
+            <h5 class="mb-0">Add Treatment</h5>
+        </div>
+        <div class="card-body">
+            <form method="post" asp-page-handler="CreateTreatment">
+                <div class="row">
+                    <div class="col-md-4">
+                        <label asp-for="Treatment.Name"class="form-label fw-bold"></label>
+                        <input asp-for="Treatment.Name"class="form-control"placeholder="Enter name..." required />
+                    </div>
+
+                    <div class="col-md-4">
+                        <label asp-for="Treatment.DurationInMinutes" class="form-label fw-bold"></label>
+                        <input asp-for="Treatment.DurationInMinutes" class="form-control" type="number"required />
+                    </div>
+                    <div class="col-md-4">
+                        <label asp-for="Treatment.Price" class="form-label fw-bold"> </label>
+                        <input asp-for="Treatment.Price" type="number" class="form-control" required />
+                    </div>
+                </div>
+                
+                
+                <button type="submit" class="btn btn-dark mt-4 small">Save</button>
+                <div class="pt-2">
+                    @if (TempData["CreateMessage"] != null)
+                    {
+                        <div class="alert alert-success fade show small py-2 text-center">@TempData["CreateMessage"]</div>
+                    }
+                </div>
+            </form>
+
+        </div>
+
+    </div>
+
+
+
+
+
+    <div class="card shadow border-0 rounded-4">
+
+        <div class="card-header bg-dark text-white">
+            <h3 class="mb-0">Treatments</h3>
+        </div>
+
+        <div class="card-body p-0">
+            <table class="table table-hover align-middle mb-0">
+                <thead class="table-light">
+                    <tr>
+                        <th>Name</th>
+                        <th>Duration</th>
+                        <th>Price</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    @foreach (var treatment in Model.Treatments)
+                    {
+                        <tr data-bs-toggle="collapse" data-bs-target="#treatment-@treatment.Id" aria-expanded="false">
+                            <td class="fw-semibold">@treatment.Name</td>
+                            <td>@treatment.DurationInMinutes</td>
+                            <td>@treatment.Price kr</td>
+                        </tr>
+                        <tr>
+                            <td colspan="3" class="p-0">
+                                <div id="treatment-@treatment.Id" class="collapse" aria-expanded="false">
+                                    <div class="bg-dark p-4 text-white border-top border-3 border-warning">
+                                        <h5 class="mb-4">Edit Treatment</h5>
+
+                                        <form method="post" asp-page-handler="UpdateTreatment">
+
+                                            <input type="hidden" name="Treatment.Id" value="@treatment.Id" typeof="text" />
+                                            <div class="row">
+                                                <div class="col-md-4">
+													<label class="form-label">Name</label>
+                                                    <input class="form-control text-muted" asp-for="Treatment.Name" value="@treatment.Name" />
+                                                </div>
+                                                <div class="col-md-2">
+                                                    <label class="form-label">Duration</label>
+                                                    <input class="form-control text-muted" asp-for="Treatment.DurationInMinutes" value="@treatment.DurationInMinutes" type="number" />
+                                                </div>
+                                                <div class="col-md-2">
+                                                    <label class="form-label">Price</label>
+                                                    <input class="form-control text-muted" asp-for="Treatment.Price" value="@treatment.Price" />
+                                                </div>
+                                                
+                                            </div>
+                                            <div class="mt-4 d-flex gap-2">
+                                                <button class="btn btn-outline-warning btn-sm" type="submit">Update</button>
+												<button class="btn btn-outline-danger btn-sm" asp-page-handler="DeleteTreatment" type="submit">Delete</button>
+                                            </div>
+                                        </form>
+
+                                    </div>
+                                </div>
+
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
+@if (TempData["Message"] != null)
+{
+    <div class="modal fade" id="messageModal">
+        <div class="modal-dialog modal-sm modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Message</h5>
+                    <button type="button"class="btn-close"data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body text-center">@TempData["Message"]</div>
+                <div class="modal-footer">
+                    <button type="button"class="btn btn-secondary"data-bs-dismiss="modal">OK</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+}
+
+<script>
+
+    document.addEventListener("DOMContentLoaded",
+    function ()
+    {
+        var modalElement = document.getElementById('messageModal');
+        if(modalElement)
+        {
+            var modal = new bootstrap.Modal(modalElement);
+             modal.show();
+        }
+    });
+
+</script>
