@@ -31,7 +31,15 @@ namespace HairdresserAppointmentClient.ApiServices
 
         public async Task<bool> UpdateTreatmentAsync(TreatmentDto dto)
         {
-            var response = await _httpClient.PutAsJsonAsync($"api/treatment", dto);
+            var response = await _httpClient.PutAsJsonAsync("api/treatment", dto);
+
+            return response.IsSuccessStatusCode;
+        }
+
+
+        public async Task<bool> DeleteTreatmentAsync(int id)
+        {
+            var response = await _httpClient.DeleteAsync($"api/treatment/{id}" );
 
             return response.IsSuccessStatusCode;
         }

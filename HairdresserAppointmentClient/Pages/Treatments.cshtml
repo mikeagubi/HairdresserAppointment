@@ -5,38 +5,42 @@
 
 
 <div class="container mt-1">
-        <div class="card shadow border-0 rounded-4 mb-4">
+    <div class="card shadow border-0 rounded-4 mb-4">
 
-            <div class="card-header bg-dark text-white">
-                <h5 class="mb-0">Add Treatment</h5>
-            </div>
-            <div class="card-body">
+        <div class="card-header bg-dark text-white">
+            <h5 class="mb-0">Add Treatment</h5>
+        </div>
+        <div class="card-body">
             <form method="post" asp-page-handler="CreateTreatment">
-                    <div class="row">
-                        <div class="col-md-4">
-                            <label asp-for="Treatment.Name"class="form-label fw-bold"></label>
-                            <input asp-for="Treatment.Name"class="form-control"placeholder="Enter name..."required />
-                        </div>
-
-                        <div class="col-md-4">
-                            <label asp-for="Treatment.DurationInMinutes" class="form-label fw-bold"></label>
-                            <input asp-for="Treatment.DurationInMinutes" class="form-control"required />
-                        </div>
-                        <div class="col-md-4">
-                            <label asp-for="Treatment.Price" class="form-label fw-bold"> </label>
-                            <input asp-for="Treatment.Price" type="number" class="form-control" required />
-                        </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <label asp-for="Treatment.Name"class="form-label fw-bold"></label>
+                        <input asp-for="Treatment.Name"class="form-control"placeholder="Enter name..."required />
                     </div>
 
-                    <button type="submit" class="btn btn-dark mt-4 small">
-                        Save
-                    </button>
-
-                </form>
-
-            </div>
+                    <div class="col-md-4">
+                        <label asp-for="Treatment.DurationInMinutes" class="form-label fw-bold"></label>
+                        <input asp-for="Treatment.DurationInMinutes" class="form-control"required />
+                    </div>
+                    <div class="col-md-4">
+                        <label asp-for="Treatment.Price" class="form-label fw-bold"> </label>
+                        <input asp-for="Treatment.Price" type="number" class="form-control" required />
+                    </div>
+                </div>
+                
+                
+                <button type="submit" class="btn btn-dark mt-4 small">Save</button>
+                <div class="pt-2">
+                    @if (TempData["CreateMessage"] != null)
+                    {
+                        <div class="alert alert-success fade show small py-2 text-center">@TempData["CreateMessage"]</div>
+                    }
+                </div>
+            </form>
 
         </div>
+
+    </div>
 
 
 
@@ -78,23 +82,24 @@
                                             <div class="row">
                                                 <div class="col-md-4">
 													<label class="form-label">Name</label>
-                                                    <input class="form-control text-muted" name="Treatment.Name" value="@treatment.Name" placeholder="@treatment.Name" />
+                                                    <input class="form-control text-muted" asp-for="Treatment.Name" placeholder="@treatment.Name" />
                                                 </div>
                                                 <div class="col-md-2">
                                                     <label class="form-label">Duration</label>
-                                                    <input class="form-control text-muted" name="Treatment.DurationInMinutes" value="@treatment.DurationInMinutes" placeholder="@treatment.DurationInMinutes" />
+                                                    <input class="form-control text-muted" asp-for="Treatment.DurationInMinutes" placeholder="@treatment.DurationInMinutes" />
                                                 </div>
                                                 <div class="col-md-2">
                                                     <label class="form-label">Price</label>
-                                                    <input class="form-control text-muted" name="Treatment.price" value="@treatment.Price" placeholder="@treatment.Price" />
+                                                    <input class="form-control text-muted" asp-for="Treatment.Price" placeholder="@treatment.Price" />
                                                 </div>
                                                 
                                             </div>
                                             <div class="mt-4 d-flex gap-2">
-                                                <button class="btn btn-outline-warning btn-sm fw-bold" type="submit">Update</button>
+                                                <button class="btn btn-outline-warning btn-sm" type="submit">Update</button>
+												<button class="btn btn-outline-danger btn-sm" asp-page-handler="DeleteTreatment" type="submit">Delete</button>
                                             </div>
-                                         </form>
-                                        
+                                        </form>
+
                                     </div>
                                 </div>
 
@@ -105,6 +110,40 @@
             </table>
         </div>
     </div>
-
-
 </div>
+
+<!-- Modal -->
+@if (TempData["Message"] != null)
+{
+    <div class="modal fade" id="messageModal">
+        <div class="modal-dialog modal-sm modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Message</h5>
+                    <button type="button"class="btn-close"data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body text-center">@TempData["Message"]</div>
+                <div class="modal-footer">
+                    <button type="button"class="btn btn-secondary"data-bs-dismiss="modal">OK</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+}
+
+<script>
+
+    document.addEventListener("DOMContentLoaded",
+    function ()
+    {
+        var modalElement = document.getElementById('messageModal');
+        if(modalElement)
+        {
+            var modal = new bootstrap.Modal(modalElement);
+             modal.show();
+        }
+    });
+
+</script>

@@ -1,3 +1,4 @@
+using Azure.Core;
 using HairdresserAppointmentClient.ApiServices;
 using HairdresserAppointmentClient.Dto;
 using Microsoft.AspNetCore.Mvc;
@@ -18,9 +19,6 @@ namespace HairdresserAppointmentClient.Pages
         [BindProperty]
         public TreatmentDto Treatment { get; set; }
 
-        [BindProperty]
-        public string Message { get; set; }
-
 
 
 
@@ -36,18 +34,37 @@ namespace HairdresserAppointmentClient.Pages
         public async Task<IActionResult> OnPostCreateTreatmentAsync()
         {
             //var token = HttpContext.Session.GetString("token");
-            await _treatmentsApiService.CreateTreatmentAsync(Treatment);
+            var success = await _treatmentsApiService.CreateTreatmentAsync(Treatment);
+            if (success)
+            {
+                TempData["CreateMessage"] = "New treatment added";
+            }
 
+            return RedirectToPage("/Treatments");
+        }
+
+
+
+        public async Task<IActionResult> OnPostUpdateTreatmentAsync()
+        {
+            var success = await _treatmentsApiService.UpdateTreatmentAsync(Treatment);
+            if (!success)
+            {
+                TempData["Message"] = "Failed to update treatment";
+            }
+            else
+            {
+                TempData["Message"] = "Treatment updated";
+            }
             return RedirectToPage("/Treatments");
 
         }
 
-        public async Task<IActionResult> OnPostUpdateTreatmentAsync()
+        public async Task<IActionResult> OnPostDeleteTreatmentAsync()
         {
-            await _treatmentsApiService.UpdateTreatmentAsync(Treatment);
+            var success = await _treatmentsApiService.DeleteTreatmentAsync(Treatment.Id);
 
-            return RedirectToPage("/Treatments");
-
+            return RedirectToPage("/treatments");
         }
 
 
