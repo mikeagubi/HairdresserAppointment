@@ -6,5 +6,6 @@
         public string Name { get; set; }
         public int DurationInMinutes { get; set; }
         public decimal Price { get; set; }
+        public List<Booking> Bookings { get; set; } = new();
     }
 }
