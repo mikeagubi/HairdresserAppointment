@@ -1,0 +1,37 @@
+﻿@page
+@model HairdresserAppointmentClient.Pages.Booking.SelectServicesModel
+@{
+}
+
+
+
+<h2 class="text-center">BOOKING Sidan TEST</h2>
+<div class="container">
+	<div class="card">
+		<div class="card-header bg-black text-white">
+			<h5>Treatments</h5>
+		</div>
+		<div class="card-body">
+			@foreach (var treatment in Model.Treatments)
+			{
+				<p>@treatment.Name</p>
+			}
+
+		</div>
+
+	</div>
+	<br />	<br />
+	<div class="card">
+		<div class="card-header bg-black text-white">
+			<h5>Hairdressers</h5>
+		</div>
+		<div class="card-body">
+			@foreach (var hairdresser in Model.Hairdressers)
+			{
+				<p>@hairdresser.Name</p>
+			}
+
+		</div>
+
+	</div>
+</div>

@@ -27,7 +27,7 @@ namespace HairdresserAppointment.API.Controllers
         }
 
 
-        [Authorize(Roles = "Admin")]
+
         [HttpGet]
         public async Task<List<HairdresserDto>> GetHairdressers()
         {
