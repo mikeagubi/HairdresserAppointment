@@ -42,6 +42,19 @@ namespace HairdresserAppointmentClient.Pages.Booking
             return Page();
         }
 
+        public async Task<IActionResult> OnPostRemoveTreatmentAsync(int treatmentId)
+        {
+            TreatmentIds.Remove(treatmentId);
+            await LoadPageAsync();
+            return Page();
+        }
+
+        public async Task<IActionResult> OnPostSelectHairdresserAsync(int hairdresserId)
+        {
+            await LoadPageAsync();
+            return Page();
+        }
+
         private async Task LoadPageAsync()
         {
             Treatments = await _treatmentApiService.GetAllTreatmentsAsync();
