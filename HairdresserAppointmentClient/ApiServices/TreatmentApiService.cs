@@ -11,7 +11,7 @@ namespace HairdresserAppointmentClient.ApiServices
         }
 
 
-        public async Task<List<TreatmentDto>> GetAllTreatments()
+        public async Task<List<TreatmentDto>> GetAllTreatmentsAsync()
         {
 
             var response = await _httpClient.GetFromJsonAsync<List<TreatmentDto>>("api/treatment");

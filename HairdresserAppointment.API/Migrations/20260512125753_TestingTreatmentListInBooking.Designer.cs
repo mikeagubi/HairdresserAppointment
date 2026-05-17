@@ -4,6 +4,7 @@ using HairdresserAppointment.API.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HairdresserAppointment.API.Migrations
 {
     [DbContext(typeof(MyDbContext))]
-    partial class MyDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260512125753_TestingTreatmentListInBooking")]
+    partial class TestingTreatmentListInBooking
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -21,21 +24,6 @@ namespace HairdresserAppointment.API.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
-
-            modelBuilder.Entity("BookingTreatment", b =>
-                {
-                    b.Property<Guid>("BookingsId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<int>("TreatmentsId")
-                        .HasColumnType("int");
-
-                    b.HasKey("BookingsId", "TreatmentsId");
-
-                    b.HasIndex("TreatmentsId");
-
-                    b.ToTable("BookingTreatment");
-                });
 
             modelBuilder.Entity("HairdresserAppointment.API.Models.Booking", b =>
                 {
@@ -202,6 +190,9 @@ namespace HairdresserAppointment.API.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<Guid?>("BookingId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<int>("DurationInMinutes")
                         .HasColumnType("int");
 
@@ -214,6 +205,8 @@ namespace HairdresserAppointment.API.Migrations
                         .HasColumnType("decimal(7,2)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("BookingId");
 
                     b.ToTable("Treatments");
                 });
@@ -378,21 +371,6 @@ namespace HairdresserAppointment.API.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("BookingTreatment", b =>
-                {
-                    b.HasOne("HairdresserAppointment.API.Models.Booking", null)
-                        .WithMany()
-                        .HasForeignKey("BookingsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("HairdresserAppointment.API.Models.Treatment", null)
-                        .WithMany()
-                        .HasForeignKey("TreatmentsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("HairdresserAppointment.API.Models.Booking", b =>
                 {
                     b.HasOne("HairdresserAppointment.API.Models.Hairdresser", "Hairdresser")
@@ -408,6 +386,13 @@ namespace HairdresserAppointment.API.Migrations
                     b.Navigation("Hairdresser");
 
                     b.Navigation("Promotion");
+                });
+
+            modelBuilder.Entity("HairdresserAppointment.API.Models.Treatment", b =>
+                {
+                    b.HasOne("HairdresserAppointment.API.Models.Booking", null)
+                        .WithMany("Treatments")
+                        .HasForeignKey("BookingId");
                 });
 
             modelBuilder.Entity("HairdresserAppointment.API.Models.WorkingHour", b =>
@@ -470,6 +455,11 @@ namespace HairdresserAppointment.API.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("HairdresserAppointment.API.Models.Booking", b =>
+                {
+                    b.Navigation("Treatments");
                 });
 
             modelBuilder.Entity("HairdresserAppointment.API.Models.Hairdresser", b =>

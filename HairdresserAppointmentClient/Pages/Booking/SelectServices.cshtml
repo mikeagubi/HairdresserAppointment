@@ -1,0 +1,98 @@
+﻿@page
+@model HairdresserAppointmentClient.Pages.Booking.SelectServicesModel
+@{
+    decimal totalPrice = 0;
+    var totalDurationInMinutes = 0;
+}
+
+
+
+
+<div class="container mt-5">
+    <div class="row">
+        @foreach (var treatment in Model.Treatments)
+        {
+            <div class="col-md-4 mb-4">
+                 <div class="card shadow h-100">
+                    <div class="card-body">
+                        <h5 class="card-title">@treatment.Name</h5>
+                        <p>Duration:@treatment.DurationInMinutes min</p>
+                        <p>Price:@treatment.Price kr</p>
+                        <form method="post" asp-page-handler="AddTreatments">
+                            @foreach(var id in Model.TreatmentIds)
+                            {
+                                <input type="hidden" asp-for="TreatmentIds" value="@id"/>     
+                            }
+                            <input type="hidden" name="treatmentId" value="@treatment.Id" />
+                            <button type="submit" class="btn btn-dark w-100">Lägg till</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        }
+
+    </div>
+
+</div>
+
+<div class="card shadow mt-5">
+    <div class="card-header bg-dark text-white">
+        <h4>Din bokning</h4>
+    </div>
+
+    <div class="card-body">
+      
+        @if (Model.TreatmentIds.Count == 0)
+        {
+            <p>No treatments selected</p>
+        }
+        else
+        {
+            @foreach(var treatment in Model.Treatments)
+            {
+                if (Model.TreatmentIds.Contains(treatment.Id))
+                {
+                    totalPrice += treatment.Price;
+                    totalDurationInMinutes += treatment.DurationInMinutes;
+
+                    <p>@treatment.Name</p>
+                    <p>@treatment.Price</p>
+                    <p>@treatment.DurationInMinutes</p>
+
+                    <form method="post" asp-page-handler="RemoveTreatment">
+                        @foreach(var id in Model.TreatmentIds)
+                        {
+                            <input type="hidden" asp-for="TreatmentIds" value="@id"/>   
+                        }
+                        <input type="hidden" name="treatmentId" value="@treatment.Id" />
+                        <button type="submit" class="btn btn-danger btn-sm">Remove</button>
+                    </form>
+                    <hr />
+
+				}
+
+				
+            }
+            <p>total pris: @totalPrice</p>
+            <p>total tid : @totalDurationInMinutes</p>
+        }
+
+        <form method="post" asp-page-handler="SelectHairdresser">
+            @foreach(var id in Model.TreatmentIds)
+            {
+                <input type="hidden" asp-for="TreatmentIds" value="@id"/>        
+            }
+
+            <label class="form-label fw-bold mt-3">Välj Frisör</label>
+            <select asp-for="HairdresserId" class="form-select">
+                <option value="" disabled selected> --Select Hairdresser--  </option>
+                    @foreach(var hairdresser in Model.Hairdressers)
+                    {
+                        <option value="@hairdresser.Id">@hairdresser.Name</option>
+                    }
+            </select>
+            <button type="submit" class="btn btn-dark w-100 mt-3">spara o gå vidare</button>
+        </form>
+
+    </div>
+</div>

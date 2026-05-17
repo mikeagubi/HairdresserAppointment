@@ -40,7 +40,7 @@ namespace HairdresserAppointmentClient.Pages
 
             var token = HttpContext.Session.GetString("token");
 
-            Hairdressers = await _hairdresserApiServices.GetHairdressersAsync(token);
+            Hairdressers = await _hairdresserApiServices.GetHairdressersAsync();
             await LoadPageAsync();
 
             return Page();
