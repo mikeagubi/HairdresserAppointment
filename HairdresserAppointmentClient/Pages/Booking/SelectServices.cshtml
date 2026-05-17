@@ -5,33 +5,58 @@
 
 
 
-<h2 class="text-center">BOOKING Sidan TEST</h2>
-<div class="container">
-	<div class="card">
-		<div class="card-header bg-black text-white">
-			<h5>Treatments</h5>
-		</div>
-		<div class="card-body">
-			@foreach (var treatment in Model.Treatments)
-			{
-				<p>@treatment.Name</p>
-			}
 
-		</div>
+<div class="container mt-5">
+    <div class="row">
+        @foreach (var treatment in Model.Treatments)
+        {
+            <div class="col-md-4 mb-4">
+                 <div class="card shadow h-100">
+                    <div class="card-body">
+                        <h5 class="card-title">@treatment.Name</h5>
+                        <p>Duration:@treatment.DurationInMinutes min</p>
+                        <p>Price:@treatment.Price kr</p>
+                        <form method="post" asp-page-handler="AddTreatments">
+                            @foreach(var id in Model.TreatmentIds)
+                            {
+                                <input type="hidden" asp-for="TreatmentIds" value="@id"/>     
+                            }
+                            <input type="hidden" name="treatmentId" value="@treatment.Id" />
+                            <button type="submit" class="btn btn-dark w-100">Lägg till</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        }
 
-	</div>
-	<br />	<br />
-	<div class="card">
-		<div class="card-header bg-black text-white">
-			<h5>Hairdressers</h5>
-		</div>
-		<div class="card-body">
-			@foreach (var hairdresser in Model.Hairdressers)
-			{
-				<p>@hairdresser.Name</p>
-			}
+    </div>
 
-		</div>
+</div>
 
-	</div>
+<div class="card shadow mt-5">
+    <div class="card-header bg-dark text-white">
+        <h4>Din bokning</h4>
+    </div>
+
+    <div class="card-body">
+      
+        @if (Model.TreatmentIds.Count == 0)
+        {
+            <p>No treatments selected</p>
+        }
+        else
+        {
+            @foreach(var t in Model.Treatments)
+            {
+                if (Model.TreatmentIds.Contains(t.Id))
+                {
+                    <p>@t.Name</p>
+                    <p>@t.Price</p>
+                    <p>@t.DurationInMinutes</p>
+                    <hr />
+                }
+            }
+        }
+
+    </div>
 </div>
