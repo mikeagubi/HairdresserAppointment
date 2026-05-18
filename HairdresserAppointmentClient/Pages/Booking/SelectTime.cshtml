@@ -1,0 +1,16 @@
+﻿@page
+@model HairdresserAppointmentClient.Pages.Booking.SelectTimeModel
+@{
+}
+<h1>Test test test</h1>
+
+
+<p>@Model.SelectedHairdresser.Name</p>
+<p>@Model.SelectedHairdresser.Id</p>
+<p>@Model.SelectedHairdresser.IsActive</p>
+@foreach(var w in Model.SelectedHairdresser.WorkingHours)
+{
+	<p>@w.DayOfWeek:  @w.StartTime - @w.EndTime</p> 
+
+}
+<p>@Model.SelectedHairdresser.WorkingHours</p>

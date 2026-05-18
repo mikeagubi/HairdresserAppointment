@@ -30,9 +30,32 @@ namespace HairdresserAppointment.API.Services
                 }).ToListAsync();
         }
 
-        public async Task<Hairdresser> GetHairdresserByIdAsync(int id)
+        public async Task<HairdresserBookingDto?> GetHairdresserByIdAsync(int id)
         {
-            return await _context.Hairdressers.FindAsync(id);
+            return await _context.Hairdressers
+                .Where(h => h.Id == id && h.IsActive)
+                .Select(h => new HairdresserBookingDto
+                {
+                    Id = h.Id,
+                    Name = h.Name,
+                    IsActive = h.IsActive,
+                    WorkingHours = h.WorkingHours
+
+                    .Select(w => new WorkingHoursDto
+                    {
+                        DayOfWeek = w.DayOfWeek,
+                        StartTime = w.StartTime,
+                        EndTime = w.EndTime
+                    }).ToList(),
+                    Bookings = h.Bookings
+                    
+                    .Select(b => new BookingTimeDto
+                    {
+                        StartTime = b.StartTime,
+                        EndTime = b.EndTime
+                    }).ToList()
+
+                }).FirstOrDefaultAsync();
         }
 
 
@@ -82,7 +105,6 @@ namespace HairdresserAppointment.API.Services
 
             return hairdresser;
         }
-
 
 
 
