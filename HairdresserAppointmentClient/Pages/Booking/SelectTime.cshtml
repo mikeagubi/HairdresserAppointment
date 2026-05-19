@@ -2,15 +2,13 @@
 @model HairdresserAppointmentClient.Pages.Booking.SelectTimeModel
 @{
 }
-<h1>Test test test</h1>
 
+<p>TEST TEST TEST TEST</p>
 
-<p>@Model.SelectedHairdresser.Name</p>
-<p>@Model.SelectedHairdresser.Id</p>
-<p>@Model.SelectedHairdresser.IsActive</p>
-@foreach(var w in Model.SelectedHairdresser.WorkingHours)
+@foreach (var slot in Model.AvailableSlots)
 {
-	<p>@w.DayOfWeek:  @w.StartTime - @w.EndTime</p> 
-
+    <div>
+        @slot
+        <hr />
+    </div>
 }
-<p>@Model.SelectedHairdresser.WorkingHours</p>

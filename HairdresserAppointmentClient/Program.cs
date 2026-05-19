@@ -24,6 +24,7 @@ builder.Services.AddHttpClient("HairdresserAppointmentApi", client =>
 
 builder.Services.AddScoped<HairdresserApiService>();
 builder.Services.AddScoped<AuthApiService>();
+builder.Services.AddScoped<BookingHelper>();
 builder.Services.AddScoped<GalleryHelper>();
 builder.Services.AddScoped<TreatmentApiService>();
 builder.Services.AddScoped<WorkingHourApiService>();
