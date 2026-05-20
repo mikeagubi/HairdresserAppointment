@@ -1,12 +1,13 @@
 ﻿using HairdresserAppointmentClient.Dto;
+using HairdresserAppointmentClient.Models;
 
 namespace HairdresserAppointmentClient.Helpers
 {
     public class BookingHelper
     {
-        public List<DateTime> GenerateTimeSlots(HairdresserBookingDto hairdresser, List<TreatmentDto> selectedTreatments)
+        public List<TimeSlot> GenerateTimeSlots(HairdresserBookingDto hairdresser, List<TreatmentDto> selectedTreatments)
         {
-            var availableSlots = new List<DateTime>();
+            var availableSlots = new List<TimeSlot>();
             var totalTreatmentTime = selectedTreatments.Sum(t => t.DurationInMinutes);
             var currentDate = DateTime.Today;
             var dayFound = 0;
@@ -21,19 +22,24 @@ namespace HairdresserAppointmentClient.Helpers
                     continue;
                 }
 
-                var startTime = currentDate.Date + workingHour.StartTime;
-                var endTime = currentDate.Date + workingHour.EndTime;
+                var currentStartTime = currentDate.Date + workingHour.StartTime;
+                var currentEndTime = currentDate.Date + workingHour.EndTime;
                 var dayHasAvailableSlots = false;
 
-                while(startTime.AddMinutes(totalTreatmentTime) <= endTime)
+                while(currentStartTime.AddMinutes(totalTreatmentTime) <= currentEndTime)
                 {
-                    var available = IsTimeAvailable(startTime, totalTreatmentTime, hairdresser.Bookings);
+                    var available = IsTimeAvailable(currentStartTime, totalTreatmentTime, hairdresser.Bookings);
                     if (available)
                     {
-                        availableSlots.Add(startTime);
+                        availableSlots.Add(new TimeSlot
+                        {
+                            StartTime = currentStartTime,
+                            EndTime = currentStartTime.AddMinutes(totalTreatmentTime)
+                        });
+
                         dayHasAvailableSlots = true;
                     }
-                        startTime = startTime.AddMinutes(15);
+                        currentStartTime = currentStartTime.AddMinutes(15);
                 }
 
                 if (dayHasAvailableSlots)

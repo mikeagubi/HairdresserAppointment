@@ -1,6 +1,7 @@
 using HairdresserAppointmentClient.ApiServices;
 using HairdresserAppointmentClient.Dto;
 using HairdresserAppointmentClient.Helpers;
+using HairdresserAppointmentClient.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
@@ -20,17 +21,17 @@ namespace HairdresserAppointmentClient.Pages.Booking
 
         public HairdresserBookingDto? SelectedHairdresser { get; set; }
         public List<TreatmentDto> SelectedTreatments { get; set; }
+        public decimal TotalPrice { get; set; }
+        public int TotalTime { get; set; }
 
-
-        public List<DateTime> AvailableSlots { get; set; } = new();
+        public List<TimeSlot> TimeSlots { get; set; } = new();
 
         
         [BindProperty(SupportsGet = true)]
         public List<int> TreatmentIds { get; set; }
 
         [BindProperty(SupportsGet = true)]
-        public int HairdresserId { 
-            get; set; }
+        public int HairdresserId { get; set; }
 
 
         public async Task OnGet()
@@ -40,13 +41,16 @@ namespace HairdresserAppointmentClient.Pages.Booking
                 return;
             }
             SelectedTreatments = (await _treatmentApiService.GetAllTreatmentsAsync())
-                .Where(T => TreatmentIds.Contains(T.Id)).ToList();
+                .Where(t => TreatmentIds.Contains(t.Id)).ToList();
+
+            
 
             SelectedHairdresser = await _hairdresserApiService.GetHairdresserByIdAsync(HairdresserId);
 
 
-            AvailableSlots = _bookingHelper.GenerateTimeSlots(SelectedHairdresser, SelectedTreatments);
-           
+            TimeSlots = _bookingHelper.GenerateTimeSlots(SelectedHairdresser, SelectedTreatments);
+            TotalPrice = SelectedTreatments.Sum(p => p.Price);
+            TotalTime = SelectedTreatments.Sum(t => t.DurationInMinutes);
 
         }
 
