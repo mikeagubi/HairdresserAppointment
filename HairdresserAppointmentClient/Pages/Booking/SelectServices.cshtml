@@ -77,7 +77,7 @@
             <p>total tid : @totalDurationInMinutes</p>
         }
 
-        <form method="post" asp-page-handler="SelectHairdresser">
+        <form method="post" asp-page-handler="SelectTime">
             @foreach(var id in Model.TreatmentIds)
             {
                 <input type="hidden" asp-for="TreatmentIds" value="@id"/>        

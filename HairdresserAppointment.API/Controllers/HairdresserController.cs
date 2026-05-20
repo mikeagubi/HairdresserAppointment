@@ -36,14 +36,23 @@ namespace HairdresserAppointment.API.Controllers
             return  hairdressers;
         }
 
- 
 
+        [HttpGet("{id}")]
+        public async Task<ActionResult<HairdresserBookingDto>> GetHairdresserById(int id)
+        {
+            var hairdresser = await _hairdresserService.GetHairdresserByIdAsync(id);
+
+            if (hairdresser == null)
+                return NotFound();
+
+            return Ok(hairdresser);
+        }
 
 
 
         //skapa PUT men inte en hel PUT utan kanske bara från active till false ? 
 
-        
+
 
 
 

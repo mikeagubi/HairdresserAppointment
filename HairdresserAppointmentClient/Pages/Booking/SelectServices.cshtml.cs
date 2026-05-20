@@ -49,10 +49,19 @@ namespace HairdresserAppointmentClient.Pages.Booking
             return Page();
         }
 
-        public async Task<IActionResult> OnPostSelectHairdresserAsync(int hairdresserId)
+        public async Task<IActionResult> OnPostSelectTimeAsync()
         {
-            await LoadPageAsync();
-            return Page();
+            if(TreatmentIds.Count == 0 || HairdresserId == 0)
+            {
+                await LoadPageAsync();
+                return Page();
+            }
+            return RedirectToPage("/Booking/SelectTime",
+                new
+                {
+                    hairdresserId = HairdresserId,
+                    treatmentIds = TreatmentIds
+                });
         }
 
         private async Task LoadPageAsync()

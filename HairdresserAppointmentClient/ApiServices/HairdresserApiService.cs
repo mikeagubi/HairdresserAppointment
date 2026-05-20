@@ -35,6 +35,11 @@ namespace HairdresserAppointmentClient.ApiServices
             }
         }
 
+        public async Task<HairdresserBookingDto?> GetHairdresserByIdAsync(int id)
+        {
+            return await _httpClient.GetFromJsonAsync<HairdresserBookingDto>($"api/hairdresser/{id}");
+        }
+
 
 
 

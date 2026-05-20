@@ -1,0 +1,28 @@
+﻿@page
+@model HairdresserAppointmentClient.Pages.Booking.SelectTimeModel
+@{
+}
+
+<p>TEST TEST TEST TEST</p>
+
+
+
+@foreach(var slot in Model.TimeSlots.GroupBy(s => s.StartTime.Date.ToString("yyyy.MM.dd")))
+{
+    <h4 class="mt-4">
+        @slot.Key
+    </h4>
+    @foreach(var s in slot)
+    {
+        
+            <button class="btn btn-outline-success m-1 text-dark">
+                @s.StartTime.ToString("HH.mm") - @s.EndTime.ToString("HH.mm")
+			<p class="small text-muted mt-2">Pris: @Model.TotalPrice.ToString(".kr")</p>
+            <p class="small text-muted"> @Model.TotalTime minuter</p>
+            
+            </button>
+        
+        
+    }
+    
+}
