@@ -14,15 +14,20 @@
     </h4>
     @foreach(var s in slot)
     {
-        
-            <button class="btn btn-outline-success m-1 text-dark">
-                @s.StartTime.ToString("HH.mm") - @s.EndTime.ToString("HH.mm")
-			<p class="small text-muted mt-2">Pris: @Model.TotalPrice.ToString(".kr")</p>
-            <p class="small text-muted"> @Model.TotalTime minuter</p>
-            
+        <form method="post" asp-page-handler="SelectTime">
+            <input type="hidden" name="startTime" value="@s.StartTime.ToString()"/>
+            <input type="hidden" name="endTime" value="@s.EndTime.ToString()" />
+            @foreach(var id in Model.TreatmentIds)
+            {
+                <input type="hidden" name="TreatmentIds" value="@id"/>
+            }
+            <input type="hidden" name="HairdresserId" value="@Model.HairdresserId"/>
+            <button type="submit" class="btn btn-outline-success m-1 text-dark">
+                @s.StartTime.ToString("HH:mm")
+                <p class="small text-muted mt-2">@Model.TotalPrice kr</p>
             </button>
-        
-        
+        </form>
     }
     
 }
+

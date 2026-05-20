@@ -48,9 +48,9 @@
         }
         else
         {
-            @foreach(var treatment in Model.Treatments)
+            @foreach(var treatment in Model.Treatments) 
             {
-                if (Model.TreatmentIds.Contains(treatment.Id))
+                if (Model.TreatmentIds.Contains(treatment.Id)) //Filtrerar på de treat som anv valt
                 {
                     totalPrice += treatment.Price;
                     totalDurationInMinutes += treatment.DurationInMinutes;
@@ -62,7 +62,7 @@
                     <form method="post" asp-page-handler="RemoveTreatment">
                         @foreach(var id in Model.TreatmentIds)
                         {
-                            <input type="hidden" asp-for="TreatmentIds" value="@id"/>   
+                            <input type="hidden" asp-for="TreatmentIds" value="@id"/>   //skickar listan igen så den inte fösvinner efter post req
                         }
                         <input type="hidden" name="treatmentId" value="@treatment.Id" />
                         <button type="submit" class="btn btn-danger btn-sm">Remove</button>
@@ -80,7 +80,7 @@
         <form method="post" asp-page-handler="SelectTime">
             @foreach(var id in Model.TreatmentIds)
             {
-                <input type="hidden" asp-for="TreatmentIds" value="@id"/>        
+                <input type="hidden" asp-for="TreatmentIds" value="@id"/>  //skickar listan igen pga post-req      
             }
 
             <label class="form-label fw-bold mt-3">Välj Frisör</label>

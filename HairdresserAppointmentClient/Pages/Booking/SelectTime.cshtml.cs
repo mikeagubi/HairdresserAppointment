@@ -56,6 +56,20 @@ namespace HairdresserAppointmentClient.Pages.Booking
 
 
 
+        public async Task<IActionResult> OnPostSelectTime(DateTime startTime, DateTime endTime)
+        {
+            return RedirectToPage("/Booking/CreateBooking",
+                new
+            {
+                hairdresserId = HairdresserId,
+                treatmentIds = TreatmentIds,
+                StartTime = startTime,
+                EndTime = endTime
+            });
+        }
+
+
+
 
 
 
