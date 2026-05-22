@@ -1,4 +1,7 @@
 ﻿using HairdresserAppointment.API.Data;
+using HairdresserAppointment.API.DTO;
+using HairdresserAppointment.API.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace HairdresserAppointment.API.Services
 {
@@ -11,6 +14,33 @@ namespace HairdresserAppointment.API.Services
             _context = context;
         }
 
+
+        public async Task CreateBookingAsync(CreateBookingDto dto)
+        {
+            var treatments = await _context.Treatments
+                .Where(t => dto.TreatmentIds.Contains(t.Id)).ToListAsync();
+
+            var totalPrice = treatments.Sum(t => t.Price);
+            var totalDurationInMinutes = treatments.Sum (t => t.DurationInMinutes);
+
+            var booking = new Booking
+            {
+                HairdresserId = dto.HairdresserId,
+                Treatments = treatments,
+                StartTime = dto.StartTime,
+                EndTime = dto.EndTime,
+                CostumerName = dto.CustomerName,
+                CostumerEmail = dto.CustomerEmail,
+                CostumerPhone = dto.CustomerPhone,
+                TotalPrice = totalPrice,
+                TotalDurationInMinutes = totalDurationInMinutes
+
+            };
+
+            _context.Bookings.Add(booking);
+            await _context.SaveChangesAsync();
+
+        }
 
 
 

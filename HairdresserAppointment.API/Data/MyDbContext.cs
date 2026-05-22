@@ -25,6 +25,10 @@ namespace HairdresserAppointment.API.Data
             modelBuilder.Entity<Promotion>()
                 .Property(p => p.DiscountPercent)
                 .HasPrecision(7, 2);
+
+            modelBuilder.Entity<Booking>()
+                .Property(b => b.TotalPrice)
+                .HasPrecision(7, 2);
         }
 
 

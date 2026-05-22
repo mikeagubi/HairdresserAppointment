@@ -9,10 +9,12 @@ namespace HairdresserAppointmentClient.Pages.Booking
     {
         private readonly HairdresserApiService _hairdresserApiService;
         private readonly TreatmentApiService _treatmentApiService;
-        public CreateBookingModel(HairdresserApiService hairdresserApiService, TreatmentApiService treatmentApiService)
+        private readonly BookingApiService _bookingApiService;
+        public CreateBookingModel(HairdresserApiService hairdresserApiService, TreatmentApiService treatmentApiService, BookingApiService bookingApiService)
         {
             _hairdresserApiService = hairdresserApiService;
             _treatmentApiService = treatmentApiService;
+            _bookingApiService = bookingApiService;
         }
 
         [BindProperty(SupportsGet = true)]
@@ -55,7 +57,12 @@ namespace HairdresserAppointmentClient.Pages.Booking
 
         public async Task<IActionResult> OnPostCreateBookingAsync()
         {
-            return null;
+            var success = await _bookingApiService.CreateBookingAsync(Booking);
+            if (!success)
+            {
+                return Page();
+            }
+            return RedirectToPage("/Booking/BookingConfirmation");
         }
     }
 }
