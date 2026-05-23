@@ -33,7 +33,7 @@ namespace HairdresserAppointmentClient.Pages.Booking
         public CreateBookingDto Booking { get; set; } = new();
 
         public HairdresserBookingDto SelectedHairdresser { get; set; }
-        public List<TreatmentDto> SelectedTreatments { get; set; }
+        public List<TreatmentDto> SelectedTreatments { get; set; } = new();
         public decimal TotalPrice { get; set; }
 
         public int TotalTime { get; set; }

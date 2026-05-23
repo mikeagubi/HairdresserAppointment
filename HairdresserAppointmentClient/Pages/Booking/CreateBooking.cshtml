@@ -28,19 +28,18 @@
     <input type="hidden" asp-for="Booking.EndTime" value="@Model.EndTime" />
     <input type="hidden" asp-for="Booking.StartTime" value="@Model.StartTime" />
     @foreach(var id in Model.TreatmentIds)
-        {
-            <input type="hidden" asp-for="Booking.TreatmentIds" value="@id"/>
-        }
+    {
+        <input type="hidden" asp-for="Booking.TreatmentIds" value="@id"/>
+    }
    
     <div class="mb-3 m-5">
-        <label class="form-label">Fullständige Namn</label>
-        <input asp-for="Booking.CustomerName" class="form-control"/>
-        <label class="form-label">Email Adress</label>
-        <input asp-for="Booking.CustomerEmail" type="email" class="form-control" />
-        <label class="form-label">Telefonnummer:</label>
-        <input asp-for="Booking.CustomerPhone" type="number" class="form-control" />
-    
-	</div>
+        <label class="form-label"> Fullständigt Namn</label>
+        <input asp-for="Booking.CustomerName" class="form-control" required />
+        <label class="form-label mt-3">Email Adress</label>
+        <input asp-for="Booking.CustomerEmail" type="email" class="form-control" required />
+        <label class="form-label mt-3">Telefonnummer</label>
+        <input asp-for="Booking.CustomerPhone" class="form-control" type="number" required />
+    </div>
 
 	<button type="submit" class="btn btn-dark m-5">Bekräfta Bokningen</button>
 </form>

@@ -34,24 +34,30 @@ namespace HairdresserAppointmentClient.Pages.Booking
         public int HairdresserId { get; set; }
 
 
-        public async Task OnGet()
+        public async Task<IActionResult> OnGet()
         {
-            if (HairdresserId == 0 || TreatmentIds == null)
+            if (HairdresserId == 0 || TreatmentIds == null || TreatmentIds.Count == 0)
             {
-                return;
+                TempData["ErrorMessage"] = "Något gick fel. Försök igen.";
+
+                return Page();
             }
+
             SelectedTreatments = (await _treatmentApiService.GetAllTreatmentsAsync())
                 .Where(t => TreatmentIds.Contains(t.Id)).ToList();
 
-            
-
             SelectedHairdresser = await _hairdresserApiService.GetHairdresserByIdAsync(HairdresserId);
-
-
+            
+            if (SelectedTreatments.Count != TreatmentIds.Count || SelectedHairdresser == null)
+            {
+                TempData["ErrorMessage"] = "Något gick fel. Försök igen.";
+                return Page();
+            }
             TimeSlots = _bookingHelper.GenerateTimeSlots(SelectedHairdresser, SelectedTreatments);
             TotalPrice = SelectedTreatments.Sum(p => p.Price);
             TotalTime = SelectedTreatments.Sum(t => t.DurationInMinutes);
 
+            return Page();
         }
 
 

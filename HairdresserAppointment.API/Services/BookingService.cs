@@ -17,6 +17,12 @@ namespace HairdresserAppointment.API.Services
 
         public async Task CreateBookingAsync(CreateBookingDto dto)
         {
+            var isBooked = await IsTimeBookedAsync(dto.HairdresserId, dto.StartTime, dto.EndTime);
+            if (isBooked)
+            {
+                return;
+            }
+
             var treatments = await _context.Treatments
                 .Where(t => dto.TreatmentIds.Contains(t.Id)).ToListAsync();
 
@@ -42,6 +48,15 @@ namespace HairdresserAppointment.API.Services
 
         }
 
+        private async Task<bool> IsTimeBookedAsync(int hairdresserId, DateTime startTime, DateTime endTime)
+        {
+            var isBooked = await _context.Bookings
+                .AnyAsync(b => b.HairdresserId == hairdresserId
+                && startTime < b.EndTime
+                && endTime > b.StartTime);
+
+            return isBooked;
+        }
 
 
 

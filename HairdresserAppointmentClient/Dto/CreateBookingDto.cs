@@ -1,4 +1,6 @@
-﻿namespace HairdresserAppointmentClient.Dto
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace HairdresserAppointmentClient.Dto
 {
     public class CreateBookingDto
     {
@@ -6,8 +8,12 @@
         public List<int> TreatmentIds { get; set; }
         public DateTime StartTime { get; set; }
         public DateTime EndTime { get; set; }
+        [Required]
         public string CustomerName { get; set; }
+        [Required]
+        [EmailAddress]
         public string CustomerEmail { get; set; }
+        [Required]
         public string CustomerPhone { get; set; }
     }
 }
