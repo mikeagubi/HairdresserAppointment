@@ -13,19 +13,19 @@
             <div class="col-md-6">
                 <div class="card shadow-lg border-0 rounded-4">
                     <div class="card-header bg-dark text-white rounded-top-4">
-                        <h4 class="mb-0 fw-bold">Hairdresser registration</h4>
+                        <h4 class="mb-0 fw-bold">+ Lägg till ny frisör</h4>
                     </div>
                     <div class="card-body">
                         <form method="post">
 
                             <div class="mb-3">
-                                <label asp-for="Hairdresser.Name"  class="form-label fw-bold"></label>
+                                <label asp-for="Hairdresser.Name"  class="form-label fw-bold">Namn</label>
 
-                                <input asp-for="Hairdresser.Name" placeholder="Enter name..." class="form-control" required /> 
+                                <input asp-for="Hairdresser.Name" placeholder="Ange namn..." class="form-control" required /> 
 
                             </div>
 
-                            <h5 class="mt-4 mb-4 fw-bold">Schedule</h5>
+                            <h5 class="mt-4 mb-4 fw-bold">Arbetstider</h5>
 
                             @for (int i = 0; i < Model.Hairdresser.WorkingHours.Count; i++)
                             {

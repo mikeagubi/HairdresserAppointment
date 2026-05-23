@@ -31,7 +31,7 @@ namespace HairdresserAppointmentClient.Pages
             {
                 return RedirectToPage("/login");
             }
-            Treatments = await _treatmentsApiService.GetAllTreatmentsAsync();
+            Treatments = (await _treatmentsApiService.GetAllTreatmentsAsync()).OrderBy(t => t.Name).ToList();
 
             return Page();
 
