@@ -21,8 +21,6 @@ function myScrollBtn() {
 
 }
 
-
-
 window.addEventListener("scroll", myScrollBtn);
 
 
@@ -32,3 +30,15 @@ function updateStatus() {
 
     text.innerText = statusBox.checked ? "Active" : "Inactive";
 }
+
+
+
+document.addEventListener("DOMContentLoaded", function () {
+    var modalElement = document.getElementById('messageModal');
+
+    if(modalElement){
+        var modal = new bootstrap.Modal(modalElement);
+        modal.show();
+    }
+});
+

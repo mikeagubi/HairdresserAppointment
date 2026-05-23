@@ -1,0 +1,45 @@
+﻿@page
+@model HairdresserAppointmentClient.Pages.Booking.CreateBookingModel
+@{
+}
+
+
+<h1>TESTTESTTESTTEST</h1>
+<h2>bokning</h2>
+
+<p>@Model.SelectedHairdresser?.Name</p>
+
+<p>tidem: @Model.StartTime.ToString("yyyy-MM-dd HH:mm") till @Model.EndTime.ToString("HH:mm")</p>
+<p>tot behnadling tiden: @Model.TotalTime minuter</p>
+<p>priset: @Model.TotalPrice kr</p>
+<hr />
+
+@foreach (var treatment in Model.SelectedTreatments)
+{
+    <p>
+        @treatment.Name
+    </p>
+}
+
+
+<form method="post" asp-page-handler="CreateBooking">
+    <input type="hidden" asp-for="Booking.HairdresserId" value="@Model.HairdresserId"/>
+    <input type="hidden" asp-for="Booking.StartTime" value="@Model.StartTime"/>
+    <input type="hidden" asp-for="Booking.EndTime" value="@Model.EndTime" />
+    <input type="hidden" asp-for="Booking.StartTime" value="@Model.StartTime" />
+    @foreach(var id in Model.TreatmentIds)
+    {
+        <input type="hidden" asp-for="Booking.TreatmentIds" value="@id"/>
+    }
+   
+    <div class="mb-3 m-5">
+        <label class="form-label"> Fullständigt Namn</label>
+        <input asp-for="Booking.CustomerName" class="form-control" required />
+        <label class="form-label mt-3">Email Adress</label>
+        <input asp-for="Booking.CustomerEmail" type="email" class="form-control" required />
+        <label class="form-label mt-3">Telefonnummer</label>
+        <input asp-for="Booking.CustomerPhone" class="form-control" type="number" required />
+    </div>
+
+	<button type="submit" class="btn btn-dark m-5">Bekräfta Bokningen</button>
+</form>

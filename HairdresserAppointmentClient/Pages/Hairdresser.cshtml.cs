@@ -16,8 +16,6 @@ namespace HairdresserAppointmentClient.Pages
             _hairdresserApiServices = hairdresserApiService;
             _authApiService = authApiService;
         }
-
-        public string ErrorMessage { get; set; }
         public List<HairdresserDto> Hairdressers { get; set; } = new();
 
         [BindProperty]
