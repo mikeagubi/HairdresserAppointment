@@ -5,19 +5,28 @@
     var totalDurationInMinutes = 0;
 }
 
+<link rel="stylesheet" href="~/css/selectservices.css" />
 
 
 
-<div class="container mt-5">
+<div class="container mt-5 col-lg-8">
     <div class="row">
         @foreach (var treatment in Model.Treatments)
         {
-            <div class="col-md-4 mb-4">
+            <div class="col-md-3 mb-4">
                  <div class="card shadow h-100">
                     <div class="card-body">
-                        <h5 class="card-title">@treatment.Name</h5>
-                        <p>Duration:@treatment.DurationInMinutes min</p>
-                        <p>Price:@treatment.Price kr</p>
+                        <div class="text-center mb-3">
+                            <img src="~/images/icons/@(treatment.Icon).png"
+                                 alt="@treatment.Name"
+                                 class="treatment-icon" />
+                        </div>
+                        <div class="text-center">
+                            <h5>@treatment.Name</h5>
+                            <i class="bi bi-clock text-muted small">@treatment.DurationInMinutes min</i>
+                            <p class="fw-bold">@treatment.Price.ToString("0") kr</p>
+                        </div>
+                        
                         <form method="post" asp-page-handler="AddTreatments">
                             @foreach(var id in Model.TreatmentIds)
                             {

@@ -1,0 +1,13 @@
+﻿.treatment-icon {
+    width: 100px;
+    height: 100px;
+    object-fit: contain;
+}
+
+h5{
+    font-family: Calibri;
+    font-weight: bolder;
+}
+p{
+    font-family: Calibri;
+}

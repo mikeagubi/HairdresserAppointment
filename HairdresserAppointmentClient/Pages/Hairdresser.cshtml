@@ -25,6 +25,8 @@
 
                             </div>
 
+                           @*  Arbetstiderna *@
+
                             <h5 class="mt-4 mb-4 fw-bold">Arbetstider</h5>
 
                             @for (int i = 0; i < Model.Hairdresser.WorkingHours.Count; i++)
@@ -34,7 +36,7 @@
                                     <div class="col-4 form-check">
                                         <input type="checkbox" asp-for="Hairdresser.WorkingHours[i].Selected" class="form-check-input border border-dark ms-1" />
                                         <label class="form-check-label ms-2">
-                                            @Model.Hairdresser.WorkingHours[i].DayOfWeek
+                                            @Model.GetSwedishDays(Model.Hairdresser.WorkingHours[i].DayOfWeek)
                                         </label>
                                     </div>
 
@@ -77,6 +79,8 @@
                         <h4 class="mb-0 fw-bold">Account registration</h4>
                     </div>
 					<div class="card-body">
+
+                       @*  Skapa konto *@
 
 						<form method="post" asp-page-handler="CreateUser">
                             <div class="mb-3">
@@ -131,7 +135,7 @@
         </div>
         <div class="card-body">
 
-            
+            @* Visa alla Frisörer *@
 
             <div id="hairdresser-list">
                 <table class="table table-hover table-bordered">

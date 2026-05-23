@@ -50,10 +50,13 @@ body {
 .nav-link {
     letter-spacing: 1px;
     text-transform: uppercase;
-    transition: 0.3s;
 }
 
-#scrollBtn{
+.nav-link:hover {
+    border-bottom: 1px solid gold;
+}
+
+#scrollBtn {
     z-index: 9990;
     right: 20px;
     bottom: 80px;

@@ -101,6 +101,21 @@ namespace HairdresserAppointmentClient.Pages
         }
 
 
+        public string GetSwedishDays(DayOfWeek day)
+        {
+            return day switch
+            {
+                DayOfWeek.Monday => "Måndag",
+                DayOfWeek.Tuesday => "Tisdag",
+                DayOfWeek.Wednesday => "Onsdag",
+                DayOfWeek.Thursday => "Torsdag",
+                DayOfWeek.Friday => "Fredag",
+                DayOfWeek.Saturday => "Lördag",
+                DayOfWeek.Sunday => "Söndag",
+            };
+        }
+
+
 
     }
 }
