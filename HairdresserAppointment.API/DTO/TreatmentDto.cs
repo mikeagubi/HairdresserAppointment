@@ -1,12 +1,11 @@
-﻿namespace HairdresserAppointment.API.Models
+﻿namespace HairdresserAppointment.API.DTO
 {
-    public class Treatment
+    public class TreatmentDto
     {
         public int Id { get; set; }
         public string Name { get; set; }
         public int DurationInMinutes { get; set; }
         public decimal Price { get; set; }
         public string? Icon { get; set; }
-        public List<Booking> Bookings { get; set; } = new();
     }
 }

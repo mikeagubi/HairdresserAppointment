@@ -13,16 +13,19 @@
         <div class="card-body">
             <form method="post" asp-page-handler="CreateTreatment">
                 <div class="row">
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <label asp-for="Treatment.Name"class="form-label fw-bold"></label>
                         <input asp-for="Treatment.Name"class="form-control"placeholder="Enter name..." required />
                     </div>
-
-                    <div class="col-md-4">
+                    <div class="col-md-3">
+                        <label asp-for="Treatment.Icon" class="form-label fw-bold"></label>
+                        <input asp-for="Treatment.Icon" class="form-control" placeholder="Icon?.."/>
+                    </div>
+                    <div class="col-md-3">
                         <label asp-for="Treatment.DurationInMinutes" class="form-label fw-bold"></label>
                         <input asp-for="Treatment.DurationInMinutes" class="form-control" type="number"required />
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <label asp-for="Treatment.Price" class="form-label fw-bold"> </label>
                         <input asp-for="Treatment.Price" type="number" class="form-control" required />
                     </div>
@@ -59,6 +62,7 @@
                         <th>Name</th>
                         <th>Duration</th>
                         <th>Price</th>
+                        <th>Icon</th>
                     </tr>
                 </thead>
 
@@ -69,9 +73,10 @@
                             <td class="fw-semibold">@treatment.Name</td>
                             <td>@treatment.DurationInMinutes</td>
                             <td>@treatment.Price kr</td>
+                            <td>@treatment.Icon</td>
                         </tr>
                         <tr>
-                            <td colspan="3" class="p-0">
+                            <td colspan="4" class="p-0">
                                 <div id="treatment-@treatment.Id" class="collapse" aria-expanded="false">
                                     <div class="bg-dark p-4 text-white border-top border-3 border-warning">
                                         <h5 class="mb-4">Edit Treatment</h5>
@@ -84,6 +89,7 @@
 													<label class="form-label">Name</label>
                                                     <input class="form-control text-muted" asp-for="Treatment.Name" value="@treatment.Name" />
                                                 </div>
+                                                
                                                 <div class="col-md-2">
                                                     <label class="form-label">Duration</label>
                                                     <input class="form-control text-muted" asp-for="Treatment.DurationInMinutes" value="@treatment.DurationInMinutes" type="number" />
@@ -91,6 +97,10 @@
                                                 <div class="col-md-2">
                                                     <label class="form-label">Price</label>
                                                     <input class="form-control text-muted" asp-for="Treatment.Price" value="@treatment.Price" />
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <label class="form-label">Icon</label>
+                                                    <input class="form-control text-muted" asp-for="Treatment.Icon" value="@treatment.Icon" />
                                                 </div>
                                                 
                                             </div>
