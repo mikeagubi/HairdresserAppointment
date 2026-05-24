@@ -1,0 +1,15 @@
+﻿
+
+.time-slot{
+    width: 100px;
+    height: 80px;
+    border: 1px solid #d4af37;
+    border-radius: 12px;
+    background-color: white;
+    color: black;
+    
+}
+.time-slot:hover {
+    background-color: #d4af37;
+    border: 1px solid black;
+}

@@ -2,38 +2,56 @@
 @model HairdresserAppointmentClient.Pages.Booking.SelectTimeModel
 @{
 }
-
-<p>TEST TEST TEST TEST</p>
-
-
-
-@foreach(var slot in Model.TimeSlots.GroupBy(s => s.StartTime.Date.ToString("yyyy.MM.dd")))
-{
-    <h4 class="mt-4">
-        @slot.Key
-    </h4>
-    @foreach(var s in slot)
-    {
-        <form method="post" asp-page-handler="SelectTime">
-            <input type="hidden" name="startTime" value="@s.StartTime.ToString()"/>
-            <input type="hidden" name="endTime" value="@s.EndTime.ToString()" />
-            @foreach(var id in Model.TreatmentIds)
-            {
-                <input type="hidden" name="TreatmentIds" value="@id"/>
-            }
-            <input type="hidden" name="HairdresserId" value="@Model.HairdresserId"/>
-            <button type="submit" class="btn btn-outline-success m-1 text-dark">
-                @s.StartTime.ToString("HH:mm")
-                <p class="small text-muted mt-2">@Model.TotalPrice kr</p>
-            </button>
-        </form>
-    }
+<link rel="stylesheet" href="~/css/selecttime.css" />
+<div class="container">
+    <div class="text-center">
+        <h1>Välj en tid</h1>
+        <p class="text-muted">Välj en ledig tid som passar dig</p>
+        @foreach (var slot in Model.TimeSlots.GroupBy(s => s.StartTime.Date.ToString("yyyy.MM.dd")))
+        {
+            <div class="card shadow-sm border-0 mb-4">
+                <div class="card-header bg-dark text-white">
+					<h4 class="mb-0 fw-bold">@slot.Key</h4>
+                </div>
+				<div class="card-body">
+                    <div class="d-flex flex-wrap gap-3">
+						@foreach (var s in slot)
+						{
+							<form method="post" asp-page-handler="SelectTime">
+								<input type="hidden" name="startTime" value="@s.StartTime.ToString()" />
+								<input type="hidden" name="endTime" value="@s.EndTime.ToString()" />
+								@foreach (var id in Model.TreatmentIds)
+								{
+									<input type="hidden" name="TreatmentIds" value="@id" />
+								}
+								<input type="hidden" name="HairdresserId" value="@Model.HairdresserId" />
+								<button type="submit" class="time-slot">
+									@s.StartTime.ToString("HH:mm")
+									<p class="small text-muted mt-2">@Model.TotalPrice kr</p>
+								</button>
+							</form>
+						}
+                    </div>
+					
+                </div>
+				
+            </div>
+            
     
-}
+        }
+    </div>
+
+
+    
+</div>
 
 
 
-<!-- Modal -->
+
+
+
+
+<!-- Error Modal -->
 @if (TempData["ErrorMessage"] != null)
 {
     <div class="modal fade" id="messageModal">
