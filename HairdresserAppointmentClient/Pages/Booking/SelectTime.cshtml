@@ -3,46 +3,96 @@
 @{
 }
 <link rel="stylesheet" href="~/css/selecttime.css" />
-<div class="container">
-    <div class="text-center">
-        <h1>Välj en tid</h1>
-        <p class="text-muted">Välj en ledig tid som passar dig</p>
-        @foreach (var slot in Model.TimeSlots.GroupBy(s => s.StartTime.Date.ToString("yyyy.MM.dd")))
-        {
-            <div class="card shadow-sm border-0 mb-4">
-                <div class="card-header bg-dark text-white">
-					<h4 class="mb-0 fw-bold">@slot.Key</h4>
-                </div>
-				<div class="card-body">
-                    <div class="d-flex flex-wrap gap-3">
-						@foreach (var s in slot)
-						{
-							<form method="post" asp-page-handler="SelectTime">
-								<input type="hidden" name="startTime" value="@s.StartTime.ToString()" />
-								<input type="hidden" name="endTime" value="@s.EndTime.ToString()" />
-								@foreach (var id in Model.TreatmentIds)
-								{
-									<input type="hidden" name="TreatmentIds" value="@id" />
-								}
-								<input type="hidden" name="HairdresserId" value="@Model.HairdresserId" />
-								<button type="submit" class="time-slot">
-									@s.StartTime.ToString("HH:mm")
-									<p class="small text-muted mt-2">@Model.TotalPrice kr</p>
-								</button>
-							</form>
-						}
-                    </div>
-					
-                </div>
-				
+
+
+
+<div class="container py-5">
+
+    <div class="row g-5">
+
+        <div class="col-lg-8">
+
+            <div class="mb-5">
+                <h1 class="fw-bold display-5">Välj en tid</h1>
+                <p class="text-muted fs-5">Välj en ledig tid som passar dig</p>
             </div>
-            
-    
-        }
+            @foreach (var slot in Model.TimeSlots.GroupBy(s => s.StartTime.Date.ToString("yyyy.MM.dd")))
+            {
+                <div class="mb-5">
+                    <div class="mb-4">
+						<h3 class="fw-semibold mb-3">@slot.Key</h3>
+                        <div class="border-bottom"></div>
+                    </div>
+						
+
+                    <div class="d-flex flex-wrap gap-3">
+                        @foreach (var s in slot)
+                        {
+                            <div>
+                                <form method="post" asp-page-handler="SelectTime">
+
+                                    <input type="hidden" name="startTime" value="@s.StartTime.ToString()" />
+                                    <input type="hidden" name="endTime" value="@s.EndTime.ToString()" />
+
+                                    @foreach (var id in Model.TreatmentIds)
+                                    {
+                                        <input type="hidden" name="TreatmentIds" value="@id" />
+                                    }
+
+                                    <input type="hidden" name="HairdresserId" value="@Model.HairdresserId" />
+
+                                    <button type="submit" class="time-slot btn bg-white rounded-4 shadow border-0">
+                                        <div class="fw-bold fs-4 text-dark">@s.StartTime.ToString("HH:mm")</div>
+                                        <small class="text-secondary">@Model.TotalPrice.ToString("0") kr</small>
+                                    </button>
+                                </form>
+                            </div>
+                            
+                        }
+                    </div>
+				</div>
+            }
+
+        </div>
+
+        <div class="col-lg-4">
+            <div class="booking-details bg-dark text-white rounded-5 shadow-lg p-4 sticky-top">
+                <div class="mb-5">
+                    <h3 class="fw-bold text-gold mb-0">Din bokning</h3>
+                </div>
+
+                <div class="mb-4">
+                    <small class="text-grey small mb-2">FRISÖR</small>
+                    <div class="fs-5 fw-semibold"> @Model.SelectedHairdresser!.Name</div>
+                </div>
+
+                <div class="mb-4">
+                    <div class="small text-grey mb-3">BEHANDLIGAR</div>
+                    @foreach (var treatment in Model.SelectedTreatments)
+                    {
+                        <div class="d-flex justify-content-between mb-2">
+                            <span> ✂ @treatment.Name</span>
+                            <span> @treatment.Price.ToString("0") kr</span>
+                        </div>
+                    }
+                </div>
+
+                <div class="border-top border-secondary pt-4">
+                    <div class="d-flex justify-content-between mb-2">
+                        <span> Total tid</span>
+                        <span> @Model.TotalTime min</span>
+					</div>
+
+                    <div class="d-flex justify-content-between align-items-center">
+                        <span>Total pris</span>
+                        <span class="fs-3 fw-bold text-gold"> @Model.TotalPrice.ToString("0") kr</span>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
     </div>
-
-
-    
 </div>
 
 
