@@ -7,101 +7,117 @@
 
 <link rel="stylesheet" href="~/css/selectservices.css" />
 
+<div class="container px-4 mt-5 mb-5">
+    <div class="row g-4">
 
-
-<div class="container mt-5 col-lg-8">
-    <div class="row">
-        @foreach (var treatment in Model.Treatments)
-        {
-            <div class="col-md-3 mb-4">
-                 <div class="card shadow h-100">
-                    <div class="card-body">
-                        <div class="text-center mb-3">
-                            <img src="~/images/icons/@(treatment.Icon).png"
-                                 alt="@treatment.Name"
-                                 class="treatment-icon" />
-                        </div>
-                        <div class="text-center">
-                            <h5>@treatment.Name</h5>
-                            <i class="bi bi-clock text-muted small">@treatment.DurationInMinutes min</i>
-                            <p class="fw-bold">@treatment.Price.ToString("0") kr</p>
-                        </div>
-                        
-                        <form method="post" asp-page-handler="AddTreatments">
-                            @foreach(var id in Model.TreatmentIds)
-                            {
-                                <input type="hidden" asp-for="TreatmentIds" value="@id"/>     
-                            }
-                            <input type="hidden" name="treatmentId" value="@treatment.Id" />
-                            <button type="submit" class="btn btn-dark w-100">Lägg till</button>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        }
-
-    </div>
-
-</div>
-
-<div class="card shadow mt-5">
-    <div class="card-header bg-dark text-white">
-        <h4>Din bokning</h4>
-    </div>
-
-    <div class="card-body">
-      
-        @if (Model.TreatmentIds.Count == 0)
-        {
-            <p>No treatments selected</p>
-        }
-        else
-        {
-            @foreach(var treatment in Model.Treatments) 
-            {
-                if (Model.TreatmentIds.Contains(treatment.Id)) //Filtrerar på de treat som anv valt
+        <div class="col-xl-9 col-lg-8">
+            <div class="row g-4">
+                @foreach (var treatment in Model.Treatments)
                 {
-                    totalPrice += treatment.Price;
-                    totalDurationInMinutes += treatment.DurationInMinutes;
+                    <div class="col-12 col-sm-6 col-lg-4 col-xl-3">
+                        <div class="card treatment-card shadow h-100">
+                            <div class="card-body text-center d-flex flex-column">
+                                <div class="mb-3">
+                                    <img src="~/images/icons/@(treatment.Icon).png" class="treatment-icon" />
+                                </div>
+                                <h5 class="treatment-title">@treatment.Name</h5>
+                                <p class="text-muted mb-2"><i class="bi bi-clock"></i> @treatment.DurationInMinutes min</p>
+                                <p class="treatment-price">@treatment.Price.ToString("0") kr</p>
+                                <form method="post" asp-page-handler="AddTreatments">
+                                    @foreach(var id in Model.TreatmentIds)
+                                    {
+                                        <input type="hidden" asp-for="TreatmentIds" value="@id"/> //Skicka listan så den inte försvinner vid req
+                                    }
 
-                    <p>@treatment.Name</p>
-                    <p>@treatment.Price</p>
-                    <p>@treatment.DurationInMinutes</p>
+                                    <input type="hidden" name="treatmentId" value="@treatment.Id" />
+                                    <button type="submit" class="btn btn-dark w-100 rounded-3">Lägg till</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                }
 
-                    <form method="post" asp-page-handler="RemoveTreatment">
-                        @foreach(var id in Model.TreatmentIds)
-                        {
-                            <input type="hidden" asp-for="TreatmentIds" value="@id"/>   //skickar listan igen så den inte fösvinner efter post req
-                        }
-                        <input type="hidden" name="treatmentId" value="@treatment.Id" />
-                        <button type="submit" class="btn btn-danger btn-sm">Remove</button>
-                    </form>
-                    <hr />
+            </div>
 
-				}
+        </div>
 
-				
-            }
-            <p>total pris: @totalPrice</p>
-            <p>total tid : @totalDurationInMinutes</p>
-        }
 
-        <form method="post" asp-page-handler="SelectTime">
-            @foreach(var id in Model.TreatmentIds)
-            {
-                <input type="hidden" asp-for="TreatmentIds" value="@id"/>  //skickar listan igen pga post-req      
-            }
 
-            <label class="form-label fw-bold mt-3">Välj Frisör</label>
-            <select asp-for="HairdresserId" class="form-select">
-                <option value="" disabled selected> --Select Hairdresser--  </option>
-                    @foreach(var hairdresser in Model.Hairdressers)
+        <div class="col-xl-3 col-lg-4 z-0">
+            <div class="card booking-card shadow-sm sticky-lg-top">
+                <div class="card-body p-4">
+                    <h3 class="fw-bold mb-4">Din bokning</h3>
+                    @if (Model.TreatmentIds.Count == 0)
                     {
-                        <option value="@hairdresser.Id">@hairdresser.Name</option>
+                        <p class="text-muted">Inga behandlingar valda</p>
                     }
-            </select>
-            <button type="submit" class="btn btn-dark w-100 mt-3">spara o gå vidare</button>
-        </form>
+                    else
+                    {
+                        @foreach (var treatment in Model.Treatments)
+                        {
+                            if (Model.TreatmentIds.Contains(treatment.Id)) //Filtrerar på de treat som anv valt
+                            {
+                                totalPrice += treatment.Price;
+                                totalDurationInMinutes += treatment.DurationInMinutes;
+                                <div class="selected-treatment mb-3">
+                                    <div class="d-flex justify-content-between">
+                                        <div> 
+                                            <p class="fw-bold mb-1">@treatment.Name</p>
+                                            <small class="text-muted">@treatment.DurationInMinutes min</small>
+                                        </div>
+                                        <div class="text-end">
+                                            <p class="fw-bold">@treatment.Price kr</p>
+                                        </div>
+                                    </div>
+
+                                    <form method="post" asp-page-handler="RemoveTreatment">
+                                        @foreach(var id in Model.TreatmentIds)
+                                        {
+                                            <input type="hidden" asp-for="TreatmentIds" value="@id" />   //skickar listan igen så den inte försvinner efter post request
+                                        }
+                                        <input type="hidden" name="treatmentId" value="@treatment.Id" />
+                                        <button type="submit" class="btn btn-sm btn-outline-danger mt-2">Ta bort</button>
+                                    </form>
+                                </div>
+                                <hr />
+                            }
+                        }
+                        <div class="mt-4">
+                            <div class="d-flex justify-content-between">
+                                <p class="fw-bold">Totaltid</p>
+                                <p>@totalDurationInMinutes min </p>
+                            </div>
+                            <div class="d-flex justify-content-between">
+                                <h5 class="fw-bold">Totalt pris</h5>
+                                <h5 class="fw-bold">@totalPrice kr</h5>
+                            </div>
+                        </div>
+                    }
+
+                    <hr class="my-4" />
+                    <form method="post" asp-page-handler="SelectTime">
+                        @foreach (var id in Model.TreatmentIds)
+                        {
+                            <input type="hidden" asp-for="TreatmentIds" value="@id" />   //skickar listan igen pga post request
+                        }
+                        <label class="form-label fw-bold">Välj frisör</label>
+
+                        <select asp-for="HairdresserId" class="form-select mb-4">
+                        <option value="" disabled selected>  -- Select Hairdresser --  </option>
+                            @foreach(var hairdresser in Model.Hairdressers)
+                            {
+                                <option value="@hairdresser.Id">@hairdresser.Name</option>
+                            }
+                        </select>
+                        <button type="submit"class="btn btn-dark w-100 py-3 rounded-3">Visa lediga tider</button>
+                    </form>
+
+                </div>
+
+            </div>
+
+        </div>
 
     </div>
+
 </div>

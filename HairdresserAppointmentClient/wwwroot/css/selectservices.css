@@ -1,13 +1,41 @@
-﻿.treatment-icon {
-    width: 100px;
-    height: 100px;
-    object-fit: contain;
+﻿.treatment-card {
+    border: none;
+    border-radius: 20px;
+    transition: 0.2s ease;
 }
 
-h5{
-    font-family: Calibri;
-    font-weight: bolder;
+.treatment-card:hover {
+    transform: translateY(-4px);
 }
-p{
-    font-family: Calibri;
+
+.treatment-icon {
+    width: 100%;
+    max-width: 120px;
+    height: auto;
+    object-fit: contain;
+    display: block;
+    margin: 0 auto;
+}
+
+.treatment-title {
+    font-family: Calibri, sans-serif;
+    font-weight: 700;
+    font-size: 1.15rem;
+    min-height: 50px;
+}
+
+.treatment-price {
+    font-size: 1.3rem;
+    font-weight: 700;
+}
+
+.booking-card {
+    border: none;
+    border-radius: 20px;
+    top: 100px;
+    margin-bottom: 120px;
+}
+
+.card-body {
+    padding: 1.5rem;
 }
