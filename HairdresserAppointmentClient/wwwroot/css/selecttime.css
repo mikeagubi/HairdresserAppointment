@@ -3,14 +3,16 @@
 .time-slot{
     width: 120px;
     height: 90px;
-    transition: all 0.25s ease, box-shadow 0.25s ease, background-color 0.25s ease;
+    transition: all 0.5s ease;
+
 }
 
-.time-slot:hover{
-    transform: translateY(-4px);
-    background-color: #d4af37 !important;
-    box-shadow: 0 10px 24px rgba(0,0,0,0.15);
-}
+    .time-slot:hover {
+        transform: translateY(-6px);
+        border: solid 2px black !important;
+        background-color: #d4af37 !important;
+        box-shadow: 0 10px 24px rgba(0,0,0,0.15);
+    }
 
 .text-grey{
     color: lightgrey;
@@ -22,4 +24,10 @@ body{
 
 .booking-details{
     top: 120px;
+}
+
+.week-days {
+    position: sticky;
+    top: 90px;
+     background-color: white;
 }

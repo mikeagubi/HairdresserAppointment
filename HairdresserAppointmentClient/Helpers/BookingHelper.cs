@@ -12,7 +12,7 @@ namespace HairdresserAppointmentClient.Helpers
             var currentDate = DateTime.Today;
             var dayFound = 0;
 
-            while (dayFound < 3)
+            while (dayFound < 90)
             {
                 var workingHour = hairdresser.WorkingHours.Where(w => w.DayOfWeek == currentDate.DayOfWeek).SingleOrDefault();
 
