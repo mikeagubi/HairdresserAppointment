@@ -1,4 +1,5 @@
 ﻿using HairdresserAppointment.API.Data;
+using HairdresserAppointment.API.DTO;
 using HairdresserAppointment.API.Models;
 using Microsoft.EntityFrameworkCore;
 
@@ -29,7 +30,7 @@ namespace HairdresserAppointment.API.Services
             return treatment;
         }
 
-        public async Task<bool> UpdateTreatmentAsync(Treatment dto)
+        public async Task<bool> UpdateTreatmentAsync(TreatmentDto dto)
         {
             var updateTreatment = await _context.Treatments.FindAsync(dto.Id);
             if (updateTreatment == null)
@@ -38,6 +39,7 @@ namespace HairdresserAppointment.API.Services
             updateTreatment.Name = dto.Name;
             updateTreatment.Price = dto.Price;
             updateTreatment.DurationInMinutes = dto.DurationInMinutes;
+            updateTreatment.Icon = dto.Icon;
 
             await _context.SaveChangesAsync();
             return true;

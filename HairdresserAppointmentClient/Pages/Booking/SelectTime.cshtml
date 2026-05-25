@@ -1,39 +1,139 @@
 ﻿@page
 @model HairdresserAppointmentClient.Pages.Booking.SelectTimeModel
 @{
+    var startDay = (Model.PageNumber - 1) * 7;
 }
-
-<p>TEST TEST TEST TEST</p>
-
-
-
-@foreach(var slot in Model.TimeSlots.GroupBy(s => s.StartTime.Date.ToString("yyyy.MM.dd")))
-{
-    <h4 class="mt-4">
-        @slot.Key
-    </h4>
-    @foreach(var s in slot)
-    {
-        <form method="post" asp-page-handler="SelectTime">
-            <input type="hidden" name="startTime" value="@s.StartTime.ToString()"/>
-            <input type="hidden" name="endTime" value="@s.EndTime.ToString()" />
-            @foreach(var id in Model.TreatmentIds)
-            {
-                <input type="hidden" name="TreatmentIds" value="@id"/>
-            }
-            <input type="hidden" name="HairdresserId" value="@Model.HairdresserId"/>
-            <button type="submit" class="btn btn-outline-success m-1 text-dark">
-                @s.StartTime.ToString("HH:mm")
-                <p class="small text-muted mt-2">@Model.TotalPrice kr</p>
-            </button>
-        </form>
-    }
-    
-}
+<link rel="stylesheet" href="~/css/selecttime.css" />
 
 
 
-<!-- Modal -->
+<div class="container py-5">
+
+    <div class="row g-5">
+
+        <div class="col-lg-8">
+            <div class="week-days z-3 bg-light pb-3 mb-3">
+                <div class="mb-4">
+                    <h1 class="fw-bold display-5">Välj en tid</h1>
+                    <p class="text-muted fs-5 mb-0"> Välj en ledig tid som passar dig</p>
+                </div>
+
+                <div class="row g-2 text-center">
+
+                    <!-- Hämtar 7 dagar fram från dagens datum -->
+                    @for (int i = 0; i < 7; i++)
+                    {
+                        var currentDay = DateTime.Today.AddDays(startDay + i);
+                        <div class="col">
+                            <div class="fw-bold text-uppercase"> @currentDay.ToString("dddd")</div>
+                            <small class="text-muted"> @currentDay.Date.ToString("d")</small>
+                        </div>
+                    }
+                </div>
+            </div>
+
+            <!-- Timeslot  -->
+            <div class="row g-2 align-items-start">
+                @for (int i = 0; i < 7; i++)
+                {
+                    var currentDay = DateTime.Today.AddDays(startDay + i);
+                    var daySlots = Model.TimeSlots.Where(s => s.StartTime.Date == currentDay.Date).ToList();  <!-- hämtar tiderna för den dan -->
+
+                    <div class="col">
+                        <div class="d-flex flex-column gap-2">
+                            @foreach (var s in daySlots)
+                            {
+                                <form method="post" asp-page-handler="SelectTime">
+                                    <input type="hidden" name="startTime" value="@s.StartTime.ToString()" />
+                                    <input type="hidden" name="endTime" value="@s.EndTime.ToString()" />
+                                    @foreach (var id in Model.TreatmentIds)
+                                    {
+                                        <input type="hidden" name="TreatmentIds" value="@id" />
+                                    }
+
+                                    <input type="hidden" name="HairdresserId" value="@Model.HairdresserId" />
+                                    <button type="submit" class="time-slot btn bg-white rounded-4 shadow-sm border-0 w-100">
+                                        <div class="fw-bold text-dark"> @s.StartTime.ToString("HH:mm")</div>
+                                        <small class="text-secondary"> @Model.TotalPrice.ToString("0")kr</small>
+                                    </button>
+                                </form>
+                            }
+                        </div>
+
+                    </div>
+                }
+            </div>
+        </div>
+
+<!-- BokningsKassa / Bokningen -->
+
+        <div class="col-lg-4">
+            <div class="booking-details bg-dark text-white rounded-5 shadow-lg p-4 sticky-top">
+                <div class="mb-5">
+                    <h3 class="fw-bold text-gold mb-0">Din bokning</h3>
+                </div>
+                 <div class="mb-4">
+                    <small class="text-grey small mb-2">FRISÖR</small>
+                    <div class="fs-5 fw-semibold"> @Model.SelectedHairdresser!.Name</div>
+                </div>
+
+                <div class="mb-4">
+                    <div class="small text-grey mb-3">BEHANDLIGAR</div>
+                    @foreach (var treatment in Model.SelectedTreatments)
+                    {
+                        <div class="d-flex justify-content-between mb-2">
+                            <span> ✂ @treatment.Name</span>
+                            <span> @treatment.Price.ToString("0") kr</span>
+                        </div>
+                    }
+                </div>
+
+                <div class="border-top border-secondary pt-4">
+                    <div class="d-flex justify-content-between mb-2">
+                        <span> Total tid</span>
+                        <span> @Model.TotalTime min</span>
+					</div>
+
+                    <div class="d-flex justify-content-between align-items-center">
+                        <span>Total pris</span>
+                        <span class="fs-3 fw-bold text-gold"> @Model.TotalPrice.ToString("0") kr</span>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- Min Pagination -->
+
+<nav class="mt-5">
+    <form method="get" class="d-flex justify-content-center gap-3">
+        @foreach (var id in Model.TreatmentIds)
+        {
+            <input type="hidden" name="TreatmentIds" value="@id" />
+        }
+
+        <input type="hidden" name="HairdresserId" value="@Model.HairdresserId" />
+
+        <button type="submit" name="PageNumber" value="@(Model.PageNumber - 1)" 
+            class="btn btn-outline-dark rounded-pill px-4" @(Model.PageNumber == 1 ? "disabled" : "")>
+            <i class="bi bi-arrow-left me-2"></i> Visa tidigare tider
+        </button>
+        
+        <button type="submit" name="PageNumber" value="@(Model.PageNumber + 1)" 
+            class="btn btn-dark rounded-pill px-4"> Visa senare tider
+            <i class="bi bi-arrow-right ms-2"></i>
+        </button>
+    </form>
+</nav>
+
+
+
+
+<!-- Error Modal för manipulering eller annat-->
+
 @if (TempData["ErrorMessage"] != null)
 {
     <div class="modal fade" id="messageModal">

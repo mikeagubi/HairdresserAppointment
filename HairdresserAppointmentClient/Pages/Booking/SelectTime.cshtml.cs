@@ -24,9 +24,11 @@ namespace HairdresserAppointmentClient.Pages.Booking
         public decimal TotalPrice { get; set; }
         public int TotalTime { get; set; }
 
-        public List<TimeSlot> TimeSlots { get; set; } = new();
+        public List<TimeSlot> TimeSlots { get; set; } = new(); //lediga luckor för behandlingens start o end-time
 
-        
+        [BindProperty(SupportsGet = true)]
+        public int PageNumber { get; set; } = 1;
+
         [BindProperty(SupportsGet = true)]
         public List<int> TreatmentIds { get; set; }
 
