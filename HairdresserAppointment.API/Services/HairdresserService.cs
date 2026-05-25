@@ -74,7 +74,7 @@ namespace HairdresserAppointment.API.Services
         }
 
 
-        public async Task<bool> SoftDeleteHairdresser(int id)
+        public async Task<bool> DeleteHairdresserAsync(int id)
         {
             var deletedHairdresser = await _context.Hairdressers.FindAsync(id);
             if (deletedHairdresser == null)

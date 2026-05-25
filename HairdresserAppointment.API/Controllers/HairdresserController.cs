@@ -48,9 +48,18 @@ namespace HairdresserAppointment.API.Controllers
             return Ok(hairdresser);
         }
 
+        [Authorize(Roles = "Admin")]
+        [HttpPut("delete{id}")]
+        public async Task<IActionResult> DeleteHairdresser(int id)
+        {
+            var success = await _hairdresserService.DeleteHairdresserAsync(id);
+            if (!success)
+            {
+                return NotFound();
+            }
 
-
-        //skapa PUT men inte en hel PUT utan kanske bara från active till false ? 
+            return NoContent();
+        }
 
 
 

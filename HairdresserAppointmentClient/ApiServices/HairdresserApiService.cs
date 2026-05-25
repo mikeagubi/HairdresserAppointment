@@ -24,9 +24,7 @@ namespace HairdresserAppointmentClient.ApiServices
         {
             try
             {
-
                 var response = await _httpClient.GetFromJsonAsync<List<HairdresserDto>>("api/hairdresser");
-
                 return response ?? new List<HairdresserDto>();
             }
             catch
@@ -40,12 +38,20 @@ namespace HairdresserAppointmentClient.ApiServices
             try
             {
                 return await _httpClient.GetFromJsonAsync<HairdresserBookingDto>($"api/hairdresser/{id}");
-
             }
             catch
             {
                 return null;
             }
+        }
+
+
+        public async Task<bool> DeleteHairdresserAsync(int id, string token)
+        {
+            AddJwtToken(token);
+            var response = await _httpClient.PutAsync("api/hairdresser/delete/{id}", null);
+
+            return response.IsSuccessStatusCode;
         }
 
 
