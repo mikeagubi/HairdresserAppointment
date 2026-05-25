@@ -12,7 +12,10 @@ namespace HairdresserAppointmentClient.Helpers
             var currentDate = DateTime.Today;
             var dayFound = 0;
 
-            while (dayFound < 90)
+            var dayCounter = 0;
+            var maxDayCount = 150;
+
+            while (dayFound < 90 && dayCounter < maxDayCount )
             {
                 var workingHour = hairdresser.WorkingHours.Where(w => w.DayOfWeek == currentDate.DayOfWeek).SingleOrDefault();
 
@@ -23,6 +26,10 @@ namespace HairdresserAppointmentClient.Helpers
                 }
 
                 var currentStartTime = currentDate.Date + workingHour.StartTime;
+                if(currentStartTime.Date == DateTime.Today)
+                {
+                    currentStartTime = DateTime.Now;
+                }
                 var currentEndTime = currentDate.Date + workingHour.EndTime;
                 var dayHasAvailableSlots = false;
 
@@ -47,7 +54,9 @@ namespace HairdresserAppointmentClient.Helpers
                     dayFound++;
                 }
 
+                dayCounter++;
                 currentDate = currentDate.AddDays(1);
+                
             }
 
             return availableSlots;
