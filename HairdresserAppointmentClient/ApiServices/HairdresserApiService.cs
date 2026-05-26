@@ -11,6 +11,7 @@ namespace HairdresserAppointmentClient.ApiServices
         }
 
 
+        //Skapa Frisör
         public async Task<bool> CreateWithTimeAsync(CreateHairdresserDto dto, string token)
         {
             AddJwtToken(token);
@@ -20,6 +21,7 @@ namespace HairdresserAppointmentClient.ApiServices
         }
 
 
+        //Hämta alla frisörer
         public async Task<List<HairdresserDto>> GetHairdressersAsync()
         {
             try
@@ -33,6 +35,8 @@ namespace HairdresserAppointmentClient.ApiServices
             }
         }
 
+
+        //Hämta frisör via Id
         public async Task<HairdresserBookingDto?> GetHairdresserByIdAsync(int id)
         {
             try
@@ -45,11 +49,12 @@ namespace HairdresserAppointmentClient.ApiServices
             }
         }
 
-
+        
+        //soft-delete Frisör
         public async Task<bool> DeleteHairdresserAsync(int id, string token)
         {
             AddJwtToken(token);
-            var response = await _httpClient.PutAsync("api/hairdresser/delete/{id}", null);
+            var response = await _httpClient.PutAsync($"api/hairdresser/delete/{id}", null);
 
             return response.IsSuccessStatusCode;
         }
