@@ -26,11 +26,16 @@ namespace HairdresserAppointmentClient.Helpers
                 }
 
                 var currentStartTime = currentDate.Date + workingHour.StartTime;
+                var currentEndTime = currentDate.Date + workingHour.EndTime;
+
                 if(currentStartTime.Date == DateTime.Today)
                 {
-                    currentStartTime = DateTime.Now;
+                    if(DateTime.Now > currentStartTime && DateTime.Now < currentEndTime)
+                    {
+                        currentStartTime = DateTime.Now;
+                    }
+                    
                 }
-                var currentEndTime = currentDate.Date + workingHour.EndTime;
                 var dayHasAvailableSlots = false;
 
                 while(currentStartTime.AddMinutes(totalTreatmentTime) <= currentEndTime)
@@ -79,7 +84,13 @@ namespace HairdresserAppointmentClient.Helpers
         }
 
 
+        public string GenerateBookingNumber()
+        {
+            string month = DateTime.Now.ToString("MMM").ToUpper();
+            string numbers = Random.Shared.Next(100000, 999999).ToString();
 
+            return $"{month}-{numbers}";
+        }
 
 
 

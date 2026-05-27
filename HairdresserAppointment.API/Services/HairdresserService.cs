@@ -55,6 +55,7 @@ namespace HairdresserAppointment.API.Services
                     }).ToList(),
 
                     Bookings = h.Bookings
+                    .Where(b => b.IsDeleted == false)
                     
                     .Select(b => new BookingTimeDto
                     {

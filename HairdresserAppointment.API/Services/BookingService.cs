@@ -39,6 +39,8 @@ namespace HairdresserAppointment.API.Services
                 CostumerEmail = dto.CustomerEmail,
                 CostumerPhone = dto.CustomerPhone,
                 TotalPrice = totalPrice,
+                BookingNumber = GenerateBookingNumber(),
+                IsDeleted = false,
                 TotalDurationInMinutes = totalDurationInMinutes
 
             };
@@ -52,13 +54,20 @@ namespace HairdresserAppointment.API.Services
         {
             var isBooked = await _context.Bookings
                 .AnyAsync(b => b.HairdresserId == hairdresserId
+                && !b.IsDeleted
                 && startTime < b.EndTime
                 && endTime > b.StartTime);
 
             return isBooked;
         }
 
+        private string GenerateBookingNumber()
+        {
+            string month = DateTime.Now.ToString("MMM").ToUpper();
+            string numbers = Random.Shared.Next(100000, 999999).ToString();
 
+            return $"{month}-{numbers}";
+        }
 
 
 
