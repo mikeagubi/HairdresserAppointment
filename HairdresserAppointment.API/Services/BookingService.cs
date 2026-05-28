@@ -8,10 +8,12 @@ namespace HairdresserAppointment.API.Services
     public class BookingService
     {
         private readonly MyDbContext _context;
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public BookingService(MyDbContext context)
+        public BookingService(MyDbContext context, IHttpContextAccessor httpContextAccessor)
         {
             _context = context;
+            _httpContextAccessor = httpContextAccessor;
         }
 
         //skapa en bookning
@@ -59,20 +61,23 @@ namespace HairdresserAppointment.API.Services
                 !b.IsDeleted && b.BookingNumber == dto.BookingNumber && 
                 (b.CostumerEmail == dto.Email || b.CostumerPhone == dto.PhoneNumber))
                 .SingleOrDefaultAsync();
+            
+            var isAdminOrHairdresser = _httpContextAccessor.HttpContext.User.IsInRole("Admin") ||
+                _httpContextAccessor.HttpContext.User.IsInRole("Hairdresser");
 
-            if(booking == null)
+            if (booking == null)
             {
                 return "Kunde ej hitta bokningen, var god och kontrollera dina uppgifter";
             }
 
-            if (CanBeCancelled(booking.StartTime))
+            if (CanBeCancelled(booking.StartTime) || isAdminOrHairdresser)
             {
                 booking.IsDeleted = true;
                 await _context.SaveChangesAsync();
                 return "Din tid har nu avbokats, Tack och välkommen åter.";
             }
 
-            return "Kan ej avbokas, avbokning måste ske senast 24 timmar innan bokad tid, Välkommen åter.";
+            return $"Kan ej avbokas, avbokning måste ske senast 24 timmar innan bokad tid.\n Välkommen åter.";
         }
 
 

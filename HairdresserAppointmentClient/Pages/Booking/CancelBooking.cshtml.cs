@@ -29,7 +29,8 @@ namespace HairdresserAppointmentClient.Pages.Booking
 
         public async Task<IActionResult> OnPostCancelBookingAsync()
         {
-            ResponseMessage = await _bookingApiService.CancelBookingAsync(CancelBooking);
+            var token = HttpContext.Session.GetString("token");
+            ResponseMessage = await _bookingApiService.CancelBookingAsync(CancelBooking, token);
 
             return Page(); 
         }

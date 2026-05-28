@@ -32,10 +32,6 @@ namespace HairdresserAppointment.API.Controllers
         }
 
 
-        //Hämta Bokning via id
-        [HttpGet]
-        public async Task
-
 
 
     }
