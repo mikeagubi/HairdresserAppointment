@@ -14,7 +14,7 @@ namespace HairdresserAppointment.API.Services
             _context = context;
         }
 
-
+        //skapa en bookning
         public async Task CreateBookingAsync(CreateBookingDto dto)
         {
             var isBooked = await IsTimeBookedAsync(dto.HairdresserId, dto.StartTime, dto.EndTime);
@@ -50,6 +50,34 @@ namespace HairdresserAppointment.API.Services
 
         }
 
+
+        //Avbokning
+        public async Task<string> CancelBookingAsync(CancelBookingDto dto)
+        {
+            var booking = await _context.Bookings
+                .Where(b => 
+                !b.IsDeleted && b.BookingNumber == dto.BookingNumber && 
+                (b.CostumerEmail == dto.Email || b.CostumerPhone == dto.PhoneNumber))
+                .SingleOrDefaultAsync();
+
+            if(booking == null)
+            {
+                return "Kunde ej hitta bokningen, var god och kontrollera dina uppgifter";
+            }
+
+            if (CanBeCancelled(booking.StartTime))
+            {
+                booking.IsDeleted = true;
+                await _context.SaveChangesAsync();
+                return "Din tid har nu avbokats, Tack och välkommen åter.";
+            }
+
+            return "Kan ej avbokas, avbokning måste ske senast 24 timmar innan bokad tid, Välkommen åter.";
+        }
+
+
+
+        // Kollar om tidsslot är bokad, förhindrar dubbla bokningar
         private async Task<bool> IsTimeBookedAsync(int hairdresserId, DateTime startTime, DateTime endTime)
         {
             var isBooked = await _context.Bookings
@@ -61,12 +89,29 @@ namespace HairdresserAppointment.API.Services
             return isBooked;
         }
 
+        //Genererar bokningsnummer
         private string GenerateBookingNumber()
         {
             string month = DateTime.Now.ToString("MMM").ToUpper();
             string numbers = Random.Shared.Next(100000, 999999).ToString();
 
             return $"{month}-{numbers}";
+        }
+
+
+        //validerar tid kvar för avbokning
+        private bool CanBeCancelled(DateTime startTime)
+        {
+            var timeNow = DateTime.Now;
+            var timeLeft = startTime - timeNow;
+            var cancelTimeLimit = TimeSpan.FromHours(24);
+
+            if(timeLeft >= cancelTimeLimit)
+            {
+                return true;
+            }
+
+            return false;
         }
 
 

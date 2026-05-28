@@ -14,13 +14,21 @@ namespace HairdresserAppointment.API.Controllers
             _bookingService = bookingService;
         }
 
-
+        //Skapa en bokning
         [HttpPost]
         public async Task CreateBooking(CreateBookingDto dto)
         {
             await _bookingService.CreateBookingAsync(dto);
         }
 
+        //Avbokning
+        [HttpPut("cancel-booking")]
+        public async Task<ActionResult<string>> CancelBooking(CancelBookingDto dto)
+        {
+            var success = await _bookingService.CancelBookingAsync(dto);
+
+            return Ok(success);
+        }
 
 
 

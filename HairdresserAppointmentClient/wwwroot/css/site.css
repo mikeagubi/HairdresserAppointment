@@ -56,6 +56,25 @@ body {
     border-bottom: 1px solid gold;
 }
 
+h1 {
+    font-family: 'Poppins', sans-serif;
+    font-size: clamp(1.8rem, 3.5vw, 4rem);
+}
+
+h2 {
+    font-size: clamp(1.3rem, 2vw, 2.5rem);
+    font-family: 'Poppins', sans-serif;
+}
+
+h4 {
+    font-family: Calibri
+}
+
+p {
+    font-size: clamp(0.95rem, 1.2vw, 1.4rem);
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
 #scrollBtn {
     z-index: 9990;
     right: 20px;
