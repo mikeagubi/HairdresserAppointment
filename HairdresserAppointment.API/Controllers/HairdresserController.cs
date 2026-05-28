@@ -18,15 +18,17 @@ namespace HairdresserAppointment.API.Controllers
         }
 
 
+        //Skapa frisör
 
         [Authorize(Roles = "Admin")]
         [HttpPost("create-with-time")]
         public async Task CreateWithTime(CreateHairdresserDto dto)
         {
-            await _hairdresserService.CreateStackAsync(dto);
+            await _hairdresserService.CreateHairdresserAsync(dto);
         }
 
 
+        //Hämta alla frisörer
 
         [HttpGet]
         public async Task<List<HairdresserDto>> GetHairdressers()
@@ -36,6 +38,7 @@ namespace HairdresserAppointment.API.Controllers
             return  hairdressers;
         }
 
+        //Hämta frisör via Id
 
         [HttpGet("{id}")]
         public async Task<ActionResult<HairdresserBookingDto>> GetHairdresserById(int id)
@@ -49,8 +52,20 @@ namespace HairdresserAppointment.API.Controllers
         }
 
 
+        //Soft-delete frisör
 
-        //skapa PUT men inte en hel PUT utan kanske bara från active till false ? 
+        [Authorize(Roles = "Admin")]
+        [HttpPut("delete/{id}")]
+        public async Task<IActionResult> DeleteHairdresser(int id)
+        {
+            var success = await _hairdresserService.DeleteHairdresserAsync(id);
+            if (!success)
+            {
+                return NotFound();
+            }
+
+            return NoContent();
+        }
 
 
 

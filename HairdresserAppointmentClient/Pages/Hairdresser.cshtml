@@ -4,160 +4,154 @@
 }
 
 <link href="~/css/hairdresser.css" rel="stylesheet" />
-<body class="bg-transparent">
 
-    <div class="container">
 
-        <div class="row">
 
-            <div class="col-md-6">
-                <div class="card shadow-lg border-0 rounded-4">
-                    <div class="card-header bg-dark text-white rounded-top-4">
-                        <h4 class="mb-0 fw-bold">+ Lägg till ny frisör</h4>
-                    </div>
-                    <div class="card-body">
-                        <form method="post">
 
-                            <div class="mb-3">
-                                <label asp-for="Hairdresser.Name"  class="form-label fw-bold">Namn</label>
-
-                                <input asp-for="Hairdresser.Name" placeholder="Ange namn..." class="form-control" required /> 
-
-                            </div>
-
-                           @*  Arbetstiderna *@
-
-                            <h5 class="mt-4 mb-4 fw-bold">Arbetstider</h5>
-
-                            @for (int i = 0; i < Model.Hairdresser.WorkingHours.Count; i++)
-                            {
-                                <div class="row mb-2">
-
-                                    <div class="col-4 form-check">
-                                        <input type="checkbox" asp-for="Hairdresser.WorkingHours[i].Selected" class="form-check-input border border-dark ms-1" />
-                                        <label class="form-check-label ms-2">
-                                            @Model.GetSwedishDays(Model.Hairdresser.WorkingHours[i].DayOfWeek)
-                                        </label>
-                                    </div>
-
-                                    <div class="col-4">
-                                        <input type="time" class="form-control" value="09:00" asp-for="Hairdresser.WorkingHours[i].StartTime" />
-                                    </div>
-
-                                    <div class="col-4">
-                                        <input type="time" class="form-control" value="19:00" asp-for="Hairdresser.WorkingHours[i].EndTime" />
-                                    </div>
-
-                                    <input type="hidden" asp-for="Hairdresser.WorkingHours[i].DayOfWeek" />
-                                </div>
-                            }
-
-                            @if (TempData["HairdresserMessage"] != null)
-                            {
-                                var type = TempData["HairdresserMessageType"]?.ToString();
-
-                                <div class="alert small py-1 text-center @(type == "success" ? "alert-success" : "alert-danger")">
-                                    @TempData["HairdresserMessage"]
-                                </div>
-                            }
-                            <button type="submit" class="btn btn-dark w-100">
-                                Save
-                            </button>
-                            
-
-                        </form>
-
-                    </div>
+<div class="container">
+    <div class="row">
+        <div class="col-md-6" id="create">
+            <div class="card shadow-lg border-0 rounded-4">
+                <div class="card-header bg-dark text-white rounded-top-4">
+                    <h4 class="mb-0 fw-bold">+ Lägg till ny frisör</h4>
                 </div>
+                <div class="card-body">
+                    <form method="post">
+                        <div class="mb-3">
+                            <label asp-for="Hairdresser.Name"  class="form-label fw-bold">Namn</label>
+                            <input asp-for="Hairdresser.Name" placeholder="Ange namn..." class="form-control" required /> 
+                        </div>
 
-            </div>
+                        @*  Arbetstiderna *@
 
+                        <h5 class="mt-4 mb-4 fw-bold">Arbetstider</h5>
 
-			<div class="col-md-6">
-                <div class="card shadow-lg border-0 rounded-4 h-100">
-                    <div class="card-header bg-dark text-white rounded-top-4">
-                        <h4 class="mb-0 fw-bold">Account registration</h4>
-                    </div>
-					<div class="card-body">
+                        @for (int i = 0; i < Model.Hairdresser.WorkingHours.Count; i++)
+                        {
+                            <div class="row mb-2">
 
-                       @*  Skapa konto *@
-
-						<form method="post" asp-page-handler="CreateUser">
-                            <div class="mb-3">
-                                <label asp-for="User.Email" class="form-label fw-bold"></label>
-                                <input asp-for="User.Email" type="email" class="form-control" required placeholder="Enter email..." />
-                            </div>
-                            <div class="mb-3">
-                                <label asp-for="User.Password" class="form-label fw-bold"></label>
-                                <input asp-for="User.Password" type="password" class="form-control" placeholder="Enter password..." />
-                            </div>
-                            <div class=" mb-3 mt-3">
-                                <label asp-for="User.HairdresserId" class="form-label fw-bold">Assign a hairdresser to this account</label>
-                                <select asp-for="User.HairdresserId" class="form-select">
-                                    <option class="text-center" value="" disabled selected>- Select Hairdresser -</option>
-                                    @foreach(var dresser in Model.Hairdressers.Where(h => h.UserEmail == null))
-                                    {
-                                        <option value="@dresser.Id">
-                                            @dresser.Name
-                                        </option>                 
-                                    }
-								</select>
-							</div>
-                            @if (TempData["AccountMessage"] != null)
-                            {
-                                var type = TempData["AccountMessageType"]?.ToString();
-
-                                <div class="alert small py-1 text-center @(type == "success" ? "alert-success" : "alert-danger")">
-                                    @TempData["AccountMessage"]
+                                <div class="col-4 form-check">
+                                    <input type="checkbox" asp-for="Hairdresser.WorkingHours[i].Selected" class="form-check-input border border-dark ms-1" />
+                                    <label class="form-check-label ms-2">
+                                        @Model.GetSwedishDays(Model.Hairdresser.WorkingHours[i].DayOfWeek)
+                                    </label>
                                 </div>
-                            }
-                            <div>
-                                <button type="submit" class="btn btn-outline-dark w-100">Create</button>
+
+                                <div class="col-4">
+                                    <input type="time" class="form-control" value="09:00" asp-for="Hairdresser.WorkingHours[i].StartTime" />
+                                </div>
+
+                                <div class="col-4">
+                                    <input type="time" class="form-control" value="19:00" asp-for="Hairdresser.WorkingHours[i].EndTime" />
+                                </div>
+
+                                <input type="hidden" asp-for="Hairdresser.WorkingHours[i].DayOfWeek" />
                             </div>
-						</form>
+                        }
+
+                        @if (TempData["HairdresserMessage"] != null)
+                        {
+                            <div class="alert small alert-warning text-center">
+                                @TempData["HairdresserMessage"]
+                            </div>
+                        }
+                        <button type="submit" class="btn btn-dark w-100"> Lägg till </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="card shadow-lg border-0 rounded-4 h-100">
+                <div class="card-header bg-dark text-white rounded-top-4">
+                    <h4 class="mb-0 fw-bold">+ Skapa nytt konto</h4>
+                </div>
+				<div class="card-body">
+
+                    @*  Skapa konto *@
+
+					<form method="post" asp-page-handler="CreateUser">
+                        <div class="mb-3">
+                            <label asp-for="User.Email" class="form-label fw-bold">E-postadress</label>
+                            <input asp-for="User.Email" type="email" class="form-control" required placeholder="Ange E-postadress..." />
+                        </div>
+                        <div class="mb-3">
+                            <label asp-for="User.Password" class="form-label fw-bold">Lösenord</label>
+                            <input asp-for="User.Password" type="password" class="form-control" placeholder="Ange lösenord..." />
+                        </div>
+                        <div class=" mb-3 mt-3">
+                            <label asp-for="User.HairdresserId" class="form-label fw-bold">Välj frisör</label>
+                            <select asp-for="User.HairdresserId" class="form-select">
+                                <option class="text-center" value="" disabled selected>- Välj Frisör -</option>
+                                @foreach(var dresser in Model.Hairdressers.Where(h => h.UserEmail == null))
+                                {
+                                    <option value="@dresser.Id">
+                                        @dresser.Name
+                                    </option>                 
+                                }
+							</select>
+						</div>
+                        @if (TempData["AccountMessage"] != null)
+                        {
+                            <div class="alert small alert-warning text-center">
+                                @TempData["AccountMessage"]
+                            </div>
+                        }
+                        <div>
+                            <button type="submit" class="btn btn-outline-dark w-100">Registrera</button>
+                        </div>
+					</form>
                        
 
-					</div>
 				</div>
-
-
 			</div>
         </div>
     </div>
-    
 
-</body>
 
-<div class="container mt-5">
-    <div class="card shadow-lg border-0 rounded-4">
-        <div class="card-header bg-dark text-white rounded-top-4">
-            <h3 class="mb-0 fw-bold">Hairdressers</h3>
-        </div>
-        <div class="card-body">
+    <div class="mt-5 mb-5" id="hairdressers">
+        <div class="card shadow-lg border-0 rounded-4">
+            <div class="card-header bg-dark text-white rounded-top-4">
+                <h3 class="mb-0 fw-bold">Alla Frisörer</h3>
+            </div>
+            <div class="card-body">
 
-            @* Visa alla Frisörer *@
-
-            <div id="hairdresser-list">
-                <table class="table table-hover table-bordered">
-                    <thead>
-                        <tr>
-                            <th>Id</th>
-                            <th>Name</th>
-                            <th>Email</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (var h in Model.Hairdressers)
-                        {
+                @* Visa alla Frisörer *@
+                @if (TempData["DeleteMessage"] != null)
+                {
+                    <div class="alert alert-warning mb-0">@TempData["DeleteMessage"]</div>
+                }
+                <div id="hairdresser-list">
+                    <table class="table table-hover table-bordered">
+                        <thead>
                             <tr>
-                                <td>@h.Id</td>
-                                <td>@h.Name</td>
-                                <td>@h.UserEmail</td>
+                                <th>Id</th>
+                                <th>Namn</th>
+                                <th>E-postadress</th>
+                                <th>Åtgärd</th>
                             </tr>
-                        }
+                        </thead>
+                        <tbody>
+                            @foreach (var h in Model.Hairdressers)
+                            {
+                                <tr>
+                                    <td>@h.Id</td>
+                                    <td>@h.Name</td>
+                                    <td>@h.UserEmail</td>
+                                    <td>
+                                        <form method="post" asp-page-handler="DeleteHairdresser">
+                                            <input type="hidden" name="id" value="@h.Id" />
+                                            <button type="submit" class="btn btn-sm btn-outline-dark">Radera</button>
+                                        </form>
+                                    </td>
+                                </tr>
+                            }
+                        
                        
-                    </tbody>
-                </table>
+                        </tbody>
+                    
+                    </table>
+                </div>
             </div>
         </div>
     </div>

@@ -14,6 +14,8 @@ namespace HairdresserAppointment.API.Services
             _context = context;
         }
 
+
+        //Hämta alla frisörer
         public async Task<List<HairdresserDto>> GetAllHairdressersAsync()
         {
             return await _context.Hairdressers
@@ -22,14 +24,18 @@ namespace HairdresserAppointment.API.Services
                 {
                     Id = h.Id,
                     Name = h.Name,
-
+                    IsActive = h.IsActive,
                     UserEmail = _context.Users
                     .Where(u => u.HairdresserId == h.Id)
                     .Select(u => u.Email)
                     .FirstOrDefault()
+
                 }).ToListAsync();
         }
 
+
+
+        //Hämta frisör via Id
         public async Task<HairdresserBookingDto?> GetHairdresserByIdAsync(int id)
         {
             return await _context.Hairdressers
@@ -47,7 +53,9 @@ namespace HairdresserAppointment.API.Services
                         StartTime = w.StartTime,
                         EndTime = w.EndTime
                     }).ToList(),
+
                     Bookings = h.Bookings
+                    .Where(b => b.IsDeleted == false)
                     
                     .Select(b => new BookingTimeDto
                     {
@@ -59,34 +67,22 @@ namespace HairdresserAppointment.API.Services
         }
 
 
-        public async Task<bool> UpdateHairdresserAsync(int id, Hairdresser hairdresser)
-        {
-            var updateHairdresser = _context.Hairdressers.Find(id);
-            if(updateHairdresser == null)
-                return false;
-
-            updateHairdresser.Name = hairdresser.Name;
-            updateHairdresser.IsActive = hairdresser.IsActive;
-            updateHairdresser.WorkingHours = hairdresser.WorkingHours;
-
-            _context.SaveChanges();
-            return true;
-        }
-
-
-        public async Task<bool> SoftDeleteHairdresser(int id)
+        //Soft-delete en frisör
+        public async Task<bool> DeleteHairdresserAsync(int id)
         {
             var deletedHairdresser = await _context.Hairdressers.FindAsync(id);
             if (deletedHairdresser == null)
                 return false;
 
             deletedHairdresser.IsActive = false;
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
 
             return true;
         }
 
-        public async Task<Hairdresser> CreateStackAsync(CreateHairdresserDto dto)
+
+        //Skapa frisör
+        public async Task<Hairdresser> CreateHairdresserAsync(CreateHairdresserDto dto)
         {
             var hairdresser = new Hairdresser
             {

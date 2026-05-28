@@ -70,7 +70,7 @@
                 </div>
 
                 <div class="col-md-6">
-                    <div class="p-4">
+                    <div class="px-4">
                         <h2 class="fw-bold mb-3">OM OSS</h2>
                         <p> DAGENS LYX är en nystartad frisörsalong i Tystberga med en tydlig vision – att skapa mer än bara en frisyr. Här handlar det om känslan, självförtroendet och helhetsupplevelsen när du lämnar salongen.</p>
                         <p>Med över 20 års erfarenhet och frisörlicens i ryggen arbetar vi med precision, kreativitet och en stark passion för yrket. Vi håller oss ständigt uppdaterade med de senaste trenderna, teknikerna och behandlingarna för att kunna erbjuda det bästa inom hårvård.</p>
@@ -85,8 +85,28 @@
         </div>
     </section>
 
+
+    <!-- Boka sektionen -->
+    <section class="text-center py-5 bg-dark text-white">
+        <div class="container mt-2">
+            <h2 class="fw-bolder text-gold mb-3">Redo för en ny look?</h2>
+            <p class="mb-4 fs-5">
+                Låt oss ta hand om ditt hår och skapa en stil som passar just dig.
+                Boka din tid idag och upplev känslan av kvalitet, omtanke och professionell service.
+            </p>
+            <div class="text-center pt-2 my-2">
+                <a href="/booking/selectservices" class="btn fw-semibold" id="goldenBtn">Boka Tid NU</a>
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+   
     <!-- Produkter -->
-    <section class="container-fluid p-4 pt-0">
+    <section class="container-fluid p-4 pt-5">
         <div class="mx-auto" style="max-width: 2000px;">
 
             <div class="row align-items-center">
@@ -108,63 +128,91 @@
         </div>
     </section>
 
+
+   
+
     <!-- Galleri -->
+    <div class=" m-5">
+        <h2 id="gallery" class=" pt-4 text-center fw-bold mb-3">Bild Galleri</h2>
+        <section id="gallery" class="container p-0">
+            <div id="galleryCarousel" class="carousel slide" data-bs-ride="carousel">
+                <div class="carousel-inner">
 
-    <h2 id="gallery" class=" pt-5 text-center fw-bold mb-3">Bild Galleri</h2>
-    <section id="gallery" class="container p-0">
-        <div id="galleryCarousel" class="carousel slide" data-bs-ride="carousel">
-            <div class="carousel-inner">
-
-                @for (int i = 0; i < Model.GalleryImages.Count; i++)
-                {
-                    <div class="carousel-item @(i == 0 ? "active" : "")">
-                        <div class="d-flex flex-column h-100">
+                    @for (int i = 0; i < Model.GalleryImages.Count; i++)
+                    {
+                        <div class="carousel-item @(i == 0 ? "active" : "")">
+                            <div class="d-flex flex-column h-100">
                                 <div class="d-flex text-center bg-body-tertiary fw-bold py-2">
-                                <h4 class="w-100 fw-bolder">Före</h4>
-                                <h4 class="w-100 fw-bolder">Efter</h4>
-                            </div>
-
-                            <div class="d-flex h-100 gap-1 px-2">
-                                <div class="w-50 d-flex align-items-center justify-content-center bg-black">
-                                    <img src="~/images/@Model.GalleryImages[i].Before" class="gallery-img" />
+                                    <h4 class="w-100 fw-bolder">Före</h4>
+                                    <h4 class="w-100 fw-bolder">Efter</h4>
                                 </div>
 
-                                <div class="w-50 d-flex align-items-center justify-content-center bg-black">
-                                    <img src="~/images/@Model.GalleryImages[i].After" class="gallery-img" />
+                                <div class="d-flex h-100 gap-1 px-2">
+                                    <div class="w-50 d-flex align-items-center justify-content-center bg-black">
+                                        <img src="~/images/@Model.GalleryImages[i].Before" class="gallery-img" />
+                                    </div>
+
+                                    <div class="w-50 d-flex align-items-center justify-content-center bg-black">
+                                        <img src="~/images/@Model.GalleryImages[i].After" class="gallery-img" />
+                                    </div>
                                 </div>
+
                             </div>
 
                         </div>
+                    }
 
-                    </div>
-                }
+                </div>
+
+                <button class="carousel-control-prev" id="prevArrow" type="button" data-bs-target="#galleryCarousel" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon custom-arrow"></span>
+                </button>
+
+                <button class="carousel-control-next" id="nextArrow" type="button" data-bs-target="#galleryCarousel" data-bs-slide="next">
+                    <span class="carousel-control-next-icon custom-arrow"></span>
+                </button>
 
             </div>
+            <div class="text-center pt-2 my-2">
+                <a href="/gallery" class="btn fw-semibold" id="goldenBtn">SE MER BILDER</a>
+            </div>
 
-            <button class="carousel-control-prev" id="prevArrow" type="button" data-bs-target="#galleryCarousel" data-bs-slide="prev">
-                <span class="carousel-control-prev-icon custom-arrow"></span>
-            </button>
+        </section>
+    </div>
+    
+    <!-- Kontakta oss sektionen -->
+    <section class="text-center py-5 bg-dark text-white">
 
-            <button class="carousel-control-next" id="nextArrow" type="button" data-bs-target="#galleryCarousel" data-bs-slide="next">
-                <span class="carousel-control-next-icon custom-arrow"></span>
-            </button>
+        <div class="container">
 
-        </div>
-        <div class="text-center pt-2">
-            <a href="/gallery" class="btn fw-semibold" id="goldenBtn">Se våra resultat</a>
+            <h2 class="fw-bold mb-3 text-gold">
+                Har du frågor eller vill boka tid?
+            </h2>
+
+            <p class="mb-4 fs-5">
+                Vi finns här för att hjälpa dig. Kontakta oss för bokning, frågor eller rådgivning kring ditt hår och våra behandlingar.
+            </p>
+
+            <a href="/contact" class="btn btn-warning fw-bold px-5 py-3 rounded-pill">
+                KONTAKTA OSS
+            </a>
+
         </div>
 
     </section>
-
 
 
     <!-- Hitta hit -->
-    <section id="contact" class="pt-5 text-center">
-        <h2 class="pt-5 fw-bold">Hitta till oss</h2>
+    <section id="contact" class="mt-5 mb-0 text-center">
+        <h2 class=" fw-bold">Hitta till oss</h2>
         <p class="fw-bold">Du hittar oss på Stationsvägen 16 i Tystberga. Lätt att nå och alltid redo att ta emot dig. </p>
-        <iframe class="shadow m-5" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2063.9820824288936!2d17.2364018!3d58.847862199999994!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x465f315f905f9e45%3A0x7fa892abe2c79fec!2sDagens%20Lyx!5e0!3m2!1ssv!2sse!4v1777144164730!5m2!1ssv!2sse" 
+        <iframe class="shadow m-5 mt-2" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2063.9820824288936!2d17.2364018!3d58.847862199999994!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x465f315f905f9e45%3A0x7fa892abe2c79fec!2sDagens%20Lyx!5e0!3m2!1ssv!2sse!4v1777144164730!5m2!1ssv!2sse" 
         width="80%" height="500" style="border:double; max-width:1800px;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
 
     </section>
+
+
+ 
+
    
 </body>

@@ -65,14 +65,6 @@ namespace HairdresserAppointment.API.Services
         
         }
 
-
-
-
-
-
     }
-
-
-
 
 }

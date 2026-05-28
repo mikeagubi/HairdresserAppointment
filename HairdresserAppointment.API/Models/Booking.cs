@@ -19,6 +19,8 @@ namespace HairdresserAppointment.API.Models
         public string CostumerPhone{ get; set; }
         public int? PromotionId { get; set; }
         public Promotion? Promotion { get; set; }
+        public string BookingNumber { get; set; }
+        public bool IsDeleted { get; set; }
         public List<Treatment> Treatments { get; set; } = new();
 
     }

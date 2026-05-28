@@ -10,7 +10,7 @@ namespace HairdresserAppointmentClient.ApiServices
         {}
 
 
-
+        //Skapa en bokning
         public async Task<bool> CreateBookingAsync(CreateBookingDto dto)
         {
             var response = await _httpClient.PostAsJsonAsync("api/booking", dto);
@@ -19,6 +19,17 @@ namespace HairdresserAppointmentClient.ApiServices
         }
 
 
+        //Avboka
+        public async Task<string> CancelBookingAsync(CancelBookingDto dto, string token)
+        {
+            AddJwtToken(token);
+
+            var response = await _httpClient.PutAsJsonAsync("api/booking/cancel-booking", dto);
+
+            var responseText = await response.Content.ReadAsStringAsync();
+
+            return responseText;
+        }
 
 
 

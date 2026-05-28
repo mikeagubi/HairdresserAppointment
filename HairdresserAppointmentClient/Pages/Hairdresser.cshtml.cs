@@ -8,7 +8,6 @@ namespace HairdresserAppointmentClient.Pages
 {
     public class HairdresserModel : PageModel
     {
-
         private readonly HairdresserApiService _hairdresserApiServices;
         private readonly AuthApiService _authApiService;
         public HairdresserModel(HairdresserApiService hairdresserApiService, AuthApiService authApiService)
@@ -16,6 +15,8 @@ namespace HairdresserAppointmentClient.Pages
             _hairdresserApiServices = hairdresserApiService;
             _authApiService = authApiService;
         }
+
+
         public List<HairdresserDto> Hairdressers { get; set; } = new();
 
         [BindProperty]
@@ -36,37 +37,44 @@ namespace HairdresserAppointmentClient.Pages
                 return RedirectToPage("/login");
             }
 
-            var token = HttpContext.Session.GetString("token");
-
             Hairdressers = await _hairdresserApiServices.GetHairdressersAsync();
-            await LoadPageAsync();
+            LoadPage();
 
             return Page();
         }
 
 
-        //skapa frisör med tid
+        //skapa en ny frisör med arbetstider
+
         public async Task<IActionResult> OnPostAsync()
         {
-            var token = HttpContext.Session.GetString("token");
-
-            Hairdresser.WorkingHours = Hairdresser.WorkingHours
-                .Where(w => w.Selected).ToList();
-
-            var success = await _hairdresserApiServices.CreateWithTimeAsync(Hairdresser, token);
-
-            if (success)
+           
+            if (!Hairdresser.WorkingHours.Any(w => w.Selected))
             {
-                TempData["HairdresserMessage"] = $"{Hairdresser.Name} is now registered";
-                TempData["HairdresserMessageType"] = "success";
+                TempData["HairdresserMessage"] = "Minst en arbetsdag måste vara markerad!";
             }
             else
             {
-                TempData["HairdresserMessage"] = $"Failed to register hairdresser";
-                TempData["HairdresserMessageType"] = "fail";
+                var token = HttpContext.Session.GetString("token");
+
+                Hairdresser.WorkingHours = Hairdresser.WorkingHours
+                    .Where(w => w.Selected).ToList();
+
+                var success = await _hairdresserApiServices.CreateWithTimeAsync(Hairdresser, token);
+
+                if (success)
+                {
+                    TempData["HairdresserMessage"] = $"{Hairdresser.Name} is now registered";
+                }
+                else
+                {
+                    TempData["HairdresserMessage"] = $"Failed to register hairdresser";
+                }
+
+                
             }
-              
-            return RedirectToPage("/hairdresser");
+            
+            return Redirect("/Hairdresser");
         }
 
 
@@ -79,19 +87,35 @@ namespace HairdresserAppointmentClient.Pages
             if (success)
             {
                 TempData["AccountMessage"] = $"{User.Email} is now created";
-                TempData["AccountMessageType"] = "success";
             }
             else
             {
                 TempData["AccountMessage"] = $"Failed to create account";
-                TempData["AccountMessageType"] = "fail";
             }
-            return RedirectToPage("/Hairdresser");
 
+            return Redirect("/Hairdresser");
         }
 
 
-        private async Task LoadPageAsync()
+        //Soft-delete frisören
+        public async Task<IActionResult> OnPostDeleteHairdresserAsync(int id)
+        {
+            var token = HttpContext.Session.GetString("token");
+            var success = await _hairdresserApiServices.DeleteHairdresserAsync(id, token);
+            if (success)
+            {
+                TempData["DeleteMessage"] = "Frisören är nu inaktiverad";
+            }
+            else
+            {
+                TempData["DeleteMessage"] = "Kunde inte Inaktivera frisören";
+            }
+
+            return Redirect("/Hairdresser#hairdressers");
+        }
+
+
+        private async Task LoadPage()
         {
             Hairdresser.WorkingHours = Enum.GetValues<DayOfWeek>()
                 .Select(d => new WorkingHourDto
@@ -99,6 +123,7 @@ namespace HairdresserAppointmentClient.Pages
                     DayOfWeek = d
                 }).ToList();
         }
+
 
 
         public string GetSwedishDays(DayOfWeek day)

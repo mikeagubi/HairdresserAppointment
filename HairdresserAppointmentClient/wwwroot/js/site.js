@@ -38,7 +38,20 @@ document.addEventListener("DOMContentLoaded", function () {
 
     if(modalElement){
         var modal = new bootstrap.Modal(modalElement);
+
         modal.show();
     }
 });
 
+
+
+document.addEventListener("DOMContentLoaded", function () {
+    var modalElement = document.getElementById('responseModal');
+
+    if (modalElement) {
+        var modal = new bootstrap.Modal(modalElement);
+
+        modal.show();
+
+    }
+});

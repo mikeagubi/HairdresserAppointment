@@ -1,0 +1,68 @@
+﻿@page
+@model HairdresserAppointmentClient.Pages.Booking.CancelBookingModel
+@{
+}
+
+<div class="position-relative vh-100" style="margin-top: -120px;">
+
+	<img src="~/images/frisörhylla.png" class="position-absolute top-0 start-0 w-100 h-100 object-fit-cover d-block opacity-25" />
+	<div class="container-fluid vh-100 bg-dark d-flex justify-content-center align-items-center">
+		<div class="card bg-dark bg-opacity-100 text-white shadow-lg border-secondary rounded-4 col-lg-4 col-md-6">
+			<div class="card-body p-5">
+				<div class="text-center mb-4">
+					<h2 class="fw-bold text-gold">Avbokning</h2>
+					<p class="fw-medium"> Ange bokningsnummer samt din e-postadress eller telefonnummer.</p>
+				</div>
+				<form method="post" asp-page-handler="cancelbooking">
+					<div class="mb-1">
+						<label asp-for="CancelBooking.BookingNumber" class=" form-label">Bokningsnummer</label>
+						<input asp-for="CancelBooking.BookingNumber" class="form-control bg-dark text-white border-secondary rounded-3" required/>
+					</div>
+					<div class="mb-2">
+						<label asp-for="CancelBooking.Email" class="form-label">E-postadress</label>
+						<input asp-for="CancelBooking.Email" class="form-control bg-dark text-white border-secondary rounded-3" />
+					</div>
+					<div class="text-center mt-3"><span class="text-white fw-bold">Eller</span></div>
+					<div class="mb-5">
+						<label asp-for="CancelBooking.PhoneNumber" class="form-label">Telefonnummer</label>
+						<input asp-for="CancelBooking.PhoneNumber" class="form-control bg-dark text-white border-secondary rounded-3" />
+					</div>
+					<button type="submit" class="btn btn-outline-warning w-100 fw-bold rounded-3 py-2">
+						Avboka
+					</button>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- Modaöen för olika responseMessage -->
+@if(Model.ResponseMessage!= null)
+{
+	<div class="modal fade" id="responseModal">
+		<div class="modal-dialog modal-fullscreen-md-down modal-dialog-centered">
+			<div class="bg-dark modal-content rounded-4 border-0 shadow">
+				<div class="modal-body p-5 text-center text-white">
+				
+					@if (Model.ResponseMessage.Contains("avbokats"))
+					{
+						<div class="mb-4">
+							<i class="bi bi-check2-circle text-success" style="font-size: 50px;"> </i>
+						</div>
+						<h3 class="fw-bold text-gold">Avbokning genomförd</h3>
+					}
+					else
+					{
+						<div class="mb-2">
+							<i class="bi bi-x-octagon text-danger" style="font-size: 30px;"></i>
+						</div>
+						<h5 class="fw-bold text-white">Något gick fel</h5>
+					}
+					<p class="text-light" style="white-space: pre-line;">@Model.ResponseMessage</p>
+
+					<button type="button" class="btn btn-outline-warning px-5 mt-3 rounded-3" data-bs-dismiss="modal"> Stäng</button>
+				</div>
+			</div>
+		</div>
+	</div>
+}
