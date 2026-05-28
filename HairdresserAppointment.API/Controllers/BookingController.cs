@@ -1,5 +1,6 @@
 ﻿using HairdresserAppointment.API.DTO;
 using HairdresserAppointment.API.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HairdresserAppointment.API.Controllers
@@ -25,10 +26,15 @@ namespace HairdresserAppointment.API.Controllers
         [HttpPut("cancel-booking")]
         public async Task<ActionResult<string>> CancelBooking(CancelBookingDto dto)
         {
-            var success = await _bookingService.CancelBookingAsync(dto);
+            var response = await _bookingService.CancelBookingAsync(dto);
 
-            return Ok(success);
+            return Ok(response);
         }
+
+
+        //Hämta Bokning via id
+        [HttpGet]
+        public async Task
 
 
 

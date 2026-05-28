@@ -76,7 +76,6 @@ namespace HairdresserAppointment.API.Services
         }
 
 
-
         // Kollar om tidsslot är bokad, förhindrar dubbla bokningar
         private async Task<bool> IsTimeBookedAsync(int hairdresserId, DateTime startTime, DateTime endTime)
         {

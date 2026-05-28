@@ -13,13 +13,11 @@ namespace HairdresserAppointmentClient.Pages.Booking
             _bookingApiService = bookingApiService;
         }
 
+        public string? ResponseMessage { get; set; }
+
         [BindProperty]
         public CancelBookingDto CancelBooking { get; set; }
 
-
-
-        //hämta bookingen sen!!!!! byt ut denna
-        public int MyProperty { get; set; }
 
 
         public void OnGet()
@@ -31,8 +29,9 @@ namespace HairdresserAppointmentClient.Pages.Booking
 
         public async Task<IActionResult> OnPostCancelBookingAsync()
         {
-            return null;
+            ResponseMessage = await _bookingApiService.CancelBookingAsync(CancelBooking);
 
+            return Page(); 
         }
 
 

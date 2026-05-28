@@ -20,9 +20,13 @@ namespace HairdresserAppointmentClient.ApiServices
 
 
         //Avboka
-        public async Task<IActionResult> CancelBookingAsync()
+        public async Task<string> CancelBookingAsync(CancelBookingDto dto)
         {
-            return null;
+            var response = await _httpClient.PutAsJsonAsync("api/booking/cancel-booking", dto);
+
+            var responseText = await response.Content.ReadAsStringAsync();
+
+            return responseText;
         }
 
 
