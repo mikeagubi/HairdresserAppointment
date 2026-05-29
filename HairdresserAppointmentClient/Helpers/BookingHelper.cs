@@ -5,43 +5,41 @@ namespace HairdresserAppointmentClient.Helpers
 {
     public class BookingHelper
     {
+
+        private const int SearchPeriodInDays = 180;
+        private const int TimeSlotIntervalMinutes = 15;
+
         public List<TimeSlot> GenerateTimeSlots(HairdresserBookingDto hairdresser, List<TreatmentDto> selectedTreatments)
         {
             var availableSlots = new List<TimeSlot>();
+
             var totalTreatmentTime = selectedTreatments.Sum(t => t.DurationInMinutes);
+
             var currentDate = DateTime.Today;
-            var dayFound = 0;
 
-            var dayCounter = 0;
-            var maxDayCount = 150;
+            var daysSearched = 0;
 
-            while (dayFound < 90 && dayCounter < maxDayCount )
+            while (daysSearched < SearchPeriodInDays)
             {
-                var workingHour = hairdresser.WorkingHours.Where(w => w.DayOfWeek == currentDate.DayOfWeek).SingleOrDefault();
+                var workingHour = hairdresser.WorkingHours
+                    .SingleOrDefault(w => w.DayOfWeek == currentDate.DayOfWeek);
 
                 if(workingHour == null)
                 {
                     currentDate = currentDate.AddDays(1);
+                    daysSearched++;
                     continue;
                 }
 
                 var currentStartTime = currentDate.Date + workingHour.StartTime;
                 var currentEndTime = currentDate.Date + workingHour.EndTime;
 
-                if(currentStartTime.Date == DateTime.Today)
-                {
-                    if(DateTime.Now > currentStartTime && DateTime.Now < currentEndTime)
-                    {
-                        currentStartTime = DateTime.Now;
-                    }
-                    
-                }
-                var dayHasAvailableSlots = false;
+                currentStartTime = AdjustStartTimeForToday(currentStartTime, currentEndTime);
 
                 while(currentStartTime.AddMinutes(totalTreatmentTime) <= currentEndTime)
                 {
-                    var available = IsTimeAvailable(currentStartTime, totalTreatmentTime, hairdresser.Bookings);
-                    if (available)
+                    var isAvailable = IsTimeAvailable(currentStartTime, totalTreatmentTime, hairdresser.Bookings);
+                    if (isAvailable)
                     {
                         availableSlots.Add(new TimeSlot
                         {
@@ -49,17 +47,12 @@ namespace HairdresserAppointmentClient.Helpers
                             EndTime = currentStartTime.AddMinutes(totalTreatmentTime)
                         });
 
-                        dayHasAvailableSlots = true;
                     }
-                        currentStartTime = currentStartTime.AddMinutes(15);
+                        currentStartTime = currentStartTime
+                        .AddMinutes(TimeSlotIntervalMinutes);
                 }
 
-                if (dayHasAvailableSlots)
-                {
-                    dayFound++;
-                }
-
-                dayCounter++;
+                daysSearched++;
                 currentDate = currentDate.AddDays(1);
                 
             }
@@ -69,6 +62,20 @@ namespace HairdresserAppointmentClient.Helpers
         }
 
 
+        //Justerar starttiden om den valda dagen är idag
+        private DateTime AdjustStartTimeForToday(DateTime currentStartTime, DateTime currentEndTime)
+        {
+            if(currentStartTime.Date == DateTime.Today)
+            {
+                if(DateTime.Now > currentStartTime && DateTime.Now < currentEndTime)
+                {
+                    return DateTime.Now;
+                }
+            }
+            return currentStartTime;
+        }
+
+        // Kontrollerar att den nya tiden inte krockar med befintliga bokningar
         private bool IsTimeAvailable(DateTime slotStartTime, int totalTreatmentTime, List<BookingTimeDto> bookings)
         {
             var slotEndTime = slotStartTime.AddMinutes(totalTreatmentTime);
@@ -82,18 +89,6 @@ namespace HairdresserAppointmentClient.Helpers
 
             return true;
         }
-
-
-        public string GenerateBookingNumber()
-        {
-            string month = DateTime.Now.ToString("MMM").ToUpper();
-            string numbers = Random.Shared.Next(100000, 999999).ToString();
-
-            return $"{month}-{numbers}";
-        }
-
-
-
 
 
 
