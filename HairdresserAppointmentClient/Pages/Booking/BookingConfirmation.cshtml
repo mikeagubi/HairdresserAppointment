@@ -6,21 +6,23 @@
 
 <div class="position-relative vh-100" style="margin-top: -120px;">
 
-	<img src="~/images/frisörhylla.png" class="position-absolute top-0 start-0 w-100 h-100 object-fit-cover d-block opacity-25" />
+	<img src="~/images/frisörhylla.png" class="position-fixed top-0 start-0 w-100 h-100 object-fit-cover d-block opacity-25" />
 	<div class="container-fluid vh-100 bg-dark d-flex justify-content-center align-items-center">
 		<div class="card bg-dark bg-opacity-100 text-white shadow-lg border-secondary rounded-4 col-lg-4 col-md-6">
 			<div class="card-body p-5">
-				<div class="text-center mb-4">
-					<h2 class="fw-bold text-gold">Tack för din bokning</h2>
-					<p class="fw-medium"> Ange bokningsnummer samt din e-postadress eller telefonnummer.</p>
-				</div>
-				<p></p>
-				
-					<button class="btn btn-outline-warning w-100 fw-bold rounded-3 py-2">
-						TILL STARTSIDAN
-					</button>
 
-			</div>
+                <div class="text-center">
+                    <h2 class="fw-bold text-gold mb-3"> Tack för din bokning</h2>
+                    <p class="mb-4"> Din bokning har registrerats och vi ser fram emot ditt besök.</p>
+                    <div class="bg-dark rounded-4 p-4 my-4">
+                        <small class="text-secondary d-block mb-2"> BOKNINGSNUMMER</small>
+                        <h3 class="fw-bold text-gold mb-0"> @Model.BookingNumber</h3>
+                    </div>
+                    <p> Spara ditt bokningsnummer för framtida referens.</p>
+                    <p class="small "> Ändringar eller avbokningar görs via hemsidan senast 24 timmar före bokad tid.</p>
+                </div>
+
+                <a href="/" id="goldenBtn" class="btn w-100 fw-bold"> Tillbaka till startsidan</a>
 		</div>
 	</div>
 </div>

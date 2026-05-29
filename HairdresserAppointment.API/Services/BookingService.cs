@@ -17,12 +17,12 @@ namespace HairdresserAppointment.API.Services
         }
 
         //skapa en bookning
-        public async Task CreateBookingAsync(CreateBookingDto dto)
+        public async Task<string> CreateBookingAsync(CreateBookingDto dto)
         {
             var isBooked = await IsTimeBookedAsync(dto.HairdresserId, dto.StartTime, dto.EndTime);
             if (isBooked)
             {
-                return;
+                return null;
             }
 
             var treatments = await _context.Treatments
@@ -50,6 +50,7 @@ namespace HairdresserAppointment.API.Services
             _context.Bookings.Add(booking);
             await _context.SaveChangesAsync();
 
+            return booking.BookingNumber;
         }
 
 

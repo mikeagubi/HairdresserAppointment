@@ -57,12 +57,12 @@ namespace HairdresserAppointmentClient.Pages.Booking
 
         public async Task<IActionResult> OnPostCreateBookingAsync()
         {
-            var success = await _bookingApiService.CreateBookingAsync(Booking);
-            if (!success)
+            var bookingNumber = await _bookingApiService.CreateBookingAsync(Booking);
+            
+            return RedirectToPage("/Booking/BookingConfirmation", new
             {
-                return Page();
-            }
-            return RedirectToPage("/Booking/BookingConfirmation");
+                bookingNumber
+            });
         }
     }
 }
