@@ -3,43 +3,45 @@
 @{
 }
 
-
 <h1 class="fw-bolder text-center" style="letter-spacing: 5px">DAGENS LYX</h1>
-<h2>bokning</h2>
-
-<p>@Model.SelectedHairdresser?.Name</p>
-
-<p>tidem: @Model.StartTime.ToString("yyyy-MM-dd HH:mm") till @Model.EndTime.ToString("HH:mm")</p>
-<p>tot behnadling tiden: @Model.TotalTime minuter</p>
-<p>priset: @Model.TotalPrice kr</p>
-<hr />
-
-@foreach (var treatment in Model.SelectedTreatments)
-{
-    <p>
-        @treatment.Name
-    </p>
-}
 
 
-<form method="post" asp-page-handler="CreateBooking">
-    <input type="hidden" asp-for="Booking.HairdresserId" value="@Model.HairdresserId"/>
-    <input type="hidden" asp-for="Booking.StartTime" value="@Model.StartTime"/>
-    <input type="hidden" asp-for="Booking.EndTime" value="@Model.EndTime" />
-    <input type="hidden" asp-for="Booking.StartTime" value="@Model.StartTime" />
-    @foreach(var id in Model.TreatmentIds)
-    {
-        <input type="hidden" asp-for="Booking.TreatmentIds" value="@id"/>
-    }
-   
-    <div class="mb-3 m-5">
-        <label class="form-label"> Fullständigt Namn</label>
-        <input asp-for="Booking.CustomerName" class="form-control" required />
-        <label class="form-label mt-3">Email Adress</label>
-        <input asp-for="Booking.CustomerEmail" type="email" class="form-control" required />
-        <label class="form-label mt-3">Telefonnummer</label>
-        <input asp-for="Booking.CustomerPhone" class="form-control" type="number" required />
+<div class="container py-5">
+    <div class="row">
+        <div class="col-lg-8">
+            <div class="bg-dark rounded-5 shadow-lg p-5">
+                <div class="mb-5">
+                    <h2 class="fw-bold text-gold"> Bekräfta bokning</h2>
+                    <p class="text-white"> Fyll i dina uppgifter för att slutföra bokningen.</p>
+                </div>
+
+                <form method="post" asp-page-handler="CreateBooking">
+                    <input type="hidden" asp-for="Booking.HairdresserId" value="@Model.HairdresserId" />
+                    <input type="hidden" asp-for="Booking.StartTime" value="@Model.StartTime" />
+                    <input type="hidden" asp-for="Booking.EndTime" value="@Model.EndTime" />
+                    @foreach (var id in Model.TreatmentIds)
+                    {
+                        <input type="hidden" asp-for="Booking.TreatmentIds" value="@id" />
+                    }
+                    <div class="row">
+                        <div class="col-md-12 mb-2">
+                            <label class="form-label fw-bold text-gold"> Fullständigt namn</label>
+                            <input asp-for="Booking.CustomerName" class="form-control rounded-2" required/>
+                        </div>
+                        <div class="col-md-7 mb-4">
+                            <label class="form-label fw-bold text-gold"> E-postadress </label>
+                            <input asp-for="Booking.CustomerEmail" type="email" class="form-control rounded-2" required/>
+                        </div>
+                        <div class="col-md-5 mb-4">
+                            <label class="form-label fw-bold text-gold"> Telefonnummer</label>
+                            <input asp-for="Booking.CustomerPhone" class="form-control rounded-2" required/>
+                        </div>
+                    </div>
+                    <button type="submit" id="goldenBtn"> Bekräfta bokningen</button>
+                </form>
+            </div>
+        </div>
+
     </div>
 
-	<button type="submit" class="btn btn-dark m-5">Bekräfta Bokningen</button>
-</form>
+</div>
