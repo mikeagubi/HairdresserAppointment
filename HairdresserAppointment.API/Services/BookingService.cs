@@ -126,7 +126,7 @@ namespace HairdresserAppointment.API.Services
             var user = await _context.Users.FindAsync(userId);
 
             return await _context.Bookings
-                .Where(b => b.HairdresserId == 42 && !b.IsDeleted)
+                .Where(b => b.HairdresserId == user.HairdresserId && !b.IsDeleted)
                 .Include(b => b.Hairdresser)
                 .Include(b => b.Treatments)
                 .Select(b => new BookingDto

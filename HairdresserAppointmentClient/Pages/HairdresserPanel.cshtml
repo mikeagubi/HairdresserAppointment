@@ -13,3 +13,11 @@
         <p>@work.StartTime - @work.EndTime</p>
     </div>
 }
+
+<hr />
+<div>
+    @foreach (var booking in Model.Bookings)
+    {
+        <p> @booking.StartTime </p>
+    }
+</div>

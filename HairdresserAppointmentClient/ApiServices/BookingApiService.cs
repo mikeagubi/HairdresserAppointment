@@ -39,7 +39,7 @@ namespace HairdresserAppointmentClient.ApiServices
         {
             AddJwtToken(token);
 
-            var response = await _httpClient.GetFromJsonAsync<List<BookingDto>>("api/get-hairdresser-bookings");
+            var response = await _httpClient.GetFromJsonAsync<List<BookingDto>>("api/booking/get-hairdresser-bookings");
             return response;
 
         }

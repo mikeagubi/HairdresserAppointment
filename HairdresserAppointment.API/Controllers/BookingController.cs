@@ -36,6 +36,7 @@ namespace HairdresserAppointment.API.Controllers
         }
 
         //hämta frisör bokningar
+        [Authorize(Roles = "Hairdresser")]
         [HttpGet("get-hairdresser-bookings")]
         public async Task<ActionResult<List<BookingDto>>> GetHairdresserBookings()
         {

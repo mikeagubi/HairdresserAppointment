@@ -24,7 +24,10 @@ namespace HairdresserAppointmentClient.Pages
             var token = HttpContext.Session.GetString("token");
             
             Workinghours = await _workinghourApiservice.GetWorkingHoursByHairdresserId(token);
-            
+
+            Bookings = (await _bookingApiService.GetHairdressersBookingsAsync(token))
+                .OrderBy(b => b.StartTime)
+                .ToList();
         }
     }
 }
