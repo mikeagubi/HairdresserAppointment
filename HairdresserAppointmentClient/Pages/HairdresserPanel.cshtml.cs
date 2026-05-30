@@ -8,6 +8,7 @@ namespace HairdresserAppointmentClient.Pages
     public class HairdresserPanelModel : PageModel
     {
         private readonly WorkingHourApiService _workinghourApiservice;
+        
         public HairdresserPanelModel(WorkingHourApiService workinghourApiservice)
         {
             _workinghourApiservice = workinghourApiservice;

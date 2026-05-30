@@ -5,12 +5,22 @@ namespace HairdresserAppointmentClient.Pages.Booking
 {
     public class BookingConfirmationModel : PageModel
     {
-        [BindProperty(SupportsGet = true)]
-        public string BookingNumber { get; set; }
+        
+        public string? BookingNumber { get; set; }
 
         
-        public void OnGet()
+
+
+        
+        public IActionResult OnGet()
         {
+            BookingNumber = TempData["BookingNumber"]?.ToString();
+
+            if (string.IsNullOrWhiteSpace(BookingNumber))
+            {
+                return RedirectToPage("/Booking/SelectServices");
+            }
+            return Page();
         }
     }
 }

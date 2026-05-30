@@ -42,8 +42,8 @@
 
         </div>
 
-
-
+        
+        <!-- bokningskassan börjar här -->
         <div class="col-xl-3 col-lg-4 z-0">
             <div class="card booking-card shadow-sm sticky-lg-top">
                 <div class="card-body p-4">
@@ -122,3 +122,20 @@
     </div>
 
 </div>
+
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="modal fade" id="messageModal">
+        <div class="modal-dialog modal-sm modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Error</h5>
+                </div>
+                <div class="modal-body text-center">@TempData["ErrorMessage"]</div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-dark" onclick="window.location.href='/Booking/SelectServices'">OK</button>
+                </div>
+            </div>
+        </div>
+    </div>
+}

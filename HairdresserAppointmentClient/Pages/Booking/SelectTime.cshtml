@@ -137,24 +137,3 @@
     </div>
 </div>
 
-
-<!-- Error Modal för manipulering eller annat-->
-
-@if (TempData["ErrorMessage"] != null)
-{
-    <div class="modal fade" id="messageModal">
-        <div class="modal-dialog modal-sm modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Error</h5>
-                </div>
-                <div class="modal-body text-center">@TempData["ErrorMessage"]</div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-dark" onclick="window.location.href='/Booking/SelectServices'">OK</button>
-                </div>
-            </div>
-        </div>
-    </div>
-}
-
-<script src="~/js/site.js"></script>
