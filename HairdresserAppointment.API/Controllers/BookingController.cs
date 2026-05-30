@@ -17,9 +17,11 @@ namespace HairdresserAppointment.API.Controllers
 
         //Skapa en bokning
         [HttpPost]
-        public async Task CreateBooking(CreateBookingDto dto)
+        public async Task<IActionResult> CreateBooking(CreateBookingDto dto)
         {
-            await _bookingService.CreateBookingAsync(dto);
+            var bookingNumber =  await _bookingService.CreateBookingAsync(dto);
+
+            return Ok(bookingNumber);
         }
 
         //Avbokning

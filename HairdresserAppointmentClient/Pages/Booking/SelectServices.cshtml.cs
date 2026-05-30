@@ -15,23 +15,22 @@ namespace HairdresserAppointmentClient.Pages.Booking
             _hairdresserApiService = hairdresserApiService;
         }
 
-        public List<TreatmentDto> Treatments { get; set; } = new();
-        public List<HairdresserDto> Hairdressers { get; set; } = new();
-
-
-
         [BindProperty]
         public int HairdresserId { get; set; }
 
         [BindProperty]
         public List<int> TreatmentIds { get; set; } = new();
 
+        public List<TreatmentDto> Treatments { get; set; } = new();
+        public List<HairdresserDto> Hairdressers { get; set; } = new();
+
+        
+
 
 
         public async Task OnGet()
         {
             await LoadPageAsync();
-
         }
 
 
@@ -66,7 +65,10 @@ namespace HairdresserAppointmentClient.Pages.Booking
 
         private async Task LoadPageAsync()
         {
-            Treatments = await _treatmentApiService.GetAllTreatmentsAsync();
+            Treatments = (await _treatmentApiService.GetAllTreatmentsAsync())
+                .OrderBy(t => t.Name)
+                .ToList();
+
             Hairdressers = await _hairdresserApiService.GetHairdressersAsync();
         }
 

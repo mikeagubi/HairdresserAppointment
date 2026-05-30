@@ -11,11 +11,13 @@ namespace HairdresserAppointmentClient.ApiServices
 
 
         //Skapa en bokning
-        public async Task<bool> CreateBookingAsync(CreateBookingDto dto)
+        public async Task<string> CreateBookingAsync(CreateBookingDto dto)
         {
             var response = await _httpClient.PostAsJsonAsync("api/booking", dto);
 
-            return response.IsSuccessStatusCode;
+            var responseText = await response.Content.ReadAsStringAsync();
+
+            return responseText;
         }
 
 

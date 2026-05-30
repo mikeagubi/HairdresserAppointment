@@ -19,13 +19,6 @@ namespace HairdresserAppointmentClient.Pages.Booking
             _bookingHelper = bookingHelper;
         }
 
-        public HairdresserBookingDto? SelectedHairdresser { get; set; }
-        public List<TreatmentDto> SelectedTreatments { get; set; }
-        public decimal TotalPrice { get; set; }
-        public int TotalTime { get; set; }
-
-        public List<TimeSlot> TimeSlots { get; set; } = new(); //lediga luckor för behandlingens start o end-time
-
         [BindProperty(SupportsGet = true)]
         public int PageNumber { get; set; } = 1;
 
@@ -35,25 +28,31 @@ namespace HairdresserAppointmentClient.Pages.Booking
         [BindProperty(SupportsGet = true)]
         public int HairdresserId { get; set; }
 
+        public HairdresserBookingDto? SelectedHairdresser { get; set; }
+        public List<TreatmentDto> SelectedTreatments { get; set; } = new();
+        public decimal TotalPrice { get; set; }
+        public int TotalTime { get; set; }
+        public List<TimeSlot> TimeSlots { get; set; } = new(); //lediga luckor för behandlingens start o end-time
+
+        
+
 
         public async Task<IActionResult> OnGet()
         {
             if (HairdresserId == 0 || TreatmentIds == null || TreatmentIds.Count == 0)
             {
-                TempData["ErrorMessage"] = "Något gick fel. Försök igen.";
-
-                return Page();
+                ReturnToBookingPage();
             }
 
             SelectedTreatments = (await _treatmentApiService.GetAllTreatmentsAsync())
-                .Where(t => TreatmentIds.Contains(t.Id)).ToList();
+                .Where(t => TreatmentIds.Contains(t.Id))
+                .ToList();
 
             SelectedHairdresser = await _hairdresserApiService.GetHairdresserByIdAsync(HairdresserId);
             
             if (SelectedTreatments.Count != TreatmentIds.Count || SelectedHairdresser == null)
             {
-                TempData["ErrorMessage"] = "Något gick fel. Försök igen.";
-                return Page();
+                ReturnToBookingPage();
             }
             TimeSlots = _bookingHelper.GenerateTimeSlots(SelectedHairdresser, SelectedTreatments);
             TotalPrice = SelectedTreatments.Sum(p => p.Price);
@@ -74,6 +73,13 @@ namespace HairdresserAppointmentClient.Pages.Booking
                 StartTime = startTime,
                 EndTime = endTime
             });
+        }
+
+
+        private IActionResult ReturnToBookingPage()
+        {
+            TempData["ErrorMessage"] = ("Något gick fel. Försök igen.");
+            return RedirectToPage("/Booking/SelectServices");
         }
 
 
