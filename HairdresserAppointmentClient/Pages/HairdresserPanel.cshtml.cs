@@ -8,20 +8,23 @@ namespace HairdresserAppointmentClient.Pages
     public class HairdresserPanelModel : PageModel
     {
         private readonly WorkingHourApiService _workinghourApiservice;
-        
-        public HairdresserPanelModel(WorkingHourApiService workinghourApiservice)
+        private readonly BookingApiService _bookingApiService;
+        public HairdresserPanelModel(WorkingHourApiService workinghourApiservice, BookingApiService bookingApiService)
         {
             _workinghourApiservice = workinghourApiservice;
+            _bookingApiService = bookingApiService;
         }
 
         public List<WorkingHourDto> Workinghours { get; set; }
+        public List<BookingDto> Bookings { get; set; }
 
 
         public async Task OnGet()
         {
             var token = HttpContext.Session.GetString("token");
+            
             Workinghours = await _workinghourApiservice.GetWorkingHoursByHairdresserId(token);
-        
+            
         }
     }
 }

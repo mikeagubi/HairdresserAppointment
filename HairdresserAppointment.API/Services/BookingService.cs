@@ -53,6 +53,28 @@ namespace HairdresserAppointment.API.Services
             return booking.BookingNumber;
         }
 
+        //Genererar bokningsnummer
+        private string GenerateBookingNumber()
+        {
+            string month = DateTime.Now.ToString("MMM").ToUpper();
+            string numbers = Random.Shared.Next(100000, 999999).ToString();
+
+            return $"{month}-{numbers}";
+        }
+
+        // Kollar om tidsslot är bokad, förhindrar dubbla bokningar
+        private async Task<bool> IsTimeBookedAsync(int hairdresserId, DateTime startTime, DateTime endTime)
+        {
+            var isBooked = await _context.Bookings
+                .AnyAsync(b => b.HairdresserId == hairdresserId
+                && !b.IsDeleted
+                && startTime < b.EndTime
+                && endTime > b.StartTime);
+
+            return isBooked;
+        }
+
+
 
         //Avbokning
         public async Task<string> CancelBookingAsync(CancelBookingDto dto)
@@ -81,29 +103,6 @@ namespace HairdresserAppointment.API.Services
             return $"Kan ej avbokas, avbokning måste ske senast 24 timmar innan bokad tid.\n Välkommen åter.";
         }
 
-
-        // Kollar om tidsslot är bokad, förhindrar dubbla bokningar
-        private async Task<bool> IsTimeBookedAsync(int hairdresserId, DateTime startTime, DateTime endTime)
-        {
-            var isBooked = await _context.Bookings
-                .AnyAsync(b => b.HairdresserId == hairdresserId
-                && !b.IsDeleted
-                && startTime < b.EndTime
-                && endTime > b.StartTime);
-
-            return isBooked;
-        }
-
-        //Genererar bokningsnummer
-        private string GenerateBookingNumber()
-        {
-            string month = DateTime.Now.ToString("MMM").ToUpper();
-            string numbers = Random.Shared.Next(100000, 999999).ToString();
-
-            return $"{month}-{numbers}";
-        }
-
-
         //validerar tid kvar för avbokning
         private bool CanBeCancelled(DateTime startTime)
         {
@@ -118,6 +117,44 @@ namespace HairdresserAppointment.API.Services
 
             return false;
         }
+
+
+
+        //Hämta frisör bokningar
+        public async Task<List<BookingDto>> GetHairdresserBookingAsync(string userId)
+        {
+            var user = await _context.Users.FindAsync(userId);
+
+            return await _context.Bookings
+                .Where(b => b.HairdresserId == 42 && !b.IsDeleted)
+                .Include(b => b.Hairdresser)
+                .Include(b => b.Treatments)
+                .Select(b => new BookingDto
+                {
+                    Id = b.Id,
+                    HairdresserId = b.HairdresserId,
+                    StartTime = b.StartTime,
+                    EndTime = b.EndTime,
+                    TotalDurationInMinutes = b.TotalDurationInMinutes,
+                    TotalPrice = b.TotalPrice,
+                    CostumerName = b.CostumerName,
+                    CostumerEmail = b.CostumerEmail,
+                    CostumerPhone = b.CostumerPhone,
+                    BookingNumber = b.BookingNumber,
+                    HairdresserName = b.Hairdresser.Name,
+                    PromotionId = b.PromotionId,
+                    IsDeleted = b.IsDeleted,
+                    Treatments = b.Treatments
+                    .Select(t => t.Name)
+                    .ToList()
+                }).ToListAsync();
+        }
+        
+
+
+
+
+       
 
 
 

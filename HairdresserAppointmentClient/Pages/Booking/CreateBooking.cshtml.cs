@@ -42,7 +42,7 @@ namespace HairdresserAppointmentClient.Pages.Booking
         {
             if(HairdresserId == 0 || TreatmentIds == null || TreatmentIds.Count == 0)
             {
-                ReturnToBookingPage();
+                return ReturnToBookingPage();
             }
             SelectedHairdresser = await _hairdresserApiService.GetHairdresserByIdAsync(HairdresserId);
 
@@ -52,7 +52,7 @@ namespace HairdresserAppointmentClient.Pages.Booking
 
             if (SelectedTreatments.Count != TreatmentIds.Count || SelectedHairdresser == null)
             {
-                ReturnToBookingPage();
+                return ReturnToBookingPage();
             }
 
             TotalPrice = SelectedTreatments.Sum(t => t.Price);
