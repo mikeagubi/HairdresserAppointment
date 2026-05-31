@@ -26,6 +26,7 @@ namespace HairdresserAppointmentClient.Pages
             Workinghours = await _workinghourApiservice.GetWorkingHoursByHairdresserId(token);
 
             Bookings = (await _bookingApiService.GetHairdressersBookingsAsync(token))
+                .Where(b => b.StartTime > DateTime.Now)
                 .OrderBy(b => b.StartTime)
                 .ToList();
         }
