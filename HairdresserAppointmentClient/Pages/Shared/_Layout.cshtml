@@ -83,8 +83,8 @@
                                     Frisör
                                 </a>
                                 <ul class="dropdown-menu dropdown-menu-end bg-dark">
-                                    <li><a class="dropdown-item text-gold" asp-page="/Hairdresser">Arbetstid</a></li>
-                                    <li><a class="dropdown-item text-gold" asp-page="/Hairdresser">Ledighet</a></li>
+                                    <li><a class="dropdown-item text-gold" asp-page="/HairdresserPanel">Bokningar</a></li>
+                                    <li><a class="dropdown-item text-gold" asp-page="/Hairdresser">Arbetstider</a></li>
                                     <li>
                                         <a class="dropdown-item text-gold" asp-page="/Logout">
                                             <i class="bi bi-box-arrow-right"></i> Logga ut
@@ -110,7 +110,7 @@
         <div class="container-fluid d-flex align-items-center small">
             <div>&copy; 2026 DagensLyx</div>
             <div class="ms-4 text-start">
-                <a class="text-gold text-decoration-none me-3 fw-bolder" href="#contact">Kontakt</a>
+                <a class="text-gold text-decoration-none me-3 fw-bolder" href="/contact">KONTAKT</a>
                 <a class="text-gold text-decoration-none me-3 fw-bold" href="#about">OM OSS</a>
             </div>
                 @if (string.IsNullOrEmpty(role))

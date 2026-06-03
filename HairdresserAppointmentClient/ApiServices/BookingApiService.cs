@@ -34,6 +34,17 @@ namespace HairdresserAppointmentClient.ApiServices
         }
 
 
+        //Hämta frisörs bokningar
+        public async Task<List<BookingDto>> GetHairdressersBookingsAsync(string token)
+        {
+            AddJwtToken(token);
+
+            var response = await _httpClient.GetFromJsonAsync<List<BookingDto>>("api/booking/get-hairdresser-bookings");
+            return response;
+
+        }
+
+
 
 
 

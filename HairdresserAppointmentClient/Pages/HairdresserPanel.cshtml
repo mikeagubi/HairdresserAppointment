@@ -3,13 +3,88 @@
 @{
 }
 
-<div>
-	<h1>hejhejhejhej</h1>
-</div>
-@foreach (var work in Model.Workinghours)
-{
-    <div>
-        <p>@work.DayOfWeek</p>
-        <p>@work.StartTime - @work.EndTime</p>
+
+<div class="container mt-4">
+    <p class="alert alert-danger">KVAR: ändra tid, avboka, lunch rast tillägg, lägg till/ta bort behadnling - Vyn = Dag/Vecka</p>
+    <div class="card shadow border-0 rounded-4">
+        <div class="card-header bg-dark text-white">
+            <h3 class="mb-0">Mina Bokningar</h3>
+        </div>
+        <div class="card-body p-0">
+            <table class="table table-hover align-middle mb-0">
+                <thead class="table-light">
+                    <tr>
+                        <th>Datum</th>
+                        <th>Tid</th>
+                        <th>Kund</th>
+                        <th>Behandling</th>
+                        <th>Pris</th>
+                    </tr>
+                </thead>
+                 <tbody>
+                    @foreach (var booking in Model.Bookings.OrderBy(b => b.StartTime))
+                    {
+                        <tr data-bs-toggle="collapse" data-bs-target="#booking-@booking.Id">
+                            <td> @booking.StartTime.ToString("yyyy-MM-dd")</td>
+                            <td> @booking.StartTime.ToString("HH:mm") - @booking.EndTime.ToString("HH:mm")</td>
+                            <td class="fw-semibold"> @booking.CostumerName</td>
+                            <td> @string.Join(" **** ", booking.Treatments)</td>
+
+                            <td class="text-success fw-bold">
+                                @booking.TotalPrice kr
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td colspan="5" class="p-0">
+                                <div id="booking-@booking.Id" class="collapse">
+                                    <div class="bg-dark text-white p-4 border-top border-3 border-warning">
+                                        <h5 class="mb-4">Boknings Detaljer</h5>
+                                        <div class="row">
+
+                                            <div class="col-md-6">
+                                                <h6 class="text-warning">Kund Information</h6>
+
+                                                <strong>Namn:</strong>
+                                                <p class="mb-2"> @booking.CostumerName</p>
+
+                                                <strong>E-post Adress:</strong>
+                                                <p class="mb-2">@booking.CostumerEmail</p>
+
+                                                <strong>Telefon:</strong>
+                                                <p class="mb-0">@booking.CostumerPhone</p>
+
+                                            </div>
+
+                                            <div class="col-md-6">
+
+                                                <h6 class="text-warning">Boknings Information</h6>
+
+                                                <strong>Bokningsnummer:</strong>
+                                                <p class="mb-2">@booking.BookingNumber</p>
+
+                                                <strong>Datum:</strong>
+                                                <p class="mb-2">@booking.StartTime.ToString("yyyy-MM-dd")</p>
+
+                                                <strong>Tid:</strong>
+                                                <p class="mb-2">@booking.StartTime.ToString("HH:mm") 
+                                                    - @booking.EndTime.ToString("HH:mm")
+                                                </p>
+
+                                                <strong>Behandlings tid:</strong>
+                                                <p class="mb-2">@booking.TotalDurationInMinutes min</p>
+
+                                                <strong>Pris:</strong>
+                                                <p class="mb-0">@booking.TotalPrice.ToString("0")kr</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
     </div>
-}
+</div>

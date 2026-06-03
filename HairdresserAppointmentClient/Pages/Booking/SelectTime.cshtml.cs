@@ -41,7 +41,7 @@ namespace HairdresserAppointmentClient.Pages.Booking
         {
             if (HairdresserId == 0 || TreatmentIds == null || TreatmentIds.Count == 0)
             {
-                ReturnToBookingPage();
+                return ReturnToBookingPage();
             }
 
             SelectedTreatments = (await _treatmentApiService.GetAllTreatmentsAsync())
@@ -52,7 +52,7 @@ namespace HairdresserAppointmentClient.Pages.Booking
             
             if (SelectedTreatments.Count != TreatmentIds.Count || SelectedHairdresser == null)
             {
-                ReturnToBookingPage();
+                return ReturnToBookingPage();
             }
             TimeSlots = _bookingHelper.GenerateTimeSlots(SelectedHairdresser, SelectedTreatments);
             TotalPrice = SelectedTreatments.Sum(p => p.Price);

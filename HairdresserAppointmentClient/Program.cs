@@ -6,7 +6,6 @@ using Microsoft.EntityFrameworkCore;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
 
 
 builder.Services.AddRazorPages();
@@ -29,6 +28,7 @@ builder.Services.AddScoped<BookingApiService>();
 builder.Services.AddScoped<GalleryHelper>();
 builder.Services.AddScoped<TreatmentApiService>();
 builder.Services.AddScoped<WorkingHourApiService>();
+builder.Services.AddScoped<PromotionApiService>();
 
 builder.Services.AddSession();
 

@@ -34,6 +34,13 @@ namespace HairdresserAppointmentClient.Helpers
                 var currentStartTime = currentDate.Date + workingHour.StartTime;
                 var currentEndTime = currentDate.Date + workingHour.EndTime;
 
+                if (currentDate.Date == DateTime.Today && DateTime.Now >= currentEndTime)
+                {
+                    currentDate = currentDate.AddDays(1);
+                    daysSearched++;
+                    continue;
+                }
+
                 currentStartTime = AdjustStartTimeForToday(currentStartTime, currentEndTime);
 
                 while(currentStartTime.AddMinutes(totalTreatmentTime) <= currentEndTime)
@@ -60,6 +67,8 @@ namespace HairdresserAppointmentClient.Helpers
             return availableSlots;
 
         }
+
+
 
 
         //Justerar starttiden om den valda dagen är idag

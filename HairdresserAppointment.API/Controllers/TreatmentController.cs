@@ -39,9 +39,9 @@ namespace HairdresserAppointment.API.Controllers
 
         [Authorize(Roles = "Admin")]
         [HttpPut]
-        public async Task<IActionResult> UpdateTreatment(TreatmentDto dto)
+        public async Task<IActionResult> UpdateTreatment(Treatment treatment)
         {
-            var treatmentToUpdate = await _treatmentService.UpdateTreatmentAsync(dto);
+            var treatmentToUpdate = await _treatmentService.UpdateTreatmentAsync(treatment);
             if (!treatmentToUpdate)
                 return NotFound();
 

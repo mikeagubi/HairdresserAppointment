@@ -1,7 +1,9 @@
 ﻿using HairdresserAppointment.API.DTO;
+using HairdresserAppointment.API.Models;
 using HairdresserAppointment.API.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace HairdresserAppointment.API.Controllers
 {
@@ -29,6 +31,19 @@ namespace HairdresserAppointment.API.Controllers
         public async Task<ActionResult<string>> CancelBooking(CancelBookingDto dto)
         {
             var response = await _bookingService.CancelBookingAsync(dto);
+
+            return Ok(response);
+        }
+
+        //hämta frisör bokningar
+        [Authorize(Roles = "Hairdresser")]
+        [HttpGet("get-hairdresser-bookings")]
+        public async Task<ActionResult<List<BookingDto>>> GetHairdresserBookings()
+        {
+            var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+            var response = await _bookingService.GetHairdresserBookingAsync(userId);
+
 
             return Ok(response);
         }
