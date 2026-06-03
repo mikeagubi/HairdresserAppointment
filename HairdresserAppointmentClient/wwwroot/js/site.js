@@ -17,20 +17,9 @@ function myScrollBtn() {
     else {
         btn.classList.add("d-none");
     }
-
-
 }
 
 window.addEventListener("scroll", myScrollBtn);
-
-
-function updateStatus() {
-    const statusBox = document.getElementById("statusCheckBox");
-    const text = document.getElementById("statusText");
-
-    text.innerText = statusBox.checked ? "Active" : "Inactive";
-}
-
 
 
 document.addEventListener("DOMContentLoaded", function () {

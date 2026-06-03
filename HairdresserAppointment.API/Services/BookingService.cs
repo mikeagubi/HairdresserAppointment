@@ -2,6 +2,7 @@
 using HairdresserAppointment.API.DTO;
 using HairdresserAppointment.API.Models;
 using Microsoft.EntityFrameworkCore;
+using System.Globalization;
 
 namespace HairdresserAppointment.API.Services
 {
@@ -56,7 +57,7 @@ namespace HairdresserAppointment.API.Services
         //Genererar bokningsnummer
         private string GenerateBookingNumber()
         {
-            string month = DateTime.Now.ToString("MMM").ToUpper();
+            string month = DateTime.Now.ToString("MMM", CultureInfo.InvariantCulture).ToUpper();
             string numbers = Random.Shared.Next(100000, 999999).ToString();
 
             return $"{month}-{numbers}";

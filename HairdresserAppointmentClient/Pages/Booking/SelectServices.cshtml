@@ -19,7 +19,7 @@
                         <div class="card treatment-card shadow h-100">
                             <div class="card-body text-center d-flex flex-column">
                                 <div class="mb-3">
-                                    <img src="~/images/icons/@(treatment.Icon).png" class="treatment-icon" />
+                                    <img src="~/images/icons/@(treatment.Icon ?? "ovrigt").png" class="treatment-icon" />
                                 </div>
                                 <h5 class="treatment-title">@treatment.Name</h5>
                                 <p class="text-muted mb-2"><i class="bi bi-clock"></i> @treatment.DurationInMinutes min</p>

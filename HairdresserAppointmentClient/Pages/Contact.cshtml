@@ -1,0 +1,51 @@
+﻿@page
+@model HairdresserAppointmentClient.Pages.ContactModel
+@{
+}
+
+<div class="container-fluid bg-dark text-white min-vh-100" style="margin-top:-30px;">
+    <div class="container py-5">
+        <div class="text-center mb-5">
+            <h3 class="fw-bold"> Kontakta Oss</h3>
+            <p class="text-light">Har du frågor om din bokning eller någon av våra behandlingar?
+                Vi hjälper dig gärna.
+            </p>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="card bg-black border-warning shadow rounded-4">
+                    <div class="card-body p-5">
+                        <h3 class="text-warning text-center fw-bold mb-4"> Kontaktuppgifter</h3>
+                        <div class="text-center">
+                            <div class="mb-4">
+                                <h5 class="text-warning mb-2">📞 Telefon </h5>
+                                <p class="fs-6 text-light mb-0"> 076-289 16 10</p>
+                            </div>
+                            <div class="mb-4">
+                                <h5 class="text-warning mb-2">📍 Adress</h5>
+                                <p class="fs-6 text-light mb-0"> Stationsvägen 16</p>
+                                <p class="fs-6 text-light"> 611 74 Tystberga </p>
+                            </div>
+
+                        </div>
+
+                        <hr class="border-warning" />
+
+                        <p class="text-center text-light">
+                            Har du frågor om din bokning eller våra behandlingar?<br />Vi hjälper dig gärna.<br />
+                            Behöver du avboka en tid kan du göra det direkt här på hemsidan.
+                        </p>
+                        <div class="text-center mt-4">
+                            <a asp-page="/Booking/CancelBooking" id="goldenBtn" class="btn fw-bold"> Avboka Tid</a>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
