@@ -40,6 +40,15 @@
                                 <label class="form-label fw-bold text-gold"> Telefonnummer</label>
                                 <input asp-for="Booking.CustomerPhone" class="form-control rounded-2" required />
                             </div>
+                            <div class="col-md-5 mb-4">
+                                <label class="form-label fw-bold text-gold" asp-for="PromotionCode"></label>
+                                <div class="input-group">
+                                    <input id="promotionCode" asp-for="PromotionCode" class="form-control rounded-start-2" />
+                                    <button type="button" onclick="validateCode()" class="btn btn-outline-warning">Använd</button>
+                                </div>
+                                <div id="promotionMessage" class="text-white mt-2"></div>
+                                    
+                            </div>
                         </div>
                         <button type="submit" id="goldenBtn"> Bekräfta bokningen</button>
                     </form>

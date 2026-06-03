@@ -29,6 +29,7 @@ builder.Services.AddScoped<BookingApiService>();
 builder.Services.AddScoped<GalleryHelper>();
 builder.Services.AddScoped<TreatmentApiService>();
 builder.Services.AddScoped<WorkingHourApiService>();
+builder.Services.AddScoped<PromotionApiService>();
 
 builder.Services.AddSession();
 

@@ -10,11 +10,14 @@ namespace HairdresserAppointmentClient.Pages.Booking
         private readonly HairdresserApiService _hairdresserApiService;
         private readonly TreatmentApiService _treatmentApiService;
         private readonly BookingApiService _bookingApiService;
-        public CreateBookingModel(HairdresserApiService hairdresserApiService, TreatmentApiService treatmentApiService, BookingApiService bookingApiService)
+        private readonly PromotionApiService _promotionApiService;
+        public CreateBookingModel(HairdresserApiService hairdresserApiService, TreatmentApiService treatmentApiService, 
+            BookingApiService bookingApiService, PromotionApiService promotionApiService)
         {
             _hairdresserApiService = hairdresserApiService;
             _treatmentApiService = treatmentApiService;
             _bookingApiService = bookingApiService;
+            _promotionApiService = promotionApiService;
         }
 
         [BindProperty(SupportsGet = true)]
@@ -31,6 +34,7 @@ namespace HairdresserAppointmentClient.Pages.Booking
 
         [BindProperty]
         public CreateBookingDto Booking { get; set; } = new();
+
         public HairdresserBookingDto SelectedHairdresser { get; set; }
         public List<TreatmentDto> SelectedTreatments { get; set; } = new();
         public decimal TotalPrice { get; set; }
@@ -74,5 +78,9 @@ namespace HairdresserAppointmentClient.Pages.Booking
             TempData["ErrorMessage"] = ("Något gick fel. Försök igen.");
             return RedirectToPage("/Booking/SelectServices");
         }
+
+
+
+
     }
 }

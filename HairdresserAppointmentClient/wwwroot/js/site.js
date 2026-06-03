@@ -55,3 +55,15 @@ document.addEventListener("DOMContentLoaded", function () {
 
     }
 });
+
+
+async function validateCode() {
+
+    const code = document.getElementById("promotionCode").value;
+
+    const response = await fetch("https://localhost:44303/api/promotion/validate-code/" + code);
+
+    const message = await response.text();
+
+    document.getElementById("promotionMessage").innerText = message;
+}
