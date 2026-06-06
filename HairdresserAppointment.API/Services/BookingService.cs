@@ -31,6 +31,18 @@ namespace HairdresserAppointment.API.Services
 
             var totalPrice = treatments.Sum(t => t.Price);
             var totalDurationInMinutes = treatments.Sum (t => t.DurationInMinutes);
+            
+            if(dto.PromotionId.HasValue)
+            {
+                var code = await _context.Promotions
+                    .SingleOrDefaultAsync(p => p.Id == dto.PromotionId);
+
+                if(code != null)
+                {
+                    totalPrice -= totalPrice * code.DiscountPercent / 100;
+                }
+            }
+            
 
             var booking = new Booking
             {
@@ -44,6 +56,7 @@ namespace HairdresserAppointment.API.Services
                 TotalPrice = totalPrice,
                 BookingNumber = GenerateBookingNumber(),
                 IsDeleted = false,
+                PromotionId = dto.PromotionId,
                 TotalDurationInMinutes = totalDurationInMinutes
 
             };

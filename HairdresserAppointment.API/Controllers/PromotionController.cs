@@ -1,4 +1,5 @@
-﻿using HairdresserAppointment.API.Services;
+﻿using HairdresserAppointment.API.DTO;
+using HairdresserAppointment.API.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HairdresserAppointment.API.Controllers
@@ -17,7 +18,7 @@ namespace HairdresserAppointment.API.Controllers
 
         //validerar kampanjkoden
         [HttpGet("validate-code/{code}")]
-        public async Task<string> ValidatePromotion(string code)
+        public async Task<PromotionValidationDto> ValidatePromotion(string code)
         {
             var response = await _promotionService.ValidatePromotionCodeAsync(code);
 

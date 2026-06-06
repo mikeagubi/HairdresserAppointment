@@ -33,7 +33,7 @@ namespace HairdresserAppointmentClient.Pages.Booking
         public DateTime EndTime { get; set; }
 
         [BindProperty]
-        public CreateBookingDto Booking { get; set; } = new();
+        public CreateBookingDto CreateBooking { get; set; } = new();
 
         public HairdresserBookingDto SelectedHairdresser { get; set; }
         public List<TreatmentDto> SelectedTreatments { get; set; } = new();
@@ -68,7 +68,7 @@ namespace HairdresserAppointmentClient.Pages.Booking
 
         public async Task<IActionResult> OnPostCreateBookingAsync()
         {
-            var bookingNumber = await _bookingApiService.CreateBookingAsync(Booking);
+            var bookingNumber = await _bookingApiService.CreateBookingAsync(CreateBooking);
             TempData["BookingNumber"] = bookingNumber;
             return RedirectToPage("/Booking/BookingConfirmation");
         }

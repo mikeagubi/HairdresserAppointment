@@ -49,10 +49,27 @@ document.addEventListener("DOMContentLoaded", function () {
 async function validateCode() {
 
     const code = document.getElementById("promotionCode").value;
+    const priceElement = document.getElementById("totalPrice");
+    const orginalPrice = parseFloat(priceElement.dataset.orginalPrice);
+
+    if (code === "") {
+        document.getElementById("promotionMessage").innerText = "Ange en rabattkod"
+        return;
+    }
 
     const response = await fetch("https://localhost:44303/api/promotion/validate-code/" + code);
 
-    const message = await response.text();
+    const result = await response.json();
 
-    document.getElementById("promotionMessage").innerText = message;
+    document.getElementById("promotionMessage").innerText = result.message;
+
+    if (result.isValid) {
+        document.getElementById("promotionId").value = result.promotionId;
+
+        const discountPrice = orginalPrice * result.discountPercent / 100;
+        const newPrice = orginalPrice - (orginalPrice * result.discountPercent / 100);
+
+        document.getElementById("discountAmount").innerText = "-" + discountPrice;
+        priceElement.innerText = newPrice;
+    }
 }
