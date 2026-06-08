@@ -26,6 +26,20 @@ namespace HairdresserAppointment.API.Services
                 return null;
             }
 
+            var workingHours = await _context.WorkingHours
+                .SingleOrDefaultAsync(w => w.HairdresserId == dto.HairdresserId
+                && w.DayOfWeek == dto.StartTime.DayOfWeek);
+            
+            if(workingHours == null)
+            {
+                return null;
+            }
+            if(dto.StartTime.TimeOfDay < workingHours.StartTime 
+                || dto.EndTime.TimeOfDay > workingHours.EndTime)
+            {
+                return null;
+            }
+
             var treatments = await _context.Treatments
                 .Where(t => dto.TreatmentIds.Contains(t.Id)).ToListAsync();
 

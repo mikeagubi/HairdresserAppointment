@@ -69,6 +69,11 @@ namespace HairdresserAppointmentClient.Pages.Booking
         public async Task<IActionResult> OnPostCreateBookingAsync()
         {
             var bookingNumber = await _bookingApiService.CreateBookingAsync(CreateBooking);
+            if(string.IsNullOrEmpty(bookingNumber))
+            {
+                return ReturnToBookingPage();
+            }
+
             TempData["BookingNumber"] = bookingNumber;
             return RedirectToPage("/Booking/BookingConfirmation");
         }
