@@ -67,7 +67,7 @@ async function validateCode() {
         document.getElementById("promotionId").value = result.promotionId;
 
         const discountPrice = orginalPrice * result.discountPercent / 100;
-        const newPrice = orginalPrice - (orginalPrice * result.discountPercent / 100);
+        const newPrice = orginalPrice - discountPrice;
 
         document.getElementById("discountAmount").innerText = "-" + discountPrice;
         priceElement.innerText = newPrice;

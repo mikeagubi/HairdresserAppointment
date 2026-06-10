@@ -1,5 +1,6 @@
 ﻿namespace HairdresserAppointmentClient.Dto
 {
+    //skapa nytt frisör konto
     public class CreateUserDto
     {
         public string Email { get; set; }

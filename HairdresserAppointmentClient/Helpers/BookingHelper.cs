@@ -55,8 +55,7 @@ namespace HairdresserAppointmentClient.Helpers
                         });
 
                     }
-                        currentStartTime = currentStartTime
-                        .AddMinutes(TimeSlotIntervalMinutes);
+                        currentStartTime = currentStartTime.AddMinutes(TimeSlotIntervalMinutes);
                 }
 
                 daysSearched++;

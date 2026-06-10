@@ -20,7 +20,7 @@ namespace HairdresserAppointment.API.Services
             _tokenService = tokenService;
         }
 
-
+        //Login Admin/Friösr
         public async Task<string?> LoginUserAsync(LoginDto userDto)
         {
             var user = await _userManager.FindByEmailAsync(userDto.Email);
@@ -39,6 +39,7 @@ namespace HairdresserAppointment.API.Services
         }
 
 
+        //skapa konto för frisör
         public async Task<bool> CreateUserAsync(CreateUserDto dto)
         {
 

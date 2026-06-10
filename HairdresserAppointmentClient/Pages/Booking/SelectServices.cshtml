@@ -104,7 +104,7 @@
                         <label class="form-label fw-bold">Välj frisör</label>
 
                         <select asp-for="HairdresserId" class="form-select mb-4">
-                        <option value="" disabled selected>  -- Select Hairdresser --  </option>
+                        <option value="" disabled selected>  -- Välj Frisör --  </option>
                             @foreach(var hairdresser in Model.Hairdressers)
                             {
                                 <option value="@hairdresser.Id">@hairdresser.Name</option>

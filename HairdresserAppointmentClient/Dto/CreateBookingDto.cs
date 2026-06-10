@@ -2,6 +2,7 @@
 
 namespace HairdresserAppointmentClient.Dto
 {
+    //för att skapa en ny bokning
     public class CreateBookingDto
     {
         public int HairdresserId { get; set; }

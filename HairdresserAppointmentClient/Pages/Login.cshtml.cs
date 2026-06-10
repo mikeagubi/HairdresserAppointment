@@ -19,12 +19,11 @@ namespace HairdresserAppointmentClient.Pages
 
         [BindProperty]
         public LoginDto loginDto { get; set; }
-        public string Role { get; set; }
         public string ErrorMessage { get; set; }
 
         public void OnGet()
         {
-            Role = HttpContext.Session.GetString("role");
+            
         }
 
         public async Task<IActionResult> OnPostAsync()

@@ -9,10 +9,10 @@ namespace HairdresserAppointmentClient.ApiServices
         { }
 
 
-        public async Task<string> ValidatePromotionCodeAsync(string code)
-        {
-            return await _httpClient.GetStringAsync($"api/promotion/validate-code/{code}");
-        }
+        //public async Task<string> ValidatePromotionCodeAsync(string code)
+        //{
+        //    return await _httpClient.GetStringAsync($"api/promotion/validate-code/{code}");
+        //}
 
 
 

@@ -2,6 +2,7 @@
 
 namespace HairdresserAppointmentClient.Dto
 {
+    //Hämta frisör bokningar
     public class BookingDto
     {
         public Guid Id { get; set; }
