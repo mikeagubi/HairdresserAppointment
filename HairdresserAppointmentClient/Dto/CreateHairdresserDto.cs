@@ -6,6 +6,7 @@
         public List<WorkingHourDto> WorkingHours { get; set; } = new();
     }
 
+
     public class WorkingHourDto
     {
         public DayOfWeek DayOfWeek { get; set; }

@@ -17,14 +17,13 @@ namespace HairdresserAppointmentClient.Pages
         }
 
 
-        public List<HairdresserDto> Hairdressers { get; set; } = new();
-
         [BindProperty]
         public CreateHairdresserDto Hairdresser { get; set; } = new();
 
         [BindProperty]
         public CreateUserDto User { get; set; }
 
+        public List<HairdresserDto> Hairdressers { get; set; } = new();
 
 
 
@@ -43,8 +42,6 @@ namespace HairdresserAppointmentClient.Pages
             return Page();
         }
 
-
-        //skapa en ny frisör med arbetstider
 
         public async Task<IActionResult> OnPostAsync()
         {
@@ -70,20 +67,18 @@ namespace HairdresserAppointmentClient.Pages
                 {
                     TempData["HairdresserMessage"] = $"Failed to register hairdresser";
                 }
-
-                
             }
             
             return Redirect("/Hairdresser");
         }
 
 
-        //skapa account för frisören
         public async Task<IActionResult> OnPostCreateUserAsync()
         {
             var token = HttpContext.Session.GetString("token");
 
             var success = await _authApiService.CreateUserAsync(User, token);
+
             if (success)
             {
                 TempData["AccountMessage"] = $"{User.Email} is now created";
@@ -97,11 +92,11 @@ namespace HairdresserAppointmentClient.Pages
         }
 
 
-        //Soft-delete frisören
         public async Task<IActionResult> OnPostDeleteHairdresserAsync(int id)
         {
             var token = HttpContext.Session.GetString("token");
             var success = await _hairdresserApiServices.DeleteHairdresserAsync(id, token);
+
             if (success)
             {
                 TempData["DeleteMessage"] = "Frisören är nu inaktiverad";

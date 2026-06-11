@@ -5,7 +5,6 @@ namespace HairdresserAppointmentClient.Helpers
 {
     public class BookingHelper
     {
-
         private const int SearchPeriodInDays = 180;
         private const int TimeSlotIntervalMinutes = 15;
 
@@ -13,7 +12,8 @@ namespace HairdresserAppointmentClient.Helpers
         {
             var availableSlots = new List<TimeSlot>();
 
-            var totalTreatmentTime = selectedTreatments.Sum(t => t.DurationInMinutes);
+            var totalTreatmentTime = selectedTreatments
+                .Sum(t => t.DurationInMinutes);
 
             var currentDate = DateTime.Today;
 
@@ -51,7 +51,8 @@ namespace HairdresserAppointmentClient.Helpers
                         availableSlots.Add(new TimeSlot
                         {
                             StartTime = currentStartTime,
-                            EndTime = currentStartTime.AddMinutes(totalTreatmentTime)
+                            EndTime = currentStartTime
+                            .AddMinutes(totalTreatmentTime)
                         });
 
                     }
@@ -65,32 +66,34 @@ namespace HairdresserAppointmentClient.Helpers
             }
 
             return availableSlots;
-
         }
 
 
-
-
-        //Justerar starttiden om den valda dagen är idag
         private DateTime AdjustStartTimeForToday(DateTime currentStartTime, DateTime currentEndTime)
         {
             if(currentStartTime.Date == DateTime.Today)
             {
-                if(DateTime.Now > currentStartTime && DateTime.Now < currentEndTime)
+                if(DateTime.Now > currentStartTime && 
+                    DateTime.Now < currentEndTime)
                 {
                     return DateTime.Now;
                 }
             }
+
             return currentStartTime;
         }
 
-        // Kontrollerar att den nya tiden inte krockar med befintliga bokningar
-        private bool IsTimeAvailable(DateTime slotStartTime, int totalTreatmentTime, List<BookingTimeDto> bookings)
+
+        private bool IsTimeAvailable(DateTime slotStartTime, 
+            int totalTreatmentTime, List<BookingTimeDto> bookings)
         {
-            var slotEndTime = slotStartTime.AddMinutes(totalTreatmentTime);
+            var slotEndTime = slotStartTime
+                .AddMinutes(totalTreatmentTime);
+
             foreach(var booking in bookings)
             {
-                if(slotEndTime > booking.StartTime && slotStartTime < booking.EndTime)
+                if(slotEndTime > booking.StartTime &&
+                    slotStartTime < booking.EndTime)
                 {
                     return false;
                 }
@@ -98,8 +101,6 @@ namespace HairdresserAppointmentClient.Helpers
 
             return true;
         }
-
-
 
     }
 }

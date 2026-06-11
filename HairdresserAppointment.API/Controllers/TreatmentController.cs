@@ -13,7 +13,6 @@ namespace HairdresserAppointment.API.Controllers
     public class TreatmentController : ControllerBase
     {
         private readonly TreatmentService _treatmentService;
-
         public TreatmentController(TreatmentService treatmentService)
         {
             _treatmentService = treatmentService;

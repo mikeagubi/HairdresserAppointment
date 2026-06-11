@@ -16,6 +16,7 @@ namespace HairdresserAppointmentClient.ApiServices
 
             var response = await _httpClient
                 .GetFromJsonAsync<List<WorkingHourDto>>("api/workinghour/workhour-by-id");
+
             if (response == null)
                 return new List<WorkingHourDto>();
 

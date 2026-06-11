@@ -8,13 +8,5 @@ namespace HairdresserAppointmentClient.ApiServices
             : base(factory.CreateClient("HairdresserAppointmentApi"))
         { }
 
-
-        public async Task<string> ValidatePromotionCodeAsync(string code)
-        {
-            return await _httpClient.GetStringAsync($"api/promotion/validate-code/{code}");
-        }
-
-
-
     }
 }

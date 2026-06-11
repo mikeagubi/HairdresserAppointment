@@ -20,7 +20,6 @@ namespace HairdresserAppointment.API.Services
             _tokenService = tokenService;
         }
 
-
         public async Task<string?> LoginUserAsync(LoginDto userDto)
         {
             var user = await _userManager.FindByEmailAsync(userDto.Email);

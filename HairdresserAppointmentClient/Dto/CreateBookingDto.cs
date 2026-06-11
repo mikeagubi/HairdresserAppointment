@@ -15,5 +15,6 @@ namespace HairdresserAppointmentClient.Dto
         public string CustomerEmail { get; set; }
         [Required]
         public string CustomerPhone { get; set; }
+        public int? PromotionId { get; set; }
     }
 }

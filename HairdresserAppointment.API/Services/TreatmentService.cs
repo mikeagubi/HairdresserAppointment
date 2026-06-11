@@ -8,7 +8,6 @@ namespace HairdresserAppointment.API.Services
     public class TreatmentService
     {
         private readonly MyDbContext _context;
-
         public TreatmentService(MyDbContext context)
 
         {
@@ -29,6 +28,7 @@ namespace HairdresserAppointment.API.Services
 
             return treatment;
         }
+
 
         public async Task<bool> UpdateTreatmentAsync(Treatment treatment)
         {

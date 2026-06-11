@@ -24,9 +24,6 @@ namespace HairdresserAppointmentClient.Pages.Booking
         public List<TreatmentDto> Treatments { get; set; } = new();
         public List<HairdresserDto> Hairdressers { get; set; } = new();
 
-        
-
-
 
         public async Task OnGet()
         {
@@ -50,11 +47,14 @@ namespace HairdresserAppointmentClient.Pages.Booking
 
         public async Task<IActionResult> OnPostSelectTimeAsync()
         {
-            if(TreatmentIds.Count == 0 || HairdresserId == 0)
+            if(TreatmentIds.Count == 0 || 
+                HairdresserId == 0)
             {
                 await LoadPageAsync();
+
                 return Page();
             }
+
             return RedirectToPage("/Booking/SelectTime",
                 new
                 {
@@ -72,8 +72,6 @@ namespace HairdresserAppointmentClient.Pages.Booking
             Hairdressers = await _hairdresserApiService.GetHairdressersAsync();
         }
 
-
-
-
     }
+
 }
