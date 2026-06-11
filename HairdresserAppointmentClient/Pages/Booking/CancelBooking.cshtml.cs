@@ -13,11 +13,10 @@ namespace HairdresserAppointmentClient.Pages.Booking
             _bookingApiService = bookingApiService;
         }
 
-        public string? ResponseMessage { get; set; }
 
         [BindProperty]
         public CancelBookingDto CancelBooking { get; set; }
-
+        public string? ResponseMessage { get; set; }
 
 
         public void OnGet()
@@ -26,10 +25,10 @@ namespace HairdresserAppointmentClient.Pages.Booking
         }
 
 
-
         public async Task<IActionResult> OnPostCancelBookingAsync()
         {
             var token = HttpContext.Session.GetString("token");
+
             ResponseMessage = await _bookingApiService.CancelBookingAsync(CancelBooking, token);
 
             return Page(); 

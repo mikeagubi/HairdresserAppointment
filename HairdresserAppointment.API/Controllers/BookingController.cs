@@ -17,7 +17,7 @@ namespace HairdresserAppointment.API.Controllers
             _bookingService = bookingService;
         }
 
-        //Skapa en bokning
+
         [HttpPost]
         public async Task<IActionResult> CreateBooking(CreateBookingDto dto)
         {
@@ -26,7 +26,7 @@ namespace HairdresserAppointment.API.Controllers
             return Ok(bookingNumber);
         }
 
-        //Avbokning
+
         [HttpPut("cancel-booking")]
         public async Task<ActionResult<string>> CancelBooking(CancelBookingDto dto)
         {
@@ -35,7 +35,7 @@ namespace HairdresserAppointment.API.Controllers
             return Ok(response);
         }
 
-        //hämta frisör bokningar
+
         [Authorize(Roles = "Hairdresser")]
         [HttpGet("get-hairdresser-bookings")]
         public async Task<ActionResult<List<BookingDto>>> GetHairdresserBookings()
@@ -43,7 +43,6 @@ namespace HairdresserAppointment.API.Controllers
             var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 
             var response = await _bookingService.GetHairdresserBookingAsync(userId);
-
 
             return Ok(response);
         }

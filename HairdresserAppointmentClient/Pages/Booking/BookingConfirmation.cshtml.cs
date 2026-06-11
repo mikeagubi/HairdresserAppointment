@@ -5,11 +5,7 @@ namespace HairdresserAppointmentClient.Pages.Booking
 {
     public class BookingConfirmationModel : PageModel
     {
-        
         public string? BookingNumber { get; set; }
-
-        
-
 
         
         public IActionResult OnGet()

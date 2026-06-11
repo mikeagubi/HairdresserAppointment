@@ -1,6 +1,5 @@
 ﻿namespace HairdresserAppointmentClient.Dto
 {
-    //för avbokningar
     public class CancelBookingDto
     {
         public string BookingNumber { get; set; }

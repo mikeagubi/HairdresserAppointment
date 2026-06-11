@@ -15,8 +15,6 @@ namespace HairdresserAppointment.API.Controllers
             _promotionService = promotionService;
         }
 
-
-        //validerar kampanjkoden
         [HttpGet("validate-code/{code}")]
         public async Task<PromotionValidationDto> ValidatePromotion(string code)
         {

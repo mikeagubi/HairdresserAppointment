@@ -16,7 +16,5 @@ namespace HairdresserAppointmentClient.ApiServices
                 new AuthenticationHeaderValue("Bearer", token);
         }
 
-
-
     }
 }

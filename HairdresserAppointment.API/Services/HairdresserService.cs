@@ -8,14 +8,12 @@ namespace HairdresserAppointment.API.Services
     public class HairdresserService
     {
         private readonly MyDbContext _context;
-
         public HairdresserService(MyDbContext context)
         {
             _context = context;
         }
 
 
-        //Hämta alla frisörer
         public async Task<List<HairdresserDto>> GetAllHairdressersAsync()
         {
             return await _context.Hairdressers
@@ -34,8 +32,6 @@ namespace HairdresserAppointment.API.Services
         }
 
 
-
-        //Hämta frisör via Id
         public async Task<HairdresserBookingDto?> GetHairdresserByIdAsync(int id)
         {
             return await _context.Hairdressers
@@ -67,7 +63,6 @@ namespace HairdresserAppointment.API.Services
         }
 
 
-        //Soft-delete en frisör
         public async Task<bool> DeleteHairdresserAsync(int id)
         {
             var deletedHairdresser = await _context.Hairdressers.FindAsync(id);
@@ -81,7 +76,6 @@ namespace HairdresserAppointment.API.Services
         }
 
 
-        //Skapa frisör
         public async Task<Hairdresser> CreateHairdresserAsync(CreateHairdresserDto dto)
         {
             var hairdresser = new Hairdresser

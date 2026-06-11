@@ -15,26 +15,27 @@ namespace HairdresserAppointmentClient.Pages
             _treatmentsApiService = treatmentsApiService;
         }
 
-        public List<TreatmentDto> Treatments { get; set; } = new();
 
         [BindProperty]
         public TreatmentDto Treatment { get; set; }
+        public List<TreatmentDto> Treatments { get; set; } = new();
 
 
 
-
-        
         public async Task<IActionResult> OnGetAsync()
         {
             var role = HttpContext.Session.GetString("role");
+
             if(role != "Admin")
             {
                 return RedirectToPage("/login");
             }
-            Treatments = (await _treatmentsApiService.GetAllTreatmentsAsync()).OrderBy(t => t.Name).ToList();
+
+            Treatments = (await _treatmentsApiService.GetAllTreatmentsAsync())
+                .OrderBy(t => t.Name)
+                .ToList();
 
             return Page();
-
         }
 
 
@@ -43,6 +44,7 @@ namespace HairdresserAppointmentClient.Pages
             var token = HttpContext.Session.GetString("token");
 
             var success = await _treatmentsApiService.CreateTreatmentAsync(Treatment, token);
+
             if (success)
             {
                 TempData["CreateMessage"] = "New treatment added";
@@ -52,12 +54,12 @@ namespace HairdresserAppointmentClient.Pages
         }
 
 
-
         public async Task<IActionResult> OnPostUpdateTreatmentAsync()
         {
             var token = HttpContext.Session.GetString("token");
 
             var success = await _treatmentsApiService.UpdateTreatmentAsync(Treatment, token);
+
             if (!success)
             {
                 TempData["Message"] = "Failed to update treatment";
@@ -66,8 +68,8 @@ namespace HairdresserAppointmentClient.Pages
             {
                 TempData["Message"] = "Treatment updated";
             }
-            return RedirectToPage("/Treatments");
 
+            return RedirectToPage("/Treatments");
         }
 
         public async Task<IActionResult> OnPostDeleteTreatmentAsync()
@@ -75,6 +77,7 @@ namespace HairdresserAppointmentClient.Pages
             var token = HttpContext.Session.GetString("token");
 
             var success = await _treatmentsApiService.DeleteTreatmentAsync(Treatment.Id, token);
+
             if (!success)
             {
                 TempData["Message"] = "Failed to delete treatment";
@@ -86,15 +89,6 @@ namespace HairdresserAppointmentClient.Pages
 
             return RedirectToPage("/treatments");
         }
-
-
-
-
-
-
-
-
-
 
     }
 }

@@ -38,7 +38,8 @@ namespace HairdresserAppointment.API.Seed
                 await userManager.AddToRoleAsync(admin, adminRole);
             }
            
-
         }
+
     }
+
 }

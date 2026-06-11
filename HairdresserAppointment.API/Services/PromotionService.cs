@@ -13,12 +13,11 @@ namespace HairdresserAppointment.API.Services
         }
 
 
-
-        //validerar kampanjkoden
         public async Task<PromotionValidationDto> ValidatePromotionCodeAsync(string code)
         {
             var promotion = await _context.Promotions
                 .SingleOrDefaultAsync(p => p.Code == code);
+            
             if(promotion == null)
             {
                 return new PromotionValidationDto
@@ -54,9 +53,9 @@ namespace HairdresserAppointment.API.Services
                 PromotionId = promotion.Id,
                 DiscountPercent = promotion.DiscountPercent,
             };
+
         }
 
-
-
     }
+
 }

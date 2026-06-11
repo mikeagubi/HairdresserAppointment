@@ -44,31 +44,40 @@ namespace HairdresserAppointmentClient.Pages.Booking
 
         public async Task<IActionResult> OnGetAsync()
         {
-            if(HairdresserId == 0 || TreatmentIds == null || TreatmentIds.Count == 0)
+            if(HairdresserId == 0 || 
+                TreatmentIds == null || 
+                TreatmentIds.Count == 0)
             {
                 return ReturnToBookingPage();
             }
-            SelectedHairdresser = await _hairdresserApiService.GetHairdresserByIdAsync(HairdresserId);
+
+            SelectedHairdresser = await _hairdresserApiService
+                .GetHairdresserByIdAsync(HairdresserId);
 
             SelectedTreatments = (await _treatmentApiService.GetAllTreatmentsAsync())
                 .Where(t => TreatmentIds.Contains(t.Id))
                 .ToList();
 
-            if (SelectedTreatments.Count != TreatmentIds.Count || SelectedHairdresser == null)
+            if (SelectedTreatments.Count != TreatmentIds.Count ||
+                SelectedHairdresser == null)
             {
                 return ReturnToBookingPage();
             }
 
-            TotalPrice = SelectedTreatments.Sum(t => t.Price);
-            TotalTime = SelectedTreatments.Sum(t => t.DurationInMinutes);
+            TotalPrice = SelectedTreatments
+                .Sum(t => t.Price);
+
+            TotalTime = SelectedTreatments
+                .Sum(t => t.DurationInMinutes);
+
             return Page();
         }
-
 
 
         public async Task<IActionResult> OnPostCreateBookingAsync()
         {
             var bookingNumber = await _bookingApiService.CreateBookingAsync(CreateBooking);
+
             if(string.IsNullOrEmpty(bookingNumber))
             {
                 return ReturnToBookingPage();
@@ -81,11 +90,9 @@ namespace HairdresserAppointmentClient.Pages.Booking
         private IActionResult ReturnToBookingPage()
         {
             TempData["ErrorMessage"] = ("Något gick fel. Försök igen.");
+
             return RedirectToPage("/Booking/SelectServices");
         }
-
-
-
 
     }
 }

@@ -10,14 +10,14 @@ namespace HairdresserAppointment.API.Services
     {
         private readonly MyDbContext _context;
         private readonly IHttpContextAccessor _httpContextAccessor;
-
-        public BookingService(MyDbContext context, IHttpContextAccessor httpContextAccessor)
+        public BookingService(MyDbContext context, 
+            IHttpContextAccessor httpContextAccessor)
         {
             _context = context;
             _httpContextAccessor = httpContextAccessor;
         }
 
-        //skapa en bookning
+
         public async Task<string> CreateBookingAsync(CreateBookingDto dto)
         {
             var isBooked = await IsTimeBookedAsync(dto.HairdresserId, dto.StartTime, dto.EndTime);
@@ -41,10 +41,14 @@ namespace HairdresserAppointment.API.Services
             }
 
             var treatments = await _context.Treatments
-                .Where(t => dto.TreatmentIds.Contains(t.Id)).ToListAsync();
+                .Where(t => dto.TreatmentIds.Contains(t.Id))
+                .ToListAsync();
 
-            var totalPrice = treatments.Sum(t => t.Price);
-            var totalDurationInMinutes = treatments.Sum (t => t.DurationInMinutes);
+            var totalPrice = treatments
+                .Sum(t => t.Price);
+
+            var totalDurationInMinutes = treatments
+                .Sum (t => t.DurationInMinutes);
             
             if(dto.PromotionId.HasValue)
             {
@@ -56,7 +60,6 @@ namespace HairdresserAppointment.API.Services
                     totalPrice -= totalPrice * code.DiscountPercent / 100;
                 }
             }
-            
 
             var booking = new Booking
             {
@@ -81,7 +84,7 @@ namespace HairdresserAppointment.API.Services
             return booking.BookingNumber;
         }
 
-        //Genererar bokningsnummer
+
         private string GenerateBookingNumber()
         {
             string month = DateTime.Now.ToString("MMM", CultureInfo.InvariantCulture).ToUpper();

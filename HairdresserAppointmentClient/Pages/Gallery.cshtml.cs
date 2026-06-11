@@ -14,6 +14,8 @@ namespace HairdresserAppointmentClient.Pages
         }
 
         public List<BeforeAndAfter> GalleryImages { get; set; }
+
+
         public void OnGet()
         {
             GalleryImages = _gallery.GetGalleri();

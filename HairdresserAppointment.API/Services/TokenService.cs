@@ -14,6 +14,7 @@ namespace HairdresserAppointment.API.Services
             _configuration = configuration;
         }
 
+
         public string GenerateToken(CustomUser user, string role)
         {
             var claims = new List<Claim>
@@ -25,7 +26,6 @@ namespace HairdresserAppointment.API.Services
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JwtSettings:Key"]));
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
-
             var token = new JwtSecurityToken(
                 issuer: _configuration["JwtSettings:Issuer"],
                 audience: _configuration["JwtSettings:Audience"],
@@ -37,5 +37,7 @@ namespace HairdresserAppointment.API.Services
             return new JwtSecurityTokenHandler().WriteToken(token);
 
         }
+
     }
+
 }

@@ -29,6 +29,7 @@ namespace HairdresserAppointmentClient.Pages
         public async Task<IActionResult> OnPostAsync()
         {
             var jwtToken = await _authApiService.LoginAsync(loginDto);
+
             if(jwtToken == null)
             {
                 ErrorMessage = "Wrong Email Or Password";
@@ -41,10 +42,10 @@ namespace HairdresserAppointmentClient.Pages
 
             HttpContext.Session.SetString("token", jwtToken);
             HttpContext.Session.SetString("role", role);
+
             return RedirectToPage("/index");
         }
 
-
-
     }
+
 }
